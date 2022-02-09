@@ -13,7 +13,7 @@ import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 public class BrandController {
 
 	@GetMapping("/view/{brandId}")
-	public APIResponse brand(@RequestHeader String requestorId,
+	public APIResponse brand(@RequestHeader String tenant, @RequestHeader String requestorId,
 			@PathVariable("brandId") String brandId) {
 
 		APIResponse apiResponse = new APIResponse();
