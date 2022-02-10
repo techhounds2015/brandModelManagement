@@ -17,12 +17,20 @@ import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 public class User {
 
 	private String name;
+	
+	@Column(name="userid")
 	private String userId;
 	private String email;
 	private String mobile;
+	
+	@Column(name="walletid")
 	private String walletId;
+	
+	@Column(name="signupdate")
 	private Timestamp signUpDate;
 	private Boolean status;
+	
+	@Column(name="roleid")
 	private String roleId;
 	
 	@Id //@GeneratedValue(strategy = GenerationType.AUTO)

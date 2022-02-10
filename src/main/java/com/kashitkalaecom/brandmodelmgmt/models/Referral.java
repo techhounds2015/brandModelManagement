@@ -18,11 +18,23 @@ public class Referral {
 
 	private String code;
 	private String title;
+	
+	@Column(name="discountforsender")
 	private String discountForSender;
+	
+	@Column(name="discounttype")
 	private String discountType;
+	
+	@Column(name="maxdiscount")
 	private String maxDiscount;
+	
+	@Column(name="startingdate")
 	private Timestamp startingDate;
+	
+	@Column(name="expirydate")
 	private Timestamp expiryDate;
+	
+	@Column(name="discountforuser")
 	private String discountForUser;
 	
 	@Id //@GeneratedValue(strategy = GenerationType.AUTO)

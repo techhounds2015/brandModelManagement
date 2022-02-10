@@ -15,26 +15,47 @@ import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 @Table(name="product")
 @DiscriminatorValue("E")
 public class Product {
-
+	
+	@Column(name="categoryid")
 	private String categoryId;
+	
+	@Column(name="brandid")
 	private String brandId;
+	
+	@Column(name="modelid")
 	private String modelId;
 	private String title;
+	
+	@Column(name="hsncode")
 	private String hsnCode;
+	
+	@Column(name="vegnonvegstatus")
 	private Boolean vegNonvegStatus;
 	private Integer sizes;
+	
+	@Column(name="avaliableforsubscription")
 	private Boolean avaliableForSubscription;
 	private String description;
+	
+	@Column(name="maxqualitypurchased")
 	private String maxQualityPurchased;
 	private Boolean status;
 	private String sku;
 	private String mrp;
+	
+	@Column(name="sellingprice")
 	private Integer sellingPrice;
 	private String cgst;
 	private String sgst;
 	private String cesss;
+	
+	@Column(name="outletid")
 	private String outletId;
+	
+	@Column(name="markasfeatured")
 	private String markAsFeatured;
+	
+	@Column(name="markasbestproduct")
 	private String markAsBestProduct;
 	
 	@Id //@GeneratedValue(strategy = GenerationType.AUTO)

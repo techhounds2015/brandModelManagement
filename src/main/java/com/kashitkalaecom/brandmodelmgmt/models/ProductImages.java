@@ -15,8 +15,11 @@ import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 @Table(name="productimages")
 @DiscriminatorValue("E")
 public class ProductImages {
-
+	
+	@Column(name="productid")
 	private String productId;
+	
+	@Column(name="imagename")
 	private String imageName;
 	private Integer size;
 	private String path;

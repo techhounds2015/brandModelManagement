@@ -15,23 +15,48 @@ import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 @Table(name="storesetting")
 @DiscriminatorValue("E")
 public class StoreSetting {
-
+	
+	@Column(name="storename")
 	private String storeName;
 	private String address;
 	private String city;
 	private String state;
+	
+	@Column(name="createdby")
 	private String pinCode;
 	private String country;
+	
+	@Column(name="supportemail")
 	private String supportEmail;
+	
+	@Column(name="supportphonenumber")
 	private String supportPhoneNumber;
+	
+	@Column(name="companyname")
 	private String companyName;
+	
+	@Column(name="gstnumber")
 	private String gstNumber;
+	
+	@Column(name="playstorelink")
 	private String playStoreLink;
+	
+	@Column(name="instagramlink")
 	private String instagramLink;
+	
+	@Column(name="facebooklink")
 	private String facebookLink;
+	
+	@Column(name="appstorelink")
 	private String appStoreLink;
+	
+	@Column(name="twitterlink")
 	private String twitterLink;
+	
+	@Column(name="phonenumberoninvoice")
 	private String phoneNumberOnInvoice;
+	
+	@Column(name="whatsAppnumber")
 	private String whatsAppNumber;
 	private String logo;
 	private String favicon;
