@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Category;
-import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
 
 @RestController
@@ -27,16 +26,16 @@ public class CategoryController {
 	@PostMapping("/create")
 	public APIResponse category(@RequestHeader String requestorId, @RequestBody Category category) {
 		APIResponse apiResponse = new APIResponse();
-	
+
 		try {
-			
-			//Field Validation
-			
+
+			// Field Validation
+
 			// Business Validation
-			
-			// Save			
+
+			// Save
 			category = categoryService.save(category, requestorId);
-			
+
 			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_CREATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_CREATED.getDesc());
 			apiResponse.setResponseObject(category);
@@ -45,7 +44,7 @@ public class CategoryController {
 			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_CREATION_FAILED.getDesc());
 			apiResponse.setResponseObject(category);
 		}
-		
+
 		return apiResponse;
 	}
 
@@ -54,8 +53,15 @@ public class CategoryController {
 
 		Category category = categoryService.getCategoryById(categoryId);
 		APIResponse apiResponse = new APIResponse();
+		
+		if (category == null) {
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_NOT_EXISTS.getDesc());
+			return apiResponse;
+		}	
+		
 		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
+		apiResponse.setResponseMessage("Success");
 		apiResponse.setResponseObject(category);
 		return apiResponse;
 	}
@@ -63,22 +69,33 @@ public class CategoryController {
 	@PutMapping("/update")
 	public APIResponse updatecategory(@RequestHeader String requestorId, @RequestBody Category category) {
 
-		category = categoryService.update(category, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(category);
+
+		try {
+			category = categoryService.update(category, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_UPDATED.getDesc());
+			apiResponse.setResponseObject(category);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 
 	@PutMapping("/delete/{id}")
 	public APIResponse deletecategory(@RequestHeader String requestorId, @RequestParam String id) {
 
-		Category category = categoryService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(category);
+		try {
+			Category category = categoryService.delete(id, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_UPDATED.getDesc());
+			apiResponse.setResponseObject(category);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 
