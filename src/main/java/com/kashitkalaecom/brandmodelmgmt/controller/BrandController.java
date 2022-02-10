@@ -28,11 +28,12 @@ public class BrandController {
 	BrandFV brandFV;
 
 	@PostMapping("/create")
-	public APIResponse createBrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<Brand> createBrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
+		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
 
 		try {
 
+			// Field Validation
 			apiResponse = brandFV.fValidateCreate(null, brand, null);
 			if (!apiResponse.getValidationSuccess()) {
 				return apiResponse;
@@ -54,22 +55,24 @@ public class BrandController {
 	}
 
 	@GetMapping("/view/{brandId}")
-	public APIResponse brand(@RequestHeader String requestorId, @PathVariable("brandId") String brandId) {
+	public APIResponse<Brand> brand(@RequestHeader String requestorId, @PathVariable("brandId") String brandId) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
 		Brand brand = brandService.getBrandById(brandId);
 
 		if (brand == null) {
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getCode());
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getDesc());
+			apiResponse.setResponseObject(brand);
 			return apiResponse;
 		}
+		apiResponse.setResponseObject(brand);
 		return apiResponse;
 	}
 
 	@PutMapping("/update")
-	public APIResponse updatebrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<Brand> updatebrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
+		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
 		try {
 			brand = brandService.update(brand, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATED.getCode());
@@ -83,9 +86,9 @@ public class BrandController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse deletebrand(@RequestHeader String requestorId, @RequestParam String id) {
+	public APIResponse<Brand> deletebrand(@RequestHeader String requestorId, @RequestParam String id) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
 		try {
 			Brand brand = brandService.delete(id, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATED.getCode());
