@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kashitkalaecom.brandmodelmgmt.FV.ModelFV;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.service.ModelService;
 
@@ -22,16 +23,45 @@ public class ModelController {
 	@Autowired
 	ModelService modelService;
 
+	@Autowired
+	ModelFV modelFV;
+
 	@PostMapping("/create")
 	public APIResponse model(@RequestHeader String requestorId, @RequestBody Model model) {
-
-		model = modelService.save(model, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(model);
+
+		try {
+
+			apiResponse = modelFV.fValidateCreate(null, model, null);
+			if (!apiResponse.getValidationSuccess()) {
+				return apiResponse;
+			}
+			// Business Validation
+
+			// Save
+			model = modelService.save(model, requestorId);
+
+			apiResponse.setResponseCode(StatusCodeEnum.MODEL_CREATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_CREATED.getDesc());
+			apiResponse.setResponseObject(model);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.MODEL_CREATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_CREATION_FAILED.getDesc());
+			apiResponse.setResponseObject(model);
+		}
+
 		return apiResponse;
 	}
+
+	/*
+	 * @PostMapping("/create") public APIResponse model(@RequestHeader String
+	 * requestorId, @RequestBody Model model) {
+	 * 
+	 * model = modelService.save(model, requestorId); APIResponse apiResponse = new
+	 * APIResponse(); apiResponse.setResponseCode("200");
+	 * apiResponse.setResponseMessage("success");
+	 * apiResponse.setResponseObject(model); return apiResponse; }
+	 */
 
 	@GetMapping("/view/{modelId}")
 	public APIResponse model(@RequestHeader String requestorId, @PathVariable("modelId") String modelId) {

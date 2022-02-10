@@ -10,23 +10,65 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kashitkalaecom.brandmodelmgmt.FV.ProductImagesFV;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
-import com.kashitkalaecom.brandmodelmgmt.models.Model;
+import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.ProductImages;
-import com.kashitkalaecom.brandmodelmgmt.service.ModelService;
 import com.kashitkalaecom.brandmodelmgmt.service.ProductImagesService;
 
 @RestController
 @RequestMapping("/api/v1/productImages")
 public class ProductImagesController {
-	
+
 	@Autowired
 	ProductImagesService productImagesService;
 
-	@PostMapping("/create")
-	public APIResponse productImages(@RequestHeader String requestorId, @RequestBody ProductImages productImages) {
+	@Autowired
+	ProductImagesFV productImagesFV;
 
-		productImages = productImagesService.save(productImages, requestorId);
+	@PostMapping("/create")
+	public APIResponse category(@RequestHeader String requestorId, @RequestBody ProductImages productImages) {
+		APIResponse apiResponse = new APIResponse();
+
+		try {
+
+			apiResponse = productImagesFV.fValidateCreate(null, productImages, null);
+			if (!apiResponse.getValidationSuccess()) {
+				return apiResponse;
+			}
+			// Business Validation
+
+			// Save
+			productImages = productImagesService.save(productImages, requestorId);
+
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_CREATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_CREATED.getDesc());
+			apiResponse.setResponseObject(productImages);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_CREATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_CREATION_FAILED.getDesc());
+			apiResponse.setResponseObject(productImages);
+		}
+
+		return apiResponse;
+	}
+
+	/*
+	 * @PostMapping("/create") public APIResponse productImages(@RequestHeader
+	 * String requestorId, @RequestBody ProductImages productImages) {
+	 * 
+	 * productImages = productImagesService.save(productImages, requestorId);
+	 * APIResponse apiResponse = new APIResponse();
+	 * apiResponse.setResponseCode("200");
+	 * apiResponse.setResponseMessage("success");
+	 * apiResponse.setResponseObject(productImages); return apiResponse; }
+	 */
+
+	@GetMapping("/view/{modelId}")
+	public APIResponse productImages(@RequestHeader String requestorId,
+			@PathVariable("productImagesId") String productImagesId) {
+
+		ProductImages productImages = productImagesService.getProductImagesById(productImagesId);
 		APIResponse apiResponse = new APIResponse();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
@@ -34,36 +76,26 @@ public class ProductImagesController {
 		return apiResponse;
 	}
 
-	@GetMapping("/view/{modelId}")
-	public APIResponse model(@RequestHeader String requestorId, @PathVariable("modelId") String modelId) {
-
-		Model model = modelService.getModelById(modelId);
-		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(model);
-		return apiResponse;
-	}
-
 	@PutMapping("/update")
-	public APIResponse updatemodel(@RequestHeader String requestorId, @RequestBody Model model) {
+	public APIResponse updateproductImages(@RequestHeader String requestorId,
+			@RequestBody ProductImages productImages) {
 
-		model = modelService.update(model, requestorId);
+		productImages = productImagesService.update(productImages, requestorId);
 		APIResponse apiResponse = new APIResponse();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(model);
+		apiResponse.setResponseObject(productImages);
 		return apiResponse;
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse deletemodel(@RequestHeader String requestorId, @PathVariable String id) {
+	public APIResponse deleteproductImages(@RequestHeader String requestorId, @PathVariable String id) {
 
-		Model model = modelService.delete(id, requestorId);
+		ProductImages productImages = productImagesService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(model);
+		apiResponse.setResponseObject(productImages);
 		return apiResponse;
 	}
 

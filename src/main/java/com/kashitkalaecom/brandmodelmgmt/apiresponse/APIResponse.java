@@ -10,6 +10,7 @@ public class APIResponse<T> implements Serializable {
 	private String responseCode = "200";
 	private String responseMessage = "";
 	private T responseObject;
+	private Boolean validationSuccess;
 
 	private Map<String, String> errors;
 
@@ -54,6 +55,14 @@ public class APIResponse<T> implements Serializable {
 
 	public void setErrors(Map<String, String> errors) {
 		this.errors = errors;
+	}
+
+	public Boolean getValidationSuccess() {
+		return validationSuccess;
+	}
+
+	public void setValidationSuccess(Boolean validationSuccess) {
+		this.validationSuccess = validationSuccess;
 	}
 
 }
