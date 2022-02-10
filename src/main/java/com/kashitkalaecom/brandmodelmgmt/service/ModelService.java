@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.repository.ModelRepository;
+import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Service
 public class ModelService {
@@ -18,17 +19,21 @@ public class ModelService {
 
 	public Model save(Model model, String requestorId) {
 		model.setCreatedBy(requestorId);
+		model.setCreatedOn(CustomClock.timestamp());
 		return modelRepository.save(model);
 	}
-	
+
 	public Model update(Model model, String requestorId) {
 		model.setModifiedBy(requestorId);
+		model.setModifiedOn(CustomClock.timestamp());
 		model.setStatus(false);
 		return modelRepository.save(model);
 	}
-	
-	public Model update1(Model model, String requestorId) {
+
+	public Model delete(String id, String requestorId) {
+		Model model = modelRepository.getById(id);
 		model.setModifiedBy(requestorId);
+		model.setModifiedOn(CustomClock.timestamp());
 		model.setStatus(false);
 		return modelRepository.save(model);
 	}

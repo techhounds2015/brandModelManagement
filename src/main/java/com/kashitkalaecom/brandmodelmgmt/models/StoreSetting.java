@@ -22,7 +22,7 @@ public class StoreSetting {
 	private String city;
 	private String state;
 	
-	@Column(name="createdby")
+	@Column(name="pincode")
 	private String pinCode;
 	private String country;
 	

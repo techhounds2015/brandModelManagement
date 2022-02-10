@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
@@ -54,10 +55,10 @@ public class ModelController {
 		return apiResponse;
 	}
 
-	@PutMapping("/delete")
-	public APIResponse deletemodel(@RequestHeader String requestorId, @RequestBody Model model) {
+	@PutMapping("/delete/{id}")
+	public APIResponse deletemodel(@RequestHeader String requestorId, @PathVariable String id) {
 
-		model = modelService.update1(model, requestorId);
+		Model model = modelService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.repository.CategoryRepository;
+import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Service
 public class CategoryService {
@@ -18,16 +19,20 @@ public class CategoryService {
 
 	public Category save(Category category, String requestorId) {
 		category.setCreatedBy(requestorId);
+		category.setCreatedOn(CustomClock.timestamp());
 		return categoryRepository.save(category);
 	}
 
 	public Category update(Category category, String requestorId) {
 		category.setModifiedBy(requestorId);
+		category.setModifiedOn(CustomClock.timestamp());
 		return categoryRepository.save(category);
 	}
 
-	public Category update1(Category category, String requestorId) {
+	public Category delete(String id, String requestorId) {
+		Category category = categoryRepository.getById(id);
 		category.setModifiedBy(requestorId);
+		category.setModifiedOn(CustomClock.timestamp());
 		category.setStatus(false);
 		return categoryRepository.save(category);
 	}

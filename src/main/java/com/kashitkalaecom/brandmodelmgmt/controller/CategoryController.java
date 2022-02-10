@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.models.Category;
+import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
 
 @RestController
@@ -54,10 +56,10 @@ public class CategoryController {
 		return apiResponse;
 	}
 
-	@PutMapping("/delete")
-	public APIResponse deletecategory(@RequestHeader String requestorId, @RequestBody Category category) {
+	@PutMapping("/delete/{id}")
+	public APIResponse deletecategory(@RequestHeader String requestorId, @RequestParam String id) {
 
-		category = categoryService.update1(category, requestorId);
+		Category category = categoryService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
