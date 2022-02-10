@@ -27,20 +27,8 @@ public class BrandController {
 	@Autowired
 	BrandFV brandFV;
 
-	/*
-	 * @PostMapping("/create") public APIResponse brand(@RequestHeader String
-	 * requestorId,
-	 * 
-	 * @RequestBody Brand brand) {
-	 * 
-	 * brand = brandService.save(brand,requestorId); APIResponse apiResponse = new
-	 * APIResponse(); apiResponse.setResponseCode("200");
-	 * apiResponse.setResponseMessage("success");
-	 * apiResponse.setResponseObject(brand); return apiResponse; }
-	 */
-
 	@PostMapping("/create")
-	public APIResponse brand(@RequestHeader String requestorId, @RequestBody Brand brand) {
+	public APIResponse createBrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
 		APIResponse apiResponse = new APIResponse();
 
 		try {

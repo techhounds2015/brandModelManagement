@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Brand;
 import com.kashitkalaecom.brandmodelmgmt.validation.ValidationService;
 
@@ -30,15 +31,15 @@ public class BrandFV {
 			hashMap = validateCreate(tenantCode, brand, locale);
 
 		} catch (Exception e) {
-			apiResponse.setResponseMessage("FAILURE");
-			apiResponse.setResponseCode("8000");
+			apiResponse.setResponseMessage(StatusCodeEnum.ERROR_ON_VALIDATING_REQUEST.getCode());
+			apiResponse.setResponseCode(StatusCodeEnum.ERROR_ON_VALIDATING_REQUEST.getDesc());
 			apiResponse.setValidationSuccess(false);
 			logger.error("error while validating request", e);
 			return apiResponse;
 		}
 		if (hashMap.size() > 0) {
-			apiResponse.setResponseMessage("FAILURE");
-			apiResponse.setResponseCode("8000");
+			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getCode());
+			apiResponse.setResponseCode(StatusCodeEnum.INVALID_REQUEST.getDesc());
 			apiResponse.setValidationSuccess(false);
 			apiResponse.setErrors(hashMap);
 

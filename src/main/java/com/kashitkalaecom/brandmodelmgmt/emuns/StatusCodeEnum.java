@@ -74,7 +74,11 @@ public enum StatusCodeEnum {
 
 	
 	// Error while validating request 
-    ERROR_ON_VALIDATING_REQUEST("8000","Error while validating request.");
+    ERROR_ON_VALIDATING_REQUEST("8000","Error while validating request."),
+	
+	// Invalid Request
+    INVALID_REQUEST("1010","Invalid Request.");
+	
 	
     private String code;
     private Integer type;
