@@ -22,6 +22,9 @@ public class ProductImagesController {
 	
 	@Autowired
 	ProductImagesService productImagesService;
+	
+	@Autowired
+	ModelService modelService;
 
 	@PostMapping("/create")
 	public APIResponse productImages(@RequestHeader String requestorId, @RequestBody ProductImages productImages) {
