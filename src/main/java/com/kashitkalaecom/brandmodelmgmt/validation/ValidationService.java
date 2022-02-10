@@ -107,13 +107,11 @@ public class ValidationService {
 			} else
 			{
 			    logger.error("FIELD TYPE INFORMATION MAY BE MISSING  :" + internalName + " : " + value + " : " + fieldType);
-			    // error = "Unkonwn information in this field";
+			   
 			}
 		    } else
 		    {
-			// System.err.println("VALIDATION MAY BE UNDEFINED FOR :" + internalName + " : "
-			// + value + " : " + fieldType);
-			// error = "Extra Values Found in input";
+			
 		    }
 
 		}

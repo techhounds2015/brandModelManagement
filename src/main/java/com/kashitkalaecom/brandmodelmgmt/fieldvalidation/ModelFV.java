@@ -1,4 +1,4 @@
-package com.kashitkalaecom.brandmodelmgmt.FV;
+package com.kashitkalaecom.brandmodelmgmt.fieldvalidation;
 
 import java.util.HashMap;
 
@@ -8,26 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
-import com.kashitkalaecom.brandmodelmgmt.models.Brand;
+import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.validation.ValidationService;
-
 @Component
-public class BrandFV {
+public class ModelFV {
 
 	@Autowired
 	ValidationService validationService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(ModelFV.class);
 
-	private static final Logger logger = LoggerFactory.getLogger(BrandFV.class);
+	private static String module = Model.class.getSimpleName();
 
-	private static String module = Brand.class.getSimpleName();
-
-	public APIResponse<Brand> fValidateCreate(String tenantCode, Brand brand, String locale) {
-		APIResponse<Brand> apiResponse = new APIResponse<>();
-
+	public APIResponse<Model> fValidateCreate(String tenantCode, Model model, String locale) {
+		APIResponse<Model> apiResponse = new APIResponse<>();
+		
 		apiResponse.setValidationSuccess(true);
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		try {
-			hashMap = validateCreate(tenantCode, brand, locale);
+			hashMap = validateCreate(tenantCode, model, locale);
 
 		} catch (Exception e) {
 			apiResponse.setResponseMessage("FAILURE");
@@ -47,32 +46,31 @@ public class BrandFV {
 
 	}
 
-	private HashMap<String, String> validateCreate(String tenantCode, Brand brand, String locale) throws Exception {
-
+	private HashMap<String, String> validateCreate(String tenantCode, Model model, String locale) throws Exception {
+		
 		HashMap<String, String> hashMap = new HashMap<>();
 		String errorString = null;
 
-		errorString = validationService.validateField(tenantCode, module, brand.getCategoryId(), "categoryId", locale);
+		errorString = validationService.validateField(tenantCode, module, model.getCategoryId(), "categoryId", locale);
 		if (errorString != null)
-			hashMap.put("category", errorString);
-
-		errorString = validationService.validateField(tenantCode, module, brand.getLogo(), "logo", locale);
+			hashMap.put("categoryId", errorString);
+		
+		errorString = validationService.validateField(tenantCode, module, model.getBrandId(), "brandId", locale);
 		if (errorString != null)
-			hashMap.put("category", errorString);
-
-		errorString = validationService.validateField(tenantCode, module, brand.getDescription(), "description",
-				locale);
+			hashMap.put("brandId", errorString);
+		
+		errorString = validationService.validateField(tenantCode, module, model.getDescription(), "description", locale);
 		if (errorString != null)
 			hashMap.put("description", errorString);
-
-		errorString = validationService.validateField(tenantCode, module, brand.getName(), "name", locale);
+		
+		errorString = validationService.validateField(tenantCode, module, model.getName(), "name", locale);
 		if (errorString != null)
 			hashMap.put("name", errorString);
-
-		errorString = validationService.validateField(tenantCode, module, brand.getStatus(), "status", locale);
+		
+		errorString = validationService.validateField(tenantCode, module, model.getStatus(), "status", locale);
 		if (errorString != null)
 			hashMap.put("status", errorString);
-
+		
 		return hashMap;
 	}
 }

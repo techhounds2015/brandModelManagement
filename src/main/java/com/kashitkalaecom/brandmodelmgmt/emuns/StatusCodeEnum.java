@@ -69,9 +69,13 @@ public enum StatusCodeEnum {
     DELIVERY_CONFIG_CREATED("1101","Delivery Configuration Created Successfully."),
     DELIVERY_CONFIG_UPDATED("1102","Delivery Configuration Updated Successfully."),
     DELIVERY_CONFIG_CREATION_FAILED("1103","Failed to Create Delivery Configuration."),
-    DELIVERY_CONFIG_UPDATION_FAILED("1104","Failed to Update Delivery Configuration.");
+    DELIVERY_CONFIG_UPDATION_FAILED("1104","Failed to Update Delivery Configuration."),
 
 
+	
+	// Error while validating request 
+    ERROR_ON_VALIDATING_REQUEST("8000","Error while validating request.");
+	
     private String code;
     private Integer type;
     private String desc;

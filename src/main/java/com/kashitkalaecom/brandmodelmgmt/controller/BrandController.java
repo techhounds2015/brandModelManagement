@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kashitkalaecom.brandmodelmgmt.FV.BrandFV;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
+import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.BrandFV;
 import com.kashitkalaecom.brandmodelmgmt.models.Brand;
 import com.kashitkalaecom.brandmodelmgmt.service.BrandService;
 

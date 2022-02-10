@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kashitkalaecom.brandmodelmgmt.FV.ProductImagesFV;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
+import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.ProductImagesFV;
 import com.kashitkalaecom.brandmodelmgmt.models.ProductImages;
 import com.kashitkalaecom.brandmodelmgmt.service.ProductImagesService;
 

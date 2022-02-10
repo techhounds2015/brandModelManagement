@@ -1,4 +1,4 @@
-package com.kashitkalaecom.brandmodelmgmt.FV;
+package com.kashitkalaecom.brandmodelmgmt.fieldvalidation;
 
 import java.util.HashMap;
 import org.slf4j.Logger;
