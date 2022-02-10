@@ -47,10 +47,6 @@ public enum StatusCodeEnum {
         this.desc = desc;
     }
     
-    StatusCodeEnum(Integer type, String desc) {
-        this.type = type;
-        this.desc = desc;
-    }
 
     /**
      * gets the http status code
