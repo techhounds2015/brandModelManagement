@@ -62,40 +62,51 @@ public class BrandController {
 			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_CREATION_FAILED.getDesc());
 			apiResponse.setResponseObject(brand);
 		}
-
 		return apiResponse;
 	}
 
 	@GetMapping("/view/{brandId}")
 	public APIResponse brand(@RequestHeader String requestorId, @PathVariable("brandId") String brandId) {
 
-		Brand brand = brandService.getBrandById(brandId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(brand);
+		Brand brand = brandService.getBrandById(brandId);
+
+		if (brand == null) {
+			apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getCode());
+			apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getDesc());
+			return apiResponse;
+		}
 		return apiResponse;
 	}
 
 	@PutMapping("/update")
 	public APIResponse updatebrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
-
-		brand = brandService.update(brand, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(brand);
+		try {
+			brand = brandService.update(brand, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_UPDATED.getCode());
+			apiResponse.setResponseObject(brand);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_UPDATION_FAILED.getCode());
+		}
 		return apiResponse;
 	}
 
 	@PutMapping("/delete/{id}")
 	public APIResponse deletebrand(@RequestHeader String requestorId, @RequestParam String id) {
 
-		Brand brand = brandService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(brand);
+		try {
+			Brand brand = brandService.delete(id, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_UPDATED.getCode());
+			apiResponse.setResponseObject(brand);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_UPDATION_FAILED.getCode());
+		}
 		return apiResponse;
 	}
 }
