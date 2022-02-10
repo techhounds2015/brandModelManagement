@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
@@ -25,12 +26,26 @@ public class CategoryController {
 
 	@PostMapping("/create")
 	public APIResponse category(@RequestHeader String requestorId, @RequestBody Category category) {
-
-		category = categoryService.save(category, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(category);
+	
+		try {
+			
+			//Field Validation
+			
+			// Business Validation
+			
+			// Save			
+			category = categoryService.save(category, requestorId);
+			
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_CREATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_CREATED.getDesc());
+			apiResponse.setResponseObject(category);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_CREATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_CREATION_FAILED.getDesc());
+			apiResponse.setResponseObject(category);
+		}
+		
 		return apiResponse;
 	}
 
