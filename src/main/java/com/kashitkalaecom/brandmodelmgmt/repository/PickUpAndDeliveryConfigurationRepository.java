@@ -9,7 +9,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.PickUpAndDeliveryConfiguration;
 @Repository
 public interface PickUpAndDeliveryConfigurationRepository extends JpaRepository<PickUpAndDeliveryConfiguration, String> {
 
-	@Query("select p.dileveryCharges from pickupanddeliveryconfiguration p where p.dileveryCharges =:dileveryCharges ")
-	PickUpAndDeliveryConfiguration findByDileveryCharges(String dileveryCharges);
+	@Query("from PickUpAndDeliveryConfiguration p where p.dileveryCharges =:dileveryCharges ")
+	public PickUpAndDeliveryConfiguration findByDileveryCharges(String dileveryCharges);
 
 }

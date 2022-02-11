@@ -9,7 +9,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, String>{
 
-	@Query("select m.name from category m where m.name =:name ")
+	@Query(" from Category m where m.name =:name ")
 	Category findByName(String name);
 
 }

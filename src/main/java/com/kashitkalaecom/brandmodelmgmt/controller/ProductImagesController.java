@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.businessvalidation.ProductImagesBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.ProductImagesFV;
 import com.kashitkalaecom.brandmodelmgmt.models.ProductImages;
@@ -25,6 +26,9 @@ public class ProductImagesController {
 
 	@Autowired
 	ProductImagesFV productImagesFV;
+	
+	@Autowired
+	ProductImagesBV productImagesBV;
 
 	@PostMapping("/create")
 	public APIResponse category(@RequestHeader String requestorId, @RequestBody ProductImages productImages) {
@@ -36,9 +40,11 @@ public class ProductImagesController {
 			if (!apiResponse.getValidationSuccess()) {
 				return apiResponse;
 			}
-			// Business Validation
-
-			// Save
+			
+			apiResponse = productImagesBV.bValidateCreate(null, productImages, null);
+            if (!apiResponse.getProcessingSuccess()) {
+                return apiResponse;
+            }
 			productImages = productImagesService.save(productImages, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_CREATED.getCode());
@@ -53,23 +59,18 @@ public class ProductImagesController {
 		return apiResponse;
 	}
 
-	/*
-	 * @PostMapping("/create") public APIResponse productImages(@RequestHeader
-	 * String requestorId, @RequestBody ProductImages productImages) {
-	 * 
-	 * productImages = productImagesService.save(productImages, requestorId);
-	 * APIResponse apiResponse = new APIResponse();
-	 * apiResponse.setResponseCode("200");
-	 * apiResponse.setResponseMessage("success");
-	 * apiResponse.setResponseObject(productImages); return apiResponse; }
-	 */
-
 	@GetMapping("/view/{modelId}")
 	public APIResponse productImages(@RequestHeader String requestorId,
 			@PathVariable("productImagesId") String productImagesId) {
 
 		ProductImages productImages = productImagesService.getProductImagesById(productImagesId);
 		APIResponse apiResponse = new APIResponse();
+		if (productImages == null) {
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_NOT_EXISTS.getCode());
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_NOT_EXISTS.getDesc());
+			apiResponse.setResponseObject(productImages);
+			return apiResponse;
+		}
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(productImages);
@@ -80,22 +81,32 @@ public class ProductImagesController {
 	public APIResponse updateproductImages(@RequestHeader String requestorId,
 			@RequestBody ProductImages productImages) {
 
-		productImages = productImagesService.update(productImages, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(productImages);
+		try {
+			productImages = productImagesService.update(productImages, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATED.getCode());
+			apiResponse.setResponseObject(productImages);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATION_FAILED.getCode());
+		}
 		return apiResponse;
 	}
 
 	@PutMapping("/delete/{id}")
 	public APIResponse deleteproductImages(@RequestHeader String requestorId, @PathVariable String id) {
 
-		ProductImages productImages = productImagesService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(productImages);
+		try {
+			ProductImages productImages = productImagesService.delete(id, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATED.getCode());
+			apiResponse.setResponseObject(productImages);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATION_FAILED.getCode());
+		}
 		return apiResponse;
 	}
 

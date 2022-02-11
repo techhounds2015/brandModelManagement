@@ -9,7 +9,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.StoreSetting;
 @Repository
 public interface StoreSettingRepository extends JpaRepository<StoreSetting, String>{
 	
-	@Query("select s.companyname from storesetting s where s.companyname =:companyname ")
-	StoreSetting findByName(String companyName);
+	@Query("from StoreSetting s where s.companyName =:companyName ")
+	public StoreSetting findByName(String companyName);
 
 }

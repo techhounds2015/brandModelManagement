@@ -9,7 +9,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String>{
 	
-	@Query("select c.categoryId from product c where c.categoryId =:categoryId ")
-	Product findByName(String categoryId);
+	@Query("from Product c where c.categoryId =:categoryId ")
+	public Product findByName(String categoryId);
 
 }

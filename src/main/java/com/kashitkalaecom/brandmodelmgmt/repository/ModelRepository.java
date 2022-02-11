@@ -9,7 +9,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.Model;
 @Repository
 public interface ModelRepository extends JpaRepository<Model, String> {
 
-	@Query("select m.name from model m where m.name =:name ")
-	Model findByName(String name);
+	@Query(" from Model m where m.name =:name ")
+	public Model findByName(String name);
 
 }

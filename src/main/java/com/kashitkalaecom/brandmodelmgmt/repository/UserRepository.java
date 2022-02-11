@@ -9,7 +9,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 	
-	@Query("select u.walletId from user u where u.walletId =:walletId ")
-	User findByName(String walletId);
+	@Query("from User u where u.walletId =:walletId ")
+	public User findByName(String walletId);
 
 }

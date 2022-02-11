@@ -9,8 +9,8 @@ import com.kashitkalaecom.brandmodelmgmt.models.Brand;
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, String>{
 	
-	@Query("select b.name from brand b where b.name =:name ")
-	Brand findByName(String name);
+	@Query(" from Brand b where b.name =:name ")
+	public Brand findByName(String name);
 
 	
 
