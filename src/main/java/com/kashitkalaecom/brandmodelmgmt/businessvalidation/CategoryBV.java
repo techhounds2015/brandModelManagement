@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
-import com.kashitkalaecom.brandmodelmgmt.validation.ValidationService;
 @Component
 public class CategoryBV {
 	
@@ -20,24 +20,24 @@ public class CategoryBV {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CategoryBV.class);
 	
-	 public APIResponse bValidateCreate(String tenantCode, Category category, String locale) {
+	 public APIResponse<Category> bValidateCreate(String tenantCode, Category category, String locale) {
 		 
-		 APIResponse<Category> apiResponse = new APIResponse<Category>();
+		 APIResponse<Category> apiResponse = new APIResponse<>();
 		 apiResponse.setProcessingSuccess(true);
-		 List<String> list = new ArrayList<String>();
+		 List<String> list = new ArrayList<>();
 		try {
 			list = validateCreate(tenantCode, category, locale);
 
 		} catch (Exception e) {
-			apiResponse.setResponseMessage("FAILURE");
-			apiResponse.setResponseCode("9000");
+			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getDesc());
+			apiResponse.setResponseCode(StatusCodeEnum.INVALID_REQUEST.getCode());
 			apiResponse.setProcessingSuccess(false);
 			logger.error(e.getMessage(), e);
 			return apiResponse;
 		}
-		if (list.size() > 0) {
-			apiResponse.setResponseMessage("FAILURE");
-			apiResponse.setResponseCode("9000");
+		if (list.isEmpty()) {
+			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getDesc());
+			apiResponse.setResponseCode(StatusCodeEnum.INVALID_REQUEST.getCode());
 			apiResponse.setProcessingErrors(list);
 			apiResponse.setProcessingSuccess(false);
 

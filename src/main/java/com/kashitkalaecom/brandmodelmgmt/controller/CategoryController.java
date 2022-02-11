@@ -32,8 +32,8 @@ public class CategoryController {
 	CategoryBV categoryBV;
 
 	@PostMapping("/create")
-	public APIResponse category(@RequestHeader String requestorId, @RequestBody Category category) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<Category> category(@RequestHeader String requestorId, @RequestBody Category category) {
+		APIResponse<Category> apiResponse = new APIResponse<>();
 
 		try {
 
@@ -63,10 +63,10 @@ public class CategoryController {
 	}
 
 	@GetMapping("/view/{categoryId}")
-	public APIResponse category(@RequestHeader String requestorId, @PathVariable("categoryId") String categoryId) {
+	public APIResponse<Category> category(@RequestHeader String requestorId, @PathVariable("categoryId") String categoryId) {
 
 		Category category = categoryService.getCategoryById(categoryId);
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Category> apiResponse = new APIResponse<>();
 
 		if (category == null) {
 			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_NOT_EXISTS.getCode());
@@ -81,9 +81,9 @@ public class CategoryController {
 	}
 
 	@PutMapping("/update")
-	public APIResponse updatecategory(@RequestHeader String requestorId, @RequestBody Category category) {
+	public APIResponse<Category> updatecategory(@RequestHeader String requestorId, @RequestBody Category category) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Category> apiResponse = new APIResponse<>();
 
 		try {
 			category = categoryService.update(category, requestorId);
@@ -98,9 +98,9 @@ public class CategoryController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse deletecategory(@RequestHeader String requestorId, @RequestParam String id) {
+	public APIResponse<Category> deletecategory(@RequestHeader String requestorId, @RequestParam String id) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Category> apiResponse = new APIResponse<>();
 		try {
 			Category category = categoryService.delete(id, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_UPDATED.getCode());
