@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.businessvalidation.UserBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.UserFV;
 import com.kashitkalaecom.brandmodelmgmt.models.User;
@@ -25,6 +26,9 @@ public class UserController {
 
 	@Autowired
 	UserFV userFV;
+	
+	@Autowired
+	UserBV userBV;
 
 	@PostMapping("/create")
 	public APIResponse user(@RequestHeader String requestorId, @RequestBody User user) {
@@ -36,9 +40,11 @@ public class UserController {
 			if (!apiResponse.getValidationSuccess()) {
 				return apiResponse;
 			}
-			// Business Validation
-
-			// Save
+			
+			apiResponse = userBV.bValidateCreate(null, user, null);
+            if (!apiResponse.getProcessingSuccess()) {
+                return apiResponse;
+            }
 			user = userService.save(user, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.USER_CREATED.getCode());
@@ -58,6 +64,11 @@ public class UserController {
 
 		User user = userService.getUserById(userId);
 		APIResponse apiResponse = new APIResponse();
+		if (user == null) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
+			return apiResponse;
+		}
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(user);
@@ -67,22 +78,33 @@ public class UserController {
 	@PutMapping("/update")
 	public APIResponse updateuser(@RequestHeader String requestorId, @RequestBody User user) {
 
-		user = userService.update(user, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(user);
+		
+		try {
+			user = userService.update(user, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATED.getDesc());
+			apiResponse.setResponseObject(user);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 
 	@PutMapping("/delete/{id}")
 	public APIResponse deleteuser(@RequestHeader String requestorId, @PathVariable String id) {
 
-		User user = userService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(user);
+		try {
+			User user = userService.delete(id, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATED.getDesc());
+			apiResponse.setResponseObject(user);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 

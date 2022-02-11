@@ -42,5 +42,9 @@ public class BrandService {
 	public List<Brand> getAllBrands() {
 		return brandRepository.findAll();
 	}
+
+	public Brand getBrandByName(String name) {
+		return brandRepository.findByName(name);
+	}
 	
 }

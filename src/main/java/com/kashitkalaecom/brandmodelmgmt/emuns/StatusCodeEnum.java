@@ -59,6 +59,7 @@ public enum StatusCodeEnum {
     USER_CREATION_FAILED("8003","Failed to Create User."),
     USER_UPDATION_FAILED("8004","Failed to Update User."),
     USER_NOT_EXISTS("8005","User doesn't exists."),
+    USER_INVALID("8006","Invalid Category."),
 	
 	// Role
     ROLE_CREATED("9001","Role Created Successfully."),
@@ -72,6 +73,7 @@ public enum StatusCodeEnum {
     DELIVERY_CONFIG_UPDATED("1102","Delivery Configuration Updated Successfully."),
     DELIVERY_CONFIG_CREATION_FAILED("1103","Failed to Create Delivery Configuration."),
     DELIVERY_CONFIG_UPDATION_FAILED("1104","Failed to Update Delivery Configuration."),
+    DELIVERY_CONFIG_NOT_EXISTS("1105","Failed to Update Delivery Configuration."),
 
 
 	

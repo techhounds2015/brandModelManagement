@@ -41,4 +41,8 @@ public class PickUpAndDeliveryConfigurationService {
 		return pickUpAndDeliveryConfigurationRepository.save(pickUpAndDeliveryConfiguration);
 	}
 
+	public PickUpAndDeliveryConfiguration getpickUpAndDeliveryConfigurationByName(String dileveryCharges) {
+		return pickUpAndDeliveryConfigurationRepository.findByDileveryCharges(dileveryCharges);
+	}
+
 }

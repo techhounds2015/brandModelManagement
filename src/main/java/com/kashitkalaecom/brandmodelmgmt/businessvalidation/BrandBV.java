@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Brand;
+import com.kashitkalaecom.brandmodelmgmt.models.Category;
+import com.kashitkalaecom.brandmodelmgmt.service.BrandService;
+import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
 
 @Component
@@ -17,71 +21,52 @@ public class BrandBV {
 
 	@Autowired
 	MasterDataService masterDataService;
-
+	
+	@Autowired
+	BrandService brandService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(BrandBV.class);
 
 	public APIResponse<Brand> bValidateCreate(String tenantCode, Brand brand, String locale) {
 
-		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
-		apiResponse.setProcessingSuccess(true);
-		List<String> list = new ArrayList<String>();
+		APIResponse<Brand> apiResponse = new APIResponse<>();
+		 apiResponse.setProcessingSuccess(true);
 		try {
-			list = validateCreate(tenantCode, brand, locale);
+			apiResponse = validateCreate(tenantCode, brand, locale);
 
 		} catch (Exception e) {
-			apiResponse.setResponseMessage("FAILURE");
-			apiResponse.setResponseCode("9000");
+			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getDesc());
+			apiResponse.setResponseCode(StatusCodeEnum.INVALID_REQUEST.getCode());
 			apiResponse.setProcessingSuccess(false);
 			logger.error(e.getMessage(), e);
 			return apiResponse;
 		}
-		if (list.size() > 0) {
-			apiResponse.setResponseMessage("FAILURE");
-			apiResponse.setResponseCode("9000");
-			apiResponse.setProcessingErrors(list);
-			apiResponse.setProcessingSuccess(false);
-
-		}
+	
 		return apiResponse;
 	}
 
-	private List<String> validateCreate(String tenantCode, Brand brand, String locale) {
+	private APIResponse<Brand> validateCreate(String tenantCode, Brand brand, String locale) {
 
-		List<String> errorList = new ArrayList<String>();
-
-		List<String> brandList = masterDataService.getDataNameByType(tenantCode, "Brand");
-
-		if (brandList != null && !brandList.contains(brand.getCategoryId())) {
-			String localError = "Brand.categoryid invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		if (brandList != null && !brandList.contains(brand.getLogo())) {
-			String localError = "Brand.logo invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		if (brandList != null && !brandList.contains(brand.getName())) {
-			String localError = "Brand.name invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		if (brandList != null && !brandList.contains(brand.getStatus())) {
-			String localError = "Category.status invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		if (brandList != null && !brandList.contains(brand.getDescription())) {
-			String localError = "Brand.description invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		return errorList;
+		APIResponse<Brand> apiResponse = new APIResponse<>();
+        List<String> brandList = masterDataService.getDataNameByType(tenantCode, "Brand");
+        
+        if (brandList != null && !brandList.contains(brand.getCategoryId())) {
+        	apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_INVALID.getCode());
+        	apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_INVALID.getDesc());
+        	apiResponse.setProcessingSuccess(false);
+        	return apiResponse;
+        }
+        
+        Brand brand1 = brandService.getBrandByName(brand.getName());
+        
+        if (brand1 != null) {
+        	apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_DUPLICATE.getCode());
+        	apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_DUPLICATE.getDesc());
+        	apiResponse.setProcessingSuccess(false);
+        	return apiResponse;
+        }
+        
+        return apiResponse;
 	}
 
-}
+	}

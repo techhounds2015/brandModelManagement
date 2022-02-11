@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.businessvalidation.ProductBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.ProductFV;
 import com.kashitkalaecom.brandmodelmgmt.models.Product;
@@ -26,6 +27,9 @@ public class ProductController {
 	@Autowired
 	ProductFV prodeuctFV;
 
+	@Autowired
+	ProductBV productBV;
+
 	@PostMapping("/create")
 	public APIResponse category(@RequestHeader String requestorId, @RequestBody Product product) {
 		APIResponse apiResponse = new APIResponse();
@@ -36,9 +40,11 @@ public class ProductController {
 			if (!apiResponse.getValidationSuccess()) {
 				return apiResponse;
 			}
-			// Business Validation
 
-			// Save
+			apiResponse = productBV.bValidateCreate(null, product, null);
+			if (!apiResponse.getProcessingSuccess()) {
+				return apiResponse;
+			}
 			product = productService.save(product, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_CREATED.getCode());
@@ -53,21 +59,17 @@ public class ProductController {
 		return apiResponse;
 	}
 
-	/*
-	 * @PostMapping("/create") public APIResponse product(@RequestHeader String
-	 * requestorId, @RequestBody Product product) {
-	 * 
-	 * product = productService.save(product, requestorId); APIResponse apiResponse
-	 * = new APIResponse(); apiResponse.setResponseCode("200");
-	 * apiResponse.setResponseMessage("success");
-	 * apiResponse.setResponseObject(product); return apiResponse; }
-	 */
-
 	@GetMapping("/view/{productId}")
 	public APIResponse product(@RequestHeader String requestorId, @PathVariable("productId") String productId) {
 
 		Product product = productService.getProductById(productId);
 		APIResponse apiResponse = new APIResponse();
+		if (product == null) {
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_NOT_EXISTS.getDesc());
+			return apiResponse;
+		}
+
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(product);
@@ -77,22 +79,33 @@ public class ProductController {
 	@PutMapping("/update")
 	public APIResponse updateproduct(@RequestHeader String requestorId, @RequestBody Product product) {
 
-		product = productService.update(product, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(product);
+
+		try {
+			product = productService.update(product, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATED.getDesc());
+			apiResponse.setResponseObject(product);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 
 	@PutMapping("/delete/{id}")
 	public APIResponse deleteproduct(@RequestHeader String requestorId, @PathVariable String id) {
 
-		Product product = productService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(product);
+		try {
+			Product product = productService.delete(id, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATED.getDesc());
+			apiResponse.setResponseObject(product);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 

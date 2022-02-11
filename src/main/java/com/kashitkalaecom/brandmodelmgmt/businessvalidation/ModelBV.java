@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
+import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.models.Model;
+import com.kashitkalaecom.brandmodelmgmt.service.ModelService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
 
 @Component
@@ -18,6 +20,9 @@ public class ModelBV {
 
 	@Autowired
 	MasterDataService masterDataService;
+	
+	@Autowired
+	ModelService modelService;
 
 	private static final Logger logger = LoggerFactory.getLogger(ModelBV.class);
 
@@ -25,65 +30,44 @@ public class ModelBV {
 
 		APIResponse<Model> apiResponse = new APIResponse<Model>();
 		apiResponse.setProcessingSuccess(true);
-		List<String> list = new ArrayList<String>();
+		
 		try {
-			list = validateCreate(tenantCode, model, locale);
+			apiResponse = validateCreate(tenantCode, model, locale);
 
 		} catch (Exception e) {
-			apiResponse.setResponseMessage(StatusCodeEnum.ERROR_ON_VALIDATING_REQUEST.getCode());
-			apiResponse.setResponseCode(StatusCodeEnum.ERROR_ON_VALIDATING_REQUEST.getDesc());
+			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getDesc());
+			apiResponse.setResponseCode(StatusCodeEnum.INVALID_REQUEST.getCode());
 			apiResponse.setProcessingSuccess(false);
-			logger.error("error while validating request", e);
+			logger.error(e.getMessage(), e);
 			return apiResponse;
-		}
-		if (list.size() > 0) {
-			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getCode());
-			apiResponse.setResponseCode(StatusCodeEnum.INVALID_REQUEST.getDesc());
-			apiResponse.setProcessingErrors(list);
-			apiResponse.setProcessingSuccess(false);
-
 		}
 		return apiResponse;
 
 	}
 
-	private List<String> validateCreate(String tenantCode, Model model, String locale) {
+	private APIResponse<Model> validateCreate(String tenantCode, Model model, String locale) {
 
-		List<String> errorList = new ArrayList<String>();
+		APIResponse<Model> apiResponse = new APIResponse<>();
 
 		List<String> modelList = masterDataService.getDataNameByType(tenantCode, "Model");
 
 		if (modelList != null && !modelList.contains(model.getCategoryId())) {
-			String localError = "Model.categoryId invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		if (modelList != null && !modelList.contains(model.getName())) {
-			String localError = "Model.name invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		if (modelList != null && !modelList.contains(model.getStatus())) {
-			String localError = "Model.status invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		if (modelList != null && !modelList.contains(model.getBrandId())) {
-			String localError = "Model.brandId invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		if (modelList != null && !modelList.contains(model.getDescription())) {
-			String localError = "Model.description invailid";
-			logger.debug("localError::" + localError);
-			errorList.add(localError);
-		}
-
-		return errorList;
+        	apiResponse.setResponseCode(StatusCodeEnum.MODEL_NOT_EXISTS.getCode());
+        	apiResponse.setResponseMessage(StatusCodeEnum.MODEL_NOT_EXISTS.getDesc());
+        	apiResponse.setProcessingSuccess(false);
+        	return apiResponse;
+        }
+        
+        Model model1 = modelService.getModelByName(model.getName());
+        
+        if (model1 != null) {
+        	apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_DUPLICATE.getCode());
+        	apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_DUPLICATE.getDesc());
+        	apiResponse.setProcessingSuccess(false);
+        	return apiResponse;
+        }
+        
+        return apiResponse;
 	}
 
 }

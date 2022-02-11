@@ -73,8 +73,8 @@ public class PickUpAndDeliveryConfigurationController {
 		PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration = pickUpAndDeliveryConfigurationService.getpickUpAndDeliveryConfigurationById(pickUpAndDeliveryConfigurationId);
 		APIResponse apiResponse = new APIResponse();
 		if (pickUpAndDeliveryConfiguration == null) {
-			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_NOT_EXISTS.getCode());
-			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_NOT_EXISTS.getDesc());
+			apiResponse.setResponseCode(StatusCodeEnum.DELIVERY_CONFIG_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.DELIVERY_CONFIG_NOT_EXISTS.getDesc());
 			return apiResponse;
 		}
 		apiResponse.setResponseCode("200");
@@ -86,22 +86,32 @@ public class PickUpAndDeliveryConfigurationController {
 	@PutMapping("/update")
 	public APIResponse updatepickUpAndDeliveryConfiguration(@RequestHeader String requestorId, @RequestBody PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration) {
 
-		pickUpAndDeliveryConfiguration = pickUpAndDeliveryConfigurationService.update(pickUpAndDeliveryConfiguration, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(pickUpAndDeliveryConfiguration);
+		try {
+			pickUpAndDeliveryConfiguration = pickUpAndDeliveryConfigurationService.update(pickUpAndDeliveryConfiguration, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.DELIVERY_CONFIG_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.DELIVERY_CONFIG_UPDATED.getDesc());
+			apiResponse.setResponseObject(pickUpAndDeliveryConfiguration);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.DELIVERY_CONFIG_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.DELIVERY_CONFIG_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 
 	@PutMapping("/delete/{id}")
 	public APIResponse deletepickUpAndDeliveryConfiguration(@RequestHeader String requestorId, @PathVariable String id) {
 
-		PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration = pickUpAndDeliveryConfigurationService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
+	try {	
+		PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration = pickUpAndDeliveryConfigurationService.delete(id, requestorId);
+		apiResponse.setResponseCode(StatusCodeEnum.DELIVERY_CONFIG_UPDATED.getCode());
+		apiResponse.setResponseMessage(StatusCodeEnum.DELIVERY_CONFIG_UPDATED.getDesc());
 		apiResponse.setResponseObject(pickUpAndDeliveryConfiguration);
-		return apiResponse;
+	} catch (Exception e) {
+		apiResponse.setResponseCode(StatusCodeEnum.DELIVERY_CONFIG_UPDATION_FAILED.getCode());
+		apiResponse.setResponseMessage(StatusCodeEnum.DELIVERY_CONFIG_UPDATION_FAILED.getDesc());
+	}
+	return apiResponse;
 	}
 }
