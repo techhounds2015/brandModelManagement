@@ -24,7 +24,7 @@ public class DeliverySlotsController {
 	DeliverySlotsService deliverySlotsService;
 
 	@PostMapping("/create")
-	public APIResponse DeliverySlots(@RequestHeader String requestorId, @RequestBody DeliverySlots req) {
+	public APIResponse deliverySlots(@RequestHeader String requestorId, @RequestBody DeliverySlots req) {
 
 		req = deliverySlotsService.save(req, requestorId);
 		APIResponse apiResponse = new APIResponse();

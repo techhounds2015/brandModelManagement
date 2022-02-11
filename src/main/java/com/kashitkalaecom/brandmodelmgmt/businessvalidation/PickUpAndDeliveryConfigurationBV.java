@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.models.PickUpAndDeliveryConfiguration;
-import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
 import com.kashitkalaecom.brandmodelmgmt.service.PickUpAndDeliveryConfigurationService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
 @Component
@@ -25,7 +23,7 @@ public class PickUpAndDeliveryConfigurationBV {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PickUpAndDeliveryConfigurationBV.class);
 	
-	public APIResponse bValidateCreate(String tenantCode, PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration,
+	public APIResponse<PickUpAndDeliveryConfiguration> bValidateCreate(String tenantCode, PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration,
 			String locale) {
 		
 		APIResponse<PickUpAndDeliveryConfiguration> apiResponse = new APIResponse<>();
