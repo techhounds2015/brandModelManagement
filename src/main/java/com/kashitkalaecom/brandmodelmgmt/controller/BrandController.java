@@ -124,7 +124,7 @@ public class BrandController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse<Brand> deletebrand(@RequestHeader String requestorId, @RequestParam String id) {
+	public APIResponse<Brand> deletebrand(@RequestHeader String requestorId, @PathVariable String id) {
 
 		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
 		try {

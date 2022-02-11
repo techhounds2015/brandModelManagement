@@ -128,7 +128,7 @@ public class CategoryController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse<Category> deletecategory(@RequestHeader String requestorId, @RequestParam String id) {
+	public APIResponse<Category> deletecategory(@RequestHeader String requestorId, @PathVariable String id) {
 
 		APIResponse<Category> apiResponse = new APIResponse<>();
 		try {
