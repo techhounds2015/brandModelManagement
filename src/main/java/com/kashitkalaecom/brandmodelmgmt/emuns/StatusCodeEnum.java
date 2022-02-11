@@ -9,6 +9,13 @@ public enum StatusCodeEnum {
     BRAND_UPDATION_FAILED("1004","Failed to Update Brand."),
     BRAND_NOT_EXISTS("1005","Brand doesn't exists."),
     
+    // Brand
+    INVENTORY_CREATED("1001","Inventory Created Successfully."),
+    INVENTORY_UPDATED("1002","Inventory Updated Successfully."),
+    INVENTORY_CREATION_FAILED("1003","Failed to Create Inventory."),
+    INVENTORY_UPDATION_FAILED("1004","Failed to Update Inventory."),
+    INVENTORY_NOT_EXISTS("1005","Brand doesn't exists."),
+    
     // Model
     MODEL_CREATED("2001","Model Created Successfully."),
     MODEL_UPDATED("2002","Model Updated Successfully."),
