@@ -11,6 +11,8 @@ public class APIResponse<T> implements Serializable {
 	private String responseMessage = "";
 	private T responseObject;
 	private Boolean validationSuccess;
+	private Boolean processingSuccess;
+	private List<String> processingErrors;
 
 	private Map<String, String> errors;
 
@@ -63,6 +65,22 @@ public class APIResponse<T> implements Serializable {
 
 	public void setValidationSuccess(Boolean validationSuccess) {
 		this.validationSuccess = validationSuccess;
+	}
+
+	public Boolean getProcessingSuccess() {
+		return processingSuccess;
+	}
+
+	public void setProcessingSuccess(Boolean processingSuccess) {
+		this.processingSuccess = processingSuccess;
+	}
+
+	public List<String> getProcessingErrors() {
+		return processingErrors;
+	}
+
+	public void setProcessingErrors(List<String> processingErrors) {
+		this.processingErrors = processingErrors;
 	}
 
 }
