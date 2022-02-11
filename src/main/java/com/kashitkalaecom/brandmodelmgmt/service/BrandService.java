@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kashitkalaecom.brandmodelmgmt.models.Brand;
-import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.repository.BrandRepository;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
@@ -13,7 +12,7 @@ public class BrandService {
 
 	@Autowired
 	BrandRepository brandRepository;
-
+	
 	public Brand getBrandById(String brandId) {
 		return brandRepository.getById(brandId);
 	}

@@ -77,7 +77,10 @@ public enum StatusCodeEnum {
     ERROR_ON_VALIDATING_REQUEST("8000","Error while validating request."),
 	
 	// Invalid Request
-    INVALID_REQUEST("1010","Invalid Request.");
+    INVALID_REQUEST("1010","Invalid Request."),
+	
+	// Tenant Code Missing
+    TENANT_CODE_MISSING("9000","tenantCode missing from Request header.");
 	
 	
     private String code;

@@ -55,9 +55,9 @@ public class BrandController {
 	}
 
 	@GetMapping("/view/{brandId}")
-	public APIResponse<Brand> brand(@RequestHeader String requestorId, @PathVariable("brandId") String brandId) {
+	public APIResponse brand(@RequestHeader String requestorId, @PathVariable("brandId") String brandId) {
 
-		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
+		APIResponse apiResponse = new APIResponse();
 		Brand brand = brandService.getBrandById(brandId);
 
 		if (brand == null) {
@@ -66,6 +66,7 @@ public class BrandController {
 			apiResponse.setResponseObject(brand);
 			return apiResponse;
 		}
+		apiResponse.setResponseMessage("Success");
 		apiResponse.setResponseObject(brand);
 		return apiResponse;
 	}
