@@ -80,7 +80,10 @@ public enum StatusCodeEnum {
     INVALID_REQUEST("1010","Invalid Request."),
 	
 	// Tenant Code Missing
-    TENANT_CODE_MISSING("9000","tenantCode missing from Request header.");
+    TENANT_CODE_MISSING("9000","tenantCode missing from Request header."),
+	
+	//Common Message for Error while getting records
+	ERROR_WHILE_RETREVING_DATA("7000","Error while getting data");
 	
 	
     private String code;

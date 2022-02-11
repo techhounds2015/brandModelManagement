@@ -1,5 +1,8 @@
 package com.kashitkalaecom.brandmodelmgmt.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,6 +80,34 @@ public class CategoryController {
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("Success");
 		apiResponse.setResponseObject(category);
+		return apiResponse;
+	}
+	
+	@GetMapping("/viewAll")
+	public APIResponse<List<Category>> allActiveCategory(@RequestHeader String requestorId, @PathVariable("categoryId") String categoryId) {
+
+		APIResponse<List<Category>> apiResponse = new APIResponse<>();
+		List<Category> categoryList = new ArrayList<>();
+		
+		try {
+			categoryList = categoryService.getAllCategories();
+		}		
+		catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.ERROR_WHILE_RETREVING_DATA.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.ERROR_WHILE_RETREVING_DATA.getDesc());
+			return apiResponse;
+		}
+		
+
+		if (categoryList.isEmpty()) {
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_NOT_EXISTS.getDesc());
+			return apiResponse;
+		}
+
+		apiResponse.setResponseCode("200");
+		apiResponse.setResponseMessage("Success");
+		apiResponse.setResponseObject(categoryList);
 		return apiResponse;
 	}
 

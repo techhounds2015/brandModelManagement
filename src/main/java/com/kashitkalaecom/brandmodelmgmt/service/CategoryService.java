@@ -1,5 +1,7 @@
 package com.kashitkalaecom.brandmodelmgmt.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ public class CategoryService {
 
 	public Category getCategoryById(String categoryId) {
 		return categoryRepository.getById(categoryId);
+	}
+	
+	public List<Category> getAllCategories() {
+		return categoryRepository.findAll();
 	}
 
 	public Category save(Category category, String requestorId) {
