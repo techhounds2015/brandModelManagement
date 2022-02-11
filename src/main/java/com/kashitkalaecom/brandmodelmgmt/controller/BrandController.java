@@ -18,7 +18,6 @@ import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.BrandFV;
 import com.kashitkalaecom.brandmodelmgmt.models.Brand;
-import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.service.BrandService;
 
 @RestController
@@ -99,6 +98,9 @@ public class BrandController {
 		apiResponse.setResponseObject(brandList);
 		return apiResponse;
 	}
+	
+	
+	
 
 	@PutMapping("/update")
 	public APIResponse<Brand> updatebrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
