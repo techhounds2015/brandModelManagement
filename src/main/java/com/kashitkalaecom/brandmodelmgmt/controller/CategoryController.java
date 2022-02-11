@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.businessvalidation.CategoryBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.CategoryFV;
 import com.kashitkalaecom.brandmodelmgmt.models.Category;
@@ -26,6 +27,9 @@ public class CategoryController {
 
 	@Autowired
 	CategoryFV categoryFV;
+	
+	@Autowired
+	CategoryBV categoryBV;
 
 	@PostMapping("/create")
 	public APIResponse category(@RequestHeader String requestorId, @RequestBody Category category) {
@@ -38,7 +42,10 @@ public class CategoryController {
 				return apiResponse;
 			}
 
-			// Business Validation
+			apiResponse = categoryBV.bValidateCreate(null, category, null);
+            if (!apiResponse.getProcessingSuccess()) {
+                return apiResponse;
+            }
 
 			// Save
 			category = categoryService.save(category, requestorId);

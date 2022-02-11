@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.kashitkalaecom.brandmodelmgmt.models.StoreSetting;
 
 @Repository
-public interface StoreSettingRepositiry extends JpaRepository<StoreSetting, String>{
+public interface StoreSettingRepository extends JpaRepository<StoreSetting, String>{
 
 }
