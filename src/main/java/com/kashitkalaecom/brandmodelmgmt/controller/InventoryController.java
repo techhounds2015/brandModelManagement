@@ -18,7 +18,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.Inventory;
 import com.kashitkalaecom.brandmodelmgmt.service.InventoryService;
 
 @RestController
-@RequestMapping("/api/v1/brand")
+@RequestMapping("/api/v1/inventory")
 public class InventoryController {
 	
 	@Autowired 

@@ -37,4 +37,8 @@ public class ModelService {
 		model.setStatus(false);
 		return modelRepository.save(model);
 	}
+
+	public Model getModelByName(String name) {
+		return modelRepository.findByName(name);
+	}
 }

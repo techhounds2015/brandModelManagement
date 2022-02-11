@@ -37,4 +37,8 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	public User getUserByWalletId(String walletId) {
+		return userRepository.findByName(walletId);
+	}
+
 }

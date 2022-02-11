@@ -37,4 +37,8 @@ public class StoreSettingService {
 		return storeSettingRepository.save(storeSetting);
 	}
 
+	public StoreSetting getStoreSettingByName(String companyName) {
+		return storeSettingRepository.findByName(companyName);
+	}
+
 }

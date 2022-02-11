@@ -45,6 +45,7 @@ public class CategoryBV {
 	private APIResponse<Category> validateCreate(String tenantCode, Category category, String locale) {
 		
 		APIResponse<Category> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
         List<String> categoryList = masterDataService.getDataNameByType(tenantCode, "Category");
         
         if (categoryList != null && !categoryList.contains(category.getCategory())) {

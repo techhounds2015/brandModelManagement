@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.businessvalidation.StoreSettingBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.StoreSettingFV;
 import com.kashitkalaecom.brandmodelmgmt.models.StoreSetting;
@@ -25,6 +26,9 @@ public class StoreSettingController {
 
 	@Autowired
 	StoreSettingFV storeSettingFV;
+	
+	@Autowired
+	StoreSettingBV storeSettingBV;
 
 	@PostMapping("/create")
 	public APIResponse storeSetting(@RequestHeader String requestorId, @RequestBody StoreSetting storeSetting) {
@@ -36,9 +40,11 @@ public class StoreSettingController {
 			if (!apiResponse.getValidationSuccess()) {
 				return apiResponse;
 			}
-			// Business Validation
-
-			// Save
+			
+			apiResponse = storeSettingBV.bValidateCreate(null, storeSetting, null);
+            if (!apiResponse.getProcessingSuccess()) {
+                return apiResponse;
+            }
 			storeSetting = storeSettingService.save(storeSetting, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.USER_CREATED.getCode());
@@ -59,6 +65,12 @@ public class StoreSettingController {
 
 		StoreSetting storeSetting = storeSettingService.getStoreSettingById(storeSettingId);
 		APIResponse apiResponse = new APIResponse();
+		if (storeSetting == null) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
+			return apiResponse;
+		}
+
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(storeSetting);
@@ -68,22 +80,35 @@ public class StoreSettingController {
 	@PutMapping("/update")
 	public APIResponse updatestoreSetting(@RequestHeader String requestorId, @RequestBody StoreSetting storeSetting) {
 
-		storeSetting = storeSettingService.update(storeSetting, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(storeSetting);
+		
+		try {
+			storeSetting = storeSettingService.update(storeSetting, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATED.getDesc());
+			apiResponse.setResponseObject(storeSetting);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 
 	@PutMapping("/delete/{id}")
 	public APIResponse deletestoreSetting(@RequestHeader String requestorId, @PathVariable String id) {
 
-		StoreSetting storeSetting = storeSettingService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(storeSetting);
+		
+		try {
+
+			StoreSetting storeSetting = storeSettingService.delete(id, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATED.getDesc());
+			apiResponse.setResponseObject(storeSetting);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
 	}
 

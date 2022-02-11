@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
@@ -41,16 +40,15 @@ public class CategoryController {
 		try {
 
 			apiResponse = categoryFV.fValidateCreate(null, category, null);
-			if (!apiResponse.getValidationSuccess()) {
+			if (Boolean.FALSE.equals(apiResponse.getValidationSuccess())) {
 				return apiResponse;
 			}
 
 			apiResponse = categoryBV.bValidateCreate(null, category, null);
-            if (!apiResponse.getProcessingSuccess()) {
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
                 return apiResponse;
             }
 
-			// Save
 			category = categoryService.save(category, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_CREATED.getCode());
@@ -129,7 +127,7 @@ public class CategoryController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse<Category> deletecategory(@RequestHeader String requestorId, @RequestParam String id) {
+	public APIResponse<Category> deletecategory(@RequestHeader String requestorId, @PathVariable String id) {
 
 		APIResponse<Category> apiResponse = new APIResponse<>();
 		try {

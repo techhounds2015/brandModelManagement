@@ -38,4 +38,8 @@ public class ProductImagesService {
 		return productImagesRepository.save(productImages);
 	}
 
+	public ProductImages getProductImagesByName(String imageName) {
+		return productImagesRepository.findByName(imageName);
+	}
+
 }
