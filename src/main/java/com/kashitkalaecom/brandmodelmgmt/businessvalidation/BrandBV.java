@@ -48,6 +48,7 @@ public class BrandBV {
 	private APIResponse<Brand> validateCreate(String tenantCode, Brand brand, String locale) {
 
 		APIResponse<Brand> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
         List<String> brandList = masterDataService.getDataNameByType(tenantCode, "Brand");
         
         if (brandList != null && !brandList.contains(brand.getCategoryId())) {

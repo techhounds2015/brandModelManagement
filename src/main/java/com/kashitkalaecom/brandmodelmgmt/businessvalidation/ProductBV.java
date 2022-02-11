@@ -46,6 +46,7 @@ public class ProductBV {
 	private APIResponse<Product> validateCreate(String tenantCode, Product product, String locale) {
 		
 		APIResponse<Product> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
         List<String> productList = masterDataService.getDataNameByType(tenantCode, "Product");
         
         if (productList != null && !productList.contains(product.getBrandId())) {

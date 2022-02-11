@@ -48,7 +48,7 @@ public class ModelBV {
 	private APIResponse<Model> validateCreate(String tenantCode, Model model, String locale) {
 
 		APIResponse<Model> apiResponse = new APIResponse<>();
-
+		apiResponse.setProcessingSuccess(true);
 		List<String> modelList = masterDataService.getDataNameByType(tenantCode, "Model");
 
 		if (modelList != null && !modelList.contains(model.getCategoryId())) {

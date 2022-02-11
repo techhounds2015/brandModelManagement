@@ -45,6 +45,7 @@ public class UserBV {
 
 	private APIResponse<User> validateCreate(String tenantCode, User user, String locale) {
 		APIResponse<User> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
         List<String> userList = masterDataService.getDataNameByType(tenantCode, "User");
         
         if (userList != null && !userList.contains(user.getUserId())) {

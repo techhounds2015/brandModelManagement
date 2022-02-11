@@ -47,6 +47,7 @@ public class StoreSettingBV {
 	private APIResponse<StoreSetting> validateCreate(String tenantCode, StoreSetting storeSetting, String locale) {
 		
 		APIResponse<StoreSetting> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
         List<String> storeSettingList = masterDataService.getDataNameByType(tenantCode, "StoreSetting");
         
         if (storeSettingList != null && !storeSettingList.contains(storeSetting.getStoreName())) {

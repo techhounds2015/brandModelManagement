@@ -48,6 +48,7 @@ public class PickUpAndDeliveryConfigurationBV {
 			PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration, String locale) {
 		
 		APIResponse<PickUpAndDeliveryConfiguration> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
         List<String> pickUpAndDeliveryConfigurationList = masterDataService.getDataNameByType(tenantCode, "PickUpAndDeliveryConfiguration");
         
         if (pickUpAndDeliveryConfigurationList != null && !pickUpAndDeliveryConfigurationList.contains(pickUpAndDeliveryConfiguration.getOutletId())) {

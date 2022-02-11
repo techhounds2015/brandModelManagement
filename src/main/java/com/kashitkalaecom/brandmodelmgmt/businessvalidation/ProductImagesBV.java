@@ -45,6 +45,7 @@ public class ProductImagesBV {
 	private APIResponse<ProductImages> validateCreate(String tenantCode, ProductImages productImages, String locale) {
 		
 		APIResponse<ProductImages> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
         List<String> productImagesList = masterDataService.getDataNameByType(tenantCode, "ProductImages");
         
         if (productImagesList != null && !productImagesList.contains(productImages.getProductId())) {
