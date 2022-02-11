@@ -1,5 +1,6 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -9,17 +10,19 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.context.annotation.Lazy;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
-@Table(name="brand")
+@Table(name = "brand")
 @DiscriminatorValue("E")
-
-public class Brand // extends CommonObject 
+public class Brand implements Serializable // extends CommonObject
 {
-	
-	
-	@Column(name="categoryid")
+	private static final long serialVersionUID = 1L;
+	@Column(name = "categoryid")
 	private String categoryId;
 	private String name;
 	private Boolean status;
@@ -27,19 +30,19 @@ public class Brand // extends CommonObject
 	private String logo;
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	protected String id = UUID.randomUUID().toString();
 
-	@Column(name="createdby")
+	@Column(name = "createdby")
 	protected String createdBy;
 
-	@Column(name="createdon")
-	protected Timestamp createdOn =  CustomClock.timestamp();
+	@Column(name = "createdon")
+	protected Timestamp createdOn = CustomClock.timestamp();
 
-	@Column(name="modifiedby")
+	@Column(name = "modifiedby")
 	protected String modifiedBy;
 
-	@Column(name="modifiedon")
+	@Column(name = "modifiedon")
 	protected Timestamp modifiedOn;
 
 	public String getId() {
@@ -81,9 +84,6 @@ public class Brand // extends CommonObject
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
-
-	
 
 	public String getCategoryId() {
 		return categoryId;

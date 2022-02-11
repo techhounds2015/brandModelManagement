@@ -19,39 +19,50 @@ import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 
 @ControllerAdvice
 public class ExceptionHandlerControllerAdvice {
-	
 
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerControllerAdvice.class);
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(value = HttpStatus.OK)
-    public @ResponseBody
-    APIResponse handleException(final Exception exception, final HttpServletRequest request, WebRequest webRequest) {
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(value = HttpStatus.OK)
+	public @ResponseBody APIResponse handleException(final Exception exception, final HttpServletRequest request,
+			WebRequest webRequest) {
 
-    	APIResponse commonResponse = new APIResponse();
+		APIResponse commonResponse = new APIResponse();
 
-        commonResponse.setResponseCode("1010");
-        commonResponse.setResponseMessage("Invalid Request");
-        Map<String, String> errors = new HashMap<String,String>();
-        	
-        try {
-        	
-        	JsonMappingException jsobExp = (JsonMappingException) exception.getCause();
-        	
-        	int size = jsobExp.getPath().size();
-        	
-        	String invalidField = jsobExp.getPath().get(size-1).getFieldName();
+		commonResponse.setResponseCode("1010");
+		commonResponse.setResponseMessage("Invalid Request");
+		Map<String, String> errors = new HashMap<String, String>();
 
-        	
-        if (exception.getCause().getMessage().contains("not a valid Integer value") 
-        		|| exception.getCause().getMessage().contains("Unexpected character") ) {
-        	errors.put(invalidField, "Special Characters and Alphabet are not Allowed");
-        	commonResponse.setErrors(errors);
-        }
-        } catch (Exception e) {
-        	logger.error("Exception in handling exception-"+e.getMessage());
-        }
+		try {
 
-        return commonResponse;
-    }
+			JsonMappingException jsobExp = (JsonMappingException) exception.getCause();
+			int size = 0;
+			String invalidField = "";
+			if (jsobExp != null) {
+				size = jsobExp.getPath().size();
+				invalidField = jsobExp.getPath().get(size - 1).getFieldName();
+			}
+
+			if ((null != exception.getCause()
+					&& exception.getCause().getMessage().contains("not a valid Integer value"))
+					|| (null != exception.getCause()
+							&& exception.getCause().getMessage().contains("Unexpected character"))) {
+				errors.put(invalidField, "Special Characters and Alphabet are not Allowed");
+				commonResponse.setErrors(errors);
+			}
+
+            // header missing
+			if (null != exception.getMessage() && exception.getMessage().contains("Required request header")) {
+				commonResponse.setErrors(errors);
+				commonResponse.setResponseCode("1010");
+				commonResponse.setResponseMessage("Invalid Request");
+				commonResponse.setResponseObject(exception.getMessage());
+			}
+
+		} catch (Exception e) {
+			logger.error("Exception in handling exception-" + e.getMessage());
+		}
+
+		return commonResponse;
+	}
 }
