@@ -9,40 +9,36 @@ import com.kashitkalaecom.brandmodelmgmt.service.ShoppingCartService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/shoppingCart")
+@RequestMapping("/api/v1/shoppingCart")
 public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @PostMapping("/addProductItem")
     public ShoppingCart addProductItem(@RequestBody ShoppingCart shoppingCartDTO) {
         return shoppingCartService.saveProducts(shoppingCartDTO);
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    @GetMapping("/getAllProductItems")
     public List<ShoppingCart> getAll(){
         return shoppingCartService.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", consumes = "application/json", value ="/{id}")
+    @PutMapping("/updateProductItem")
     public ShoppingCart updateProductItem(@RequestBody ShoppingCart shoppingCartDTO, @PathVariable("id") Long ids) {
         return shoppingCartService.updateProduct(shoppingCartDTO, ids);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value ="/{id}")
+    @DeleteMapping("/updateProductItem/{id}")
     public void deleteProductItem(@PathVariable("id") Long ids) {
         shoppingCartService.deleteProduct(ids);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping("/clearCart")
     public void ClearCart( Object object) {
         shoppingCartService.clearShoppingCart(object);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/purchase/{id}")
-    public void purchaseProducts(@PathVariable("id") Long id) {
-        shoppingCartService.purchaseProducts(id);
-    }
 }
