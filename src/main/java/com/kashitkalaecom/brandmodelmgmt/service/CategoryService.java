@@ -42,4 +42,8 @@ public class CategoryService {
 		category.setStatus(false);
 		return categoryRepository.save(category);
 	}
+
+	public Category getCategoryByName(String name) {
+		return categoryRepository.findByName(name);
+	}
 }

@@ -1,6 +1,5 @@
 package com.kashitkalaecom.brandmodelmgmt.businessvalidation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Category;
+import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
 @Component
 public class CategoryBV {
@@ -18,15 +18,17 @@ public class CategoryBV {
 	@Autowired
 	MasterDataService masterDataService;
 	
+	@Autowired
+	CategoryService categoryService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(CategoryBV.class);
 	
 	 public APIResponse<Category> bValidateCreate(String tenantCode, Category category, String locale) {
 		 
 		 APIResponse<Category> apiResponse = new APIResponse<>();
 		 apiResponse.setProcessingSuccess(true);
-		 List<String> list = new ArrayList<>();
 		try {
-			list = validateCreate(tenantCode, category, locale);
+			apiResponse = validateCreate(tenantCode, category, locale);
 
 		} catch (Exception e) {
 			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getDesc());
@@ -35,31 +37,33 @@ public class CategoryBV {
 			logger.error(e.getMessage(), e);
 			return apiResponse;
 		}
-		if (list.isEmpty()) {
-			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getDesc());
-			apiResponse.setResponseCode(StatusCodeEnum.INVALID_REQUEST.getCode());
-			apiResponse.setProcessingErrors(list);
-			apiResponse.setProcessingSuccess(false);
-
-		}
+	
 		return apiResponse;
 
 }
 
-	private List<String> validateCreate(String tenantCode, Category category, String locale) {
+	private APIResponse<Category> validateCreate(String tenantCode, Category category, String locale) {
 		
-		List<String> errorList = new ArrayList<String>();
-
-       
+		APIResponse<Category> apiResponse = new APIResponse<>();
         List<String> categoryList = masterDataService.getDataNameByType(tenantCode, "Category");
         
         if (categoryList != null && !categoryList.contains(category.getCategory())) {
-        	String localError="Category.category invailid";
-            logger.debug("localError::" + localError);
-            errorList.add(localError);
-            
+        	apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_INVALID.getCode());
+        	apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_INVALID.getDesc());
+        	apiResponse.setProcessingSuccess(false);
+        	return apiResponse;
         }
-        return errorList;
+        
+        Category cat = categoryService.getCategoryByName(category.getName());
+        
+        if (cat != null) {
+        	apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_DUPLICATE.getCode());
+        	apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_DUPLICATE.getDesc());
+        	apiResponse.setProcessingSuccess(false);
+        	return apiResponse;
+        }
+        
+        return apiResponse;
 	}
 
 }

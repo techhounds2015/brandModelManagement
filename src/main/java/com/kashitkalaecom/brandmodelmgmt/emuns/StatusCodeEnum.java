@@ -23,6 +23,8 @@ public enum StatusCodeEnum {
     CATEGORY_CREATION_FAILED("3003","Failed to Create Category."),
     CATEGORY_UPDATION_FAILED("3004","Failed to Update Category."),
     CATEGORY_NOT_EXISTS("3005","Category doesn't exists."),
+    CATEGORY_INVALID("3006","Invalid Category."),
+    CATEGORY_DUPLICATE("3007","Category already exists."),
 	
 	// Outlet
     OUTLET_CREATED("4001","Outlet Created Successfully."),
