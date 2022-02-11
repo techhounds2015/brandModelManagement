@@ -23,6 +23,8 @@ public enum StatusCodeEnum {
     CATEGORY_CREATION_FAILED("3003","Failed to Create Category."),
     CATEGORY_UPDATION_FAILED("3004","Failed to Update Category."),
     CATEGORY_NOT_EXISTS("3005","Category doesn't exists."),
+    CATEGORY_INVALID("3006","Invalid Category."),
+    CATEGORY_DUPLICATE("3007","Category already exists."),
 	
 	// Outlet
     OUTLET_CREATED("4001","Outlet Created Successfully."),
@@ -80,7 +82,10 @@ public enum StatusCodeEnum {
     INVALID_REQUEST("1010","Invalid Request."),
 	
 	// Tenant Code Missing
-    TENANT_CODE_MISSING("9000","tenantCode missing from Request header.");
+    TENANT_CODE_MISSING("9000","tenantCode missing from Request header."),
+	
+	//Common Message for Error while getting records
+	ERROR_WHILE_RETREVING_DATA("7000","Error while getting data");
 	
 	
     private String code;

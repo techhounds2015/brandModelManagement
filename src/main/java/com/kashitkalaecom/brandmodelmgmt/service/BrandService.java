@@ -1,5 +1,7 @@
 package com.kashitkalaecom.brandmodelmgmt.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,10 @@ public class BrandService {
 		brand.setModifiedOn(CustomClock.timestamp());
 		brand.setStatus(false);
 		return brandRepository.save(brand);
+	}
+
+	public List<Brand> getAllBrands() {
+		return brandRepository.findAll();
 	}
 	
 }
