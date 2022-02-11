@@ -1,4 +1,4 @@
-package com.kashitkalaecom.brandmodelmgmt.models;
+package com.kashitkalaecom.brandmodelmgmt.notification;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -13,22 +13,19 @@ import javax.persistence.Table;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
-@Table(name = "brand")
+@Table(name = "notificationtemplate")
 @DiscriminatorValue("E")
-public class Brand implements Serializable // extends CommonObject
-{
+public class NotificationTemplate implements Serializable {
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	@Column(name = "categoryid")
-	private String categoryId;
-	private String name;
-	private Boolean status;
-	private String description;
-	private String logo;
 
 	@Id
 	// @GeneratedValue(strategy = GenerationType.AUTO)
 	protected String id = UUID.randomUUID().toString();
-
+	
 	@Column(name = "createdby")
 	protected String createdBy;
 
@@ -40,6 +37,21 @@ public class Brand implements Serializable // extends CommonObject
 
 	@Column(name = "modifiedon")
 	protected Timestamp modifiedOn;
+
+	private Boolean status;
+	
+
+	private String name;
+	
+	private String body;
+	
+	private String subject;
+	private String notificationtype;
+	private String notificationcode;
+	
+	private String title;
+	
+	private String parentcode;
 
 	public String getId() {
 		return id;
@@ -81,12 +93,12 @@ public class Brand implements Serializable // extends CommonObject
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getCategoryId() {
-		return categoryId;
+	public Boolean getStatus() {
+		return status;
 	}
 
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	public String getName() {
@@ -97,28 +109,54 @@ public class Brand implements Serializable // extends CommonObject
 		this.name = name;
 	}
 
-	public Boolean getStatus() {
-		return status;
+	public String getBody() {
+		return body;
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+	public void setBody(String body) {
+		this.body = body;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getSubject() {
+		return subject;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
-	public String getLogo() {
-		return logo;
+	public String getNotificationtype() {
+		return notificationtype;
 	}
 
-	public void setLogo(String logo) {
-		this.logo = logo;
+	public void setNotificationtype(String notificationtype) {
+		this.notificationtype = notificationtype;
 	}
+
+	public String getNotificationcode() {
+		return notificationcode;
+	}
+
+	public void setNotificationcode(String notificationcode) {
+		this.notificationcode = notificationcode;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getParentcode() {
+		return parentcode;
+	}
+
+	public void setParentcode(String parentcode) {
+		this.parentcode = parentcode;
+	}
+	
+	
 
 }
