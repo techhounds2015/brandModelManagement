@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.businessvalidation.BrandBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.BrandFV;
 import com.kashitkalaecom.brandmodelmgmt.models.Brand;
@@ -26,6 +27,9 @@ public class BrandController {
 
 	@Autowired
 	BrandFV brandFV;
+	
+	@Autowired
+	BrandBV brandBV;
 
 	@PostMapping("/create")
 	public APIResponse<Brand> createBrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
@@ -33,14 +37,16 @@ public class BrandController {
 
 		try {
 
-			// Field Validation
 			apiResponse = brandFV.fValidateCreate(null, brand, null);
 			if (!apiResponse.getValidationSuccess()) {
 				return apiResponse;
 			}
-			// Business Validation
-
-			// Save
+			
+			apiResponse = brandBV.bValidateCreate(null, brand, null);
+            if (!apiResponse.getProcessingSuccess()) {
+                return apiResponse;
+            }
+            
 			brand = brandService.save(brand, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_CREATED.getCode());

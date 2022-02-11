@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.businessvalidation.PickUpAndDeliveryConfigurationBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.BrandFV;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.ModelFV;
@@ -32,6 +33,9 @@ public class PickUpAndDeliveryConfigurationController {
 
 	@Autowired
 	PickUpAndDeliveryConfigurationFV pickUpAndDeliveryConfigurationFV;
+	
+	@Autowired
+	PickUpAndDeliveryConfigurationBV pickUpAndDeliveryConfigurationBV;
 
 	@PostMapping("/create")
 	public APIResponse pickUpAndDeliveryConfiguration(@RequestHeader String requestorId, @RequestBody PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration) {
@@ -43,9 +47,12 @@ public class PickUpAndDeliveryConfigurationController {
 			if (!apiResponse.getValidationSuccess()) {
 				return apiResponse;
 			}
-			// Business Validation
-
-			// Save
+			
+			apiResponse = pickUpAndDeliveryConfigurationBV.bValidateCreate(null, pickUpAndDeliveryConfiguration, null);
+            if (!apiResponse.getProcessingSuccess()) {
+                return apiResponse;
+            }
+            
 			pickUpAndDeliveryConfiguration = pickUpAndDeliveryConfigurationService.save(pickUpAndDeliveryConfiguration, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.DELIVERY_CONFIG_CREATED.getCode());
@@ -65,6 +72,11 @@ public class PickUpAndDeliveryConfigurationController {
 
 		PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration = pickUpAndDeliveryConfigurationService.getpickUpAndDeliveryConfigurationById(pickUpAndDeliveryConfigurationId);
 		APIResponse apiResponse = new APIResponse();
+		if (pickUpAndDeliveryConfiguration == null) {
+			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_NOT_EXISTS.getDesc());
+			return apiResponse;
+		}
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(pickUpAndDeliveryConfiguration);

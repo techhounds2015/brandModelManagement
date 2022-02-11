@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.businessvalidation.ModelBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.ModelFV;
 import com.kashitkalaecom.brandmodelmgmt.models.Model;
@@ -25,6 +26,9 @@ public class ModelController {
 
 	@Autowired
 	ModelFV modelFV;
+	
+	@Autowired
+	ModelBV modelBV;
 
 	@PostMapping("/create")
 	public APIResponse model(@RequestHeader String requestorId, @RequestBody Model model) {
@@ -36,9 +40,12 @@ public class ModelController {
 			if (!apiResponse.getValidationSuccess()) {
 				return apiResponse;
 			}
-			// Business Validation
+			
+			apiResponse = modelBV.bValidateCreate(null, model, null);
+            if (!apiResponse.getProcessingSuccess()) {
+                return apiResponse;
+            }
 
-			// Save
 			model = modelService.save(model, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.MODEL_CREATED.getCode());
@@ -53,21 +60,18 @@ public class ModelController {
 		return apiResponse;
 	}
 
-	/*
-	 * @PostMapping("/create") public APIResponse model(@RequestHeader String
-	 * requestorId, @RequestBody Model model) {
-	 * 
-	 * model = modelService.save(model, requestorId); APIResponse apiResponse = new
-	 * APIResponse(); apiResponse.setResponseCode("200");
-	 * apiResponse.setResponseMessage("success");
-	 * apiResponse.setResponseObject(model); return apiResponse; }
-	 */
-
 	@GetMapping("/view/{modelId}")
 	public APIResponse model(@RequestHeader String requestorId, @PathVariable("modelId") String modelId) {
 
 		Model model = modelService.getModelById(modelId);
 		APIResponse apiResponse = new APIResponse();
+		
+		if (model == null){
+			apiResponse.setResponseCode(StatusCodeEnum.MODEL_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_NOT_EXISTS.getDesc());
+			return apiResponse;
+		}
+			
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(model);
@@ -77,22 +81,33 @@ public class ModelController {
 	@PutMapping("/update")
 	public APIResponse updatemodel(@RequestHeader String requestorId, @RequestBody Model model) {
 
-		model = modelService.update(model, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(model);
+		try {
+			model = modelService.update(model, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.MODEL_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_UPDATED.getDesc());
+			apiResponse.setResponseObject(model);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.MODEL_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
+
 	}
 
 	@PutMapping("/delete/{id}")
 	public APIResponse deletemodel(@RequestHeader String requestorId, @PathVariable String id) {
 
-		Model model = modelService.delete(id, requestorId);
 		APIResponse apiResponse = new APIResponse();
-		apiResponse.setResponseCode("200");
-		apiResponse.setResponseMessage("success");
-		apiResponse.setResponseObject(model);
+		try {
+			Model model = modelService.delete(id, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.MODEL_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_UPDATED.getDesc());
+			apiResponse.setResponseObject(model);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.MODEL_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_UPDATION_FAILED.getDesc());
+		}
 		return apiResponse;
-	}
 }
+}	

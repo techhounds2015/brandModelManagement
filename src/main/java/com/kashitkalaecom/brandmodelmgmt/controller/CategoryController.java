@@ -47,7 +47,6 @@ public class CategoryController {
                 return apiResponse;
             }
 
-			// Save
 			category = categoryService.save(category, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_CREATED.getCode());
