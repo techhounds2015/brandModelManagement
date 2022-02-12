@@ -41,6 +41,8 @@ public enum StatusCodeEnum {
     PRODUCT_UPDATION_FAILED("5004","Failed to Update Product."),
     PRODUCT_NOT_EXISTS("5005","Product doesn't exists."),
     PRODUCT_DUPLICATE("5006","Product already exists."),
+    PRODUCT_ALREADY_EXPIRED("5007","Product is already expired."),
+    PRODUCT_MFD_GT_EXPIRY("5008","Mfd date cannot be greated than expiry date."),
 	
 	// Discount Code
     DISCOUNT_CODE_CREATED("6001","Discount Code Created Successfully."),
@@ -96,7 +98,6 @@ public enum StatusCodeEnum {
     NOTIFICATION_TEMPLATE_UPDATION_FAILED("1304","Failed to Update Notification Template Configuration."),
 
 
-
     // Inventory
     INVENTORY_CREATED("1401","Inventory Created Successfully."),
     INVENTORY_UPDATED("1402","Inventory Updated Successfully."),
@@ -106,6 +107,15 @@ public enum StatusCodeEnum {
     INVENTORY_SELLEING_PRICE_GT_MRP("1406","Selling Price Cannot be more than MRP."),
     INVENTORY_SELLING_PRICE_NEGATIVE("1407","Selling Price Cannot be less than Zero."),
     INVENTORY_MRP_NEGATIVE("1408","MRP Cannot be less than Zero."),
+    
+    
+    // Permission
+    PERMISSION_CREATED("1501","Permission Created Successfully."),
+    PERMISSION_UPDATED("1502","Permission Updated Successfully."),
+    PERMISSION_CREATION_FAILED("1503","Failed to Create Permission."),
+    PERMISSION_UPDATION_FAILED("1504","Failed to Update Permission."),
+    PERMISSION_NOT_EXISTS("1505","Permission doesn't exists."),
+    PERMISSION_DUPLICATE("1506","Permission already exists."),
 	
 	// Error while validating request 
     ERROR_ON_VALIDATING_REQUEST("8000","Error while validating request."),
