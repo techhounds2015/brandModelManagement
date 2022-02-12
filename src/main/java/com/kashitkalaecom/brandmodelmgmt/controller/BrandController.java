@@ -66,11 +66,11 @@ public class BrandController {
 	public APIResponse<Brand> brand(@RequestHeader String requestorId, @PathVariable("brandId") String brandId) {
 
 		APIResponse<Brand> apiResponse = new APIResponse<>();
-		int brandCount = brandService.brandExists(brandId);
+		int brandCount = brandService.brandIdExists(brandId);
 
 		if (brandCount == 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getCode());
-			apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getDesc());
+			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_NOT_EXISTS.getDesc());
 			return apiResponse;
 		}
 		
@@ -135,6 +135,14 @@ public class BrandController {
 
 		APIResponse<Brand> apiResponse = new APIResponse<>();
 		try {
+			
+			int brandCount = brandService.brandIdExists(id);
+			if (brandCount == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.BRAND_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
+			
 			Brand brand = brandService.delete(id, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_UPDATED.getCode());
