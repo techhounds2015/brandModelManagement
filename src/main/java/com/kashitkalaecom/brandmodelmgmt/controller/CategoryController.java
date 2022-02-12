@@ -66,15 +66,16 @@ public class CategoryController {
 	@GetMapping("/view/{categoryId}")
 	public APIResponse<Category> category(@RequestHeader String requestorId, @PathVariable("categoryId") String categoryId) {
 
-		Category category = categoryService.getCategoryById(categoryId);
+		int count = categoryService.categoryExists(categoryId);
 		APIResponse<Category> apiResponse = new APIResponse<>();
 
-		if (category == null) {
+		if (count == 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_NOT_EXISTS.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_NOT_EXISTS.getDesc());
 			return apiResponse;
 		}
-
+		
+		Category category = categoryService.getCategoryById(categoryId);	
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("Success");
 		apiResponse.setResponseObject(category);
@@ -82,7 +83,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/viewAll")
-	public APIResponse<List<Category>> allActiveCategory(@RequestHeader String requestorId, @PathVariable("categoryId") String categoryId) {
+	public APIResponse<List<Category>> allActiveCategory(@RequestHeader String requestorId) {
 
 		APIResponse<List<Category>> apiResponse = new APIResponse<>();
 		List<Category> categoryList = new ArrayList<>();
