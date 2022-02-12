@@ -82,7 +82,7 @@ public enum StatusCodeEnum {
     DELIVERY_CONFIG_UPDATION_FAILED("1104","Failed to Update Delivery Configuration."),
     DELIVERY_CONFIG_NOT_EXISTS("1105","Delivery Configuration doesn't exists."),
     
-    // Delivery Configuration
+    // Delivery Slot
     DELIVERY_SLOT_CREATED("1201","Delivery Slot Created Successfully."),
     DELIVERY_SLOT_UPDATED("1202","Delivery Slot Updated Successfully."),
     DELIVERY_SLOT_CREATION_FAILED("1203","Failed to Create Delivery Slot."),
