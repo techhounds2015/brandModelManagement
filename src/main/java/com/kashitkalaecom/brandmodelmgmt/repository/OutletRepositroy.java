@@ -10,6 +10,9 @@ import com.kashitkalaecom.brandmodelmgmt.models.Outlet;
 public interface OutletRepositroy extends JpaRepository<Outlet, String> {
 
 	@Query(" from Outlet o where o.gstNo =:gstNo ")
-	Outlet findByName(String gstNo);
+	Outlet findByGstNo(String gstNo);
+
+	@Query("select count(*) from Outlet o where o.id =:id ")
+	int outletIdExists(String id);
 
 }

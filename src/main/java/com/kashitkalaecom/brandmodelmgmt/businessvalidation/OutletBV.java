@@ -30,7 +30,6 @@ public class OutletBV {
 		 
 		 APIResponse<Outlet> apiResponse = new APIResponse<Outlet>();
 		 apiResponse.setProcessingSuccess(true);
-		 List<String> list = new ArrayList<String>();
 		try {
 			apiResponse = validateCreate(tenantCode, outlet, locale);
 
@@ -42,13 +41,7 @@ public class OutletBV {
 			return apiResponse;
 
 		}
-		if (list.size() > 0) {
-			apiResponse.setResponseMessage("FAILURE");
-			apiResponse.setResponseCode("9000");
-			apiResponse.setProcessingErrors(list);
-			apiResponse.setProcessingSuccess(false);
-
-		}
+		
 		return apiResponse;
 
 }
@@ -57,16 +50,8 @@ public class OutletBV {
 		
 		APIResponse<Outlet> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
-        List<String> outletList = masterDataService.getDataNameByType(tenantCode, "Outlet");
         
-        if (outletList != null && !outletList.contains(outlet.getGstNo())) {
-        	apiResponse.setResponseCode(StatusCodeEnum.OUTLET_INVALID.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.OUTLET_INVALID.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
-        }
-        
-        Outlet out = outletService.getOutletById(outlet.getGstNo());
+        Outlet out = outletService.getOutletByGstNo(outlet.getGstNo());
         
         if (out != null) {
         	apiResponse.setResponseCode(StatusCodeEnum.OUTLET_DUPLICATE.getCode());
