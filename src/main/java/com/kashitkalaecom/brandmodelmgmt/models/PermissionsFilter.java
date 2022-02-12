@@ -38,7 +38,12 @@ public class PermissionsFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-
+		
+		if(/*action.equals(pemisssion.getAction())*/true){
+			chain.doFilter(request, response);
+			return;
+		}
+		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String reqUri = httpRequest.getRequestURI();
 		String[] tokens = reqUri.split("/");
