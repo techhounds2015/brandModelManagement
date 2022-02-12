@@ -10,7 +10,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.User;
 public interface UserRepository extends JpaRepository<User, String> {
 	
 	@Query("from User u where u.walletId =:walletId ")
-	public User findByName(String walletId);
+	public User findByWalletId(String walletId);
 
 	@Query("from User u where u.email =:email ")
 	public User findByEmail(String email);
