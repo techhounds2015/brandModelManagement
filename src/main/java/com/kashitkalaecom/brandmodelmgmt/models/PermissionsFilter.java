@@ -59,15 +59,13 @@ public class PermissionsFilter implements Filter {
 			action = tokens[3];
 		}
 		
-		RolePermissionMapping pemisssion = mapping.getUserPermission(module,requestUserid);
-		if("CREATE".equals(pemisssion.getAction())){
-			chain.doFilter(request, response);
-			return;
-		}
-		if(action.equals(pemisssion.getAction())){
-			chain.doFilter(request, response);
-			return;
-		}
+		/*
+		 * RolePermissionMapping pemisssion =
+		 * mapping.getUserPermission(module,requestUserid);
+		 * if("CREATE".equals(pemisssion.getAction())){ chain.doFilter(request,
+		 * response); return; } if(action.equals(pemisssion.getAction())){
+		 * chain.doFilter(request, response); return; }
+		 */
 	}
 
 }

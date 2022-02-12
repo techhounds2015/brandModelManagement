@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 @DiscriminatorValue("E")
 public class User {
 
