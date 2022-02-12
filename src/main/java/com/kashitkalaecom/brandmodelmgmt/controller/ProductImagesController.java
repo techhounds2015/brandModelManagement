@@ -31,8 +31,8 @@ public class ProductImagesController {
 	ProductImagesBV productImagesBV;
 
 	@PostMapping("/create")
-	public APIResponse category(@RequestHeader String requestorId, @RequestBody ProductImages productImages) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<ProductImages> category(@RequestHeader String requestorId, @RequestBody ProductImages productImages) {
+		APIResponse<ProductImages> apiResponse = new APIResponse<>();
 
 		try {
 

@@ -3,6 +3,7 @@ package com.kashitkalaecom.brandmodelmgmt.notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kashitkalaecom.brandmodelmgmt.models.Brand;
 import com.kashitkalaecom.brandmodelmgmt.repository.NotificationTemplateRepo;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
@@ -23,6 +24,18 @@ public class NotificationService {
 		notificationTemplate.setModifiedOn(CustomClock.timestamp());
 		return notificationTemplateRepo.save(notificationTemplate);
 
+	}
+
+	public int notificationCodeExists(String notificationcode) {
+		return notificationTemplateRepo.notificationCodeExists(notificationcode);
+	}
+
+	public int notificationTemplateIdExists(String id) {
+		return notificationTemplateRepo.notificationTemplateIdExists(id);
+	}
+
+	public NotificationTemplate getNotificationTempalteById(String notificationTemplateId) {
+		return notificationTemplateRepo.getById(notificationTemplateId);
 	}
 
 }
