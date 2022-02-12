@@ -24,13 +24,13 @@ public class LoginController {
 	LoginBV loginBV;
 	
 	@PostMapping("/loginwithpassword")
-	public APIResponse user(@RequestHeader String tenantCode, @RequestHeader String requestorId, @RequestBody User user, @RequestHeader String locale) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<User> user(@RequestHeader String tenantCode, @RequestHeader String requestorId, @RequestBody User user, @RequestHeader String locale) {
+		APIResponse<User> apiResponse = new APIResponse<>();
 
 		try {
 			
 			apiResponse = loginBV.bValidateCreate(tenantCode, user, locale);
-            if (!apiResponse.getProcessingSuccess()) {
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
                 return apiResponse;
             }
 			user = loginService.save(user, requestorId);

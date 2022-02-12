@@ -26,25 +26,25 @@ public class UserController {
 
 	@Autowired
 	UserFV userFV;
-	
+
 	@Autowired
 	UserBV userBV;
 
 	@PostMapping("/create")
-	public APIResponse user(@RequestHeader String requestorId, @RequestBody User user) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<User> user(@RequestHeader String requestorId, @RequestBody User user) {
+		APIResponse<User> apiResponse = new APIResponse<>();
 
 		try {
 
 			apiResponse = userFV.fValidateCreate(null, user, null);
-			if (!apiResponse.getValidationSuccess()) {
+			if (Boolean.FALSE.equals(apiResponse.getValidationSuccess())) {
 				return apiResponse;
 			}
-			
+
 			apiResponse = userBV.bValidateCreate(null, user, null);
-            if (!apiResponse.getProcessingSuccess()) {
-                return apiResponse;
-            }
+			if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+				return apiResponse;
+			}
 			user = userService.save(user, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.USER_CREATED.getCode());
@@ -60,15 +60,18 @@ public class UserController {
 	}
 
 	@GetMapping("/view/{userId}")
-	public APIResponse user(@RequestHeader String requestorId, @PathVariable("userId") String userId) {
+	public APIResponse<User> user(@RequestHeader String requestorId, @PathVariable("userId") String userId) {
 
-		User user = userService.getUserById(userId);
-		APIResponse apiResponse = new APIResponse();
-		if (user == null) {
+		int userCount = userService.userIdExists(userId);
+		APIResponse<User> apiResponse = new APIResponse<>();
+		if (userCount == 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
 			return apiResponse;
 		}
+
+		User user = userService.getUserById(userId);
+
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(user);
@@ -76,10 +79,10 @@ public class UserController {
 	}
 
 	@PutMapping("/update")
-	public APIResponse updateuser(@RequestHeader String requestorId, @RequestBody User user) {
+	public APIResponse<User> updateuser(@RequestHeader String requestorId, @RequestBody User user) {
 
-		APIResponse apiResponse = new APIResponse();
-		
+		APIResponse<User> apiResponse = new APIResponse<>();
+
 		try {
 			user = userService.update(user, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATED.getCode());
@@ -93,10 +96,17 @@ public class UserController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse deleteuser(@RequestHeader String requestorId, @PathVariable String id) {
+	public APIResponse<User> deleteuser(@RequestHeader String requestorId, @PathVariable String id) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<User> apiResponse = new APIResponse<>();
 		try {
+			int userCount = userService.userIdExists(id);
+			if (userCount == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
+
 			User user = userService.delete(id, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATED.getDesc());

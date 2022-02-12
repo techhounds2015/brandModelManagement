@@ -12,6 +12,7 @@ import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.models.User;
 import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
+import com.kashitkalaecom.brandmodelmgmt.service.RoleService;
 import com.kashitkalaecom.brandmodelmgmt.service.UserService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
 
@@ -23,10 +24,13 @@ public class UserBV {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	RoleService roleService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserBV.class);
 
-	public APIResponse bValidateCreate(String tenantCode, User user, String locale) {
+	public APIResponse<User> bValidateCreate(String tenantCode, User user, String locale) {
 
 		APIResponse<User> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
@@ -48,23 +52,33 @@ public class UserBV {
 		APIResponse<User> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
 
-		User user1 = userService.getUserByEmail(user.getEmail());
+		int user1 = userService.userEmailExists(user.getEmail());
 
-		if (user1 != null) {
+		if (user1 > 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.USER_DUPLICATE.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_DUPLICATE.getDesc());
 			apiResponse.setProcessingSuccess(false);
 			return apiResponse;
 		}
 
-		user1 = userService.getUserByPhoneNumber(user.getMobile());
+		int userMobile = userService.userMobileExists(user.getMobile());
 
-		if (user1 != null) {
+		if (userMobile > 0 ) {
 			apiResponse.setResponseCode(StatusCodeEnum.USER_DUPLICATE.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_DUPLICATE.getDesc());
 			apiResponse.setProcessingSuccess(false);
 			return apiResponse;
 		}
+		
+		int roleCount = roleService.roleIdExists(user.getRoleId());
+		
+		if (roleCount == 0 ) {
+			apiResponse.setResponseCode(StatusCodeEnum.ROLE_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.ROLE_NOT_EXISTS.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
+		}
+
 
 		return apiResponse;
 	}

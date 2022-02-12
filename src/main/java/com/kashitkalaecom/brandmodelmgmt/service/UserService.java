@@ -55,4 +55,16 @@ public class UserService {
 		return userRepository.findByUserId(userId);
 	}
 
+	public int userEmailExists(String email) {
+		return userRepository.userEmailExists(email);
+	}
+	
+	public int userMobileExists(String email) {
+		return userRepository.userMobileExists(email);
+	}
+
+	public int userIdExists(String userId) {
+		return userRepository.userIdExists(userId);
+	}
+
 }

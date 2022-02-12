@@ -29,7 +29,7 @@ public class LoginBV {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoginBV.class);
 	
-	public APIResponse bValidateCreate(String tenantCode, User user, String locale) {
+	public APIResponse<User> bValidateCreate(String tenantCode, User user, String locale) {
 		
 		APIResponse<User> apiResponse = new APIResponse<>();
 		 apiResponse.setProcessingSuccess(true);
@@ -51,14 +51,7 @@ public class LoginBV {
 		
 		APIResponse<User> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
-        List<User> userList = userService.getByUserName(tenantCode, "User");
         
-        if (userList != null && !userList.contains(user.getName())) {
-        	apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
-        }
         
 		/*
 		 * User user1 = loginService.getUserByPassword(user.getPassword()); if (user1 !=
