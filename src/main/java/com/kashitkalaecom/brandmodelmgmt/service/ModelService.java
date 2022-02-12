@@ -41,4 +41,8 @@ public class ModelService {
 	public Model getModelByName(String name) {
 		return modelRepository.findByName(name);
 	}
+
+	public int modelIdExists(String modelId) {
+		return modelRepository.modelIdExists(modelId);
+	}
 }

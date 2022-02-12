@@ -31,18 +31,18 @@ public class ModelController {
 	ModelBV modelBV;
 
 	@PostMapping("/create")
-	public APIResponse model(@RequestHeader String requestorId, @RequestBody Model model) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<Model> model(@RequestHeader String requestorId, @RequestBody Model model) {
+		APIResponse<Model> apiResponse = new APIResponse<>();
 
 		try {
 
 			apiResponse = modelFV.fValidateCreate(null, model, null);
-			if (!apiResponse.getValidationSuccess()) {
+			if (Boolean.FALSE.equals(apiResponse.getValidationSuccess())) {
 				return apiResponse;
 			}
 			
 			apiResponse = modelBV.bValidateCreate(null, model, null);
-            if (!apiResponse.getProcessingSuccess()) {
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
                 return apiResponse;
             }
 
@@ -61,16 +61,18 @@ public class ModelController {
 	}
 
 	@GetMapping("/view/{modelId}")
-	public APIResponse model(@RequestHeader String requestorId, @PathVariable("modelId") String modelId) {
+	public APIResponse<Model> model(@RequestHeader String requestorId, @PathVariable("modelId") String modelId) {
 
-		Model model = modelService.getModelById(modelId);
-		APIResponse apiResponse = new APIResponse();
+		int modelCount = modelService.modelIdExists(modelId);
+		APIResponse<Model> apiResponse = new APIResponse<>();
 		
-		if (model == null){
+		if (modelCount == 0){
 			apiResponse.setResponseCode(StatusCodeEnum.MODEL_NOT_EXISTS.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_NOT_EXISTS.getDesc());
 			return apiResponse;
 		}
+		
+		Model model = modelService.getModelById(modelId);
 			
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
@@ -79,10 +81,16 @@ public class ModelController {
 	}
 
 	@PutMapping("/update")
-	public APIResponse updatemodel(@RequestHeader String requestorId, @RequestBody Model model) {
+	public APIResponse<Model> updatemodel(@RequestHeader String requestorId, @RequestBody Model model) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Model> apiResponse = new APIResponse<>();
 		try {
+			
+			apiResponse = modelBV.bValidateUpdate(null, model, null);
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+                return apiResponse;
+            }
+			
 			model = modelService.update(model, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.MODEL_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_UPDATED.getDesc());
@@ -96,10 +104,19 @@ public class ModelController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse deletemodel(@RequestHeader String requestorId, @PathVariable String id) {
+	public APIResponse<Model> deletemodel(@RequestHeader String requestorId, @PathVariable String id) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Model> apiResponse = new APIResponse<>();
 		try {
+			
+			int modelCount = modelService.modelIdExists(id);
+			
+			if (modelCount == 0){
+				apiResponse.setResponseCode(StatusCodeEnum.MODEL_NOT_EXISTS.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.MODEL_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
+			
 			Model model = modelService.delete(id, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.MODEL_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_UPDATED.getDesc());

@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
-
 @Entity
 @Table(name = "rolepermissionmapping")
 @DiscriminatorValue("E")
@@ -24,7 +23,6 @@ public class RolePermissionMapping {
 	
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	public String id = UUID.randomUUID().toString();
 
 	@Column(name = "createdby")

@@ -109,7 +109,7 @@ public class BrandBV {
         	return apiResponse;
 		}
 		
-		// Brand exists
+		// Brand Name Already exists
 		
         int brandCount = brandService.brandIdExists(brand.getId());        
         
