@@ -19,7 +19,8 @@ public class Outlet {
 	private String name;
 	private String address;
 	private String code;
-	private String gstno;
+	@Column(name="gstno")
+	private String gstNo;
 	private String latitude;
 	private String longitude;
 	private Boolean status;
@@ -131,13 +132,11 @@ public class Outlet {
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
-	public String getGstno() {
-		return gstno;
+	public String getGstNo() {
+		return gstNo;
 	}
-
-	public void setGstno(String gstno) {
-		this.gstno = gstno;
+	public void setGstNo(String gstNo) {
+		this.gstNo = gstNo;
 	}
 
 }
