@@ -1,8 +1,5 @@
 package com.kashitkalaecom.brandmodelmgmt.businessvalidation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.service.BrandService;
 import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
@@ -80,14 +76,7 @@ public class ModelBV {
 			return apiResponse;
 		}
 
-		Model model1 = modelService.getModelByName(model.getName());
-
-		if (model1 != null) {
-			apiResponse.setResponseCode(StatusCodeEnum.MODEL_DUPLICATE.getCode());
-			apiResponse.setResponseMessage(StatusCodeEnum.MODEL_DUPLICATE.getDesc());
-			apiResponse.setProcessingSuccess(false);
-			return apiResponse;
-		}
+	
 
 		return apiResponse;
 	}

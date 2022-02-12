@@ -30,7 +30,7 @@ public class Product {
 	private String hsnCode;
 	
 	@Column(name="vegnonvegstatus")
-	private Boolean vegNonvegStatus;
+	private Boolean vegNonvegStatus; //true=VEG, false=NON-VEG
 	
 	private Integer sizes;
 	
