@@ -45,4 +45,12 @@ public class DiscountService {
 	public Discount getpagesById(String discount) {
 		return discountRepository.findByName(discount);
 	}
+
+	public int discountCodeExists(String id) {
+		return discountRepository.discountCodeExists(id);
+	}
+
+	public int discountCodeCodeExists(String code) {
+		return discountRepository.discountCodeCodeExists(code);
+	}
 }

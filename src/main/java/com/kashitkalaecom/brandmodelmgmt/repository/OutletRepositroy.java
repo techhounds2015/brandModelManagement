@@ -15,4 +15,10 @@ public interface OutletRepositroy extends JpaRepository<Outlet, String> {
 	@Query("select count(*) from Outlet o where o.id =:id ")
 	int outletIdExists(String id);
 
+	@Query("select count(*) from Outlet o where o.gstNo =:gstNo ")
+	int outletGstExists(String gstNo);
+
+	@Query("select count(*) from Outlet o where o.name =:name ")
+	int outletNameExists(String name);
+
 }

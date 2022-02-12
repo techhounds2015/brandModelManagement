@@ -17,6 +17,10 @@ public class OutletService {
 	public Outlet getOutletByGstNo(String gstNo) {
 		return outletRepositroy.findByGstNo(gstNo);
 	}
+	
+	public int outletGstExists(String gstNo) {
+		return outletRepositroy.outletGstExists(gstNo);
+	}
 
 	public Outlet save(Outlet outlet, String requestorId) {
 		outlet.setCreatedOn(CustomClock.timestamp());
@@ -43,6 +47,10 @@ public class OutletService {
 	
 	public int outletIdExists(String id) {
 		return outletRepositroy.outletIdExists(id);
+	}
+
+	public int outletNameExists(String name) {
+		return outletRepositroy.outletNameExists(name);
 	}
 	
 	
