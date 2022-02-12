@@ -18,6 +18,7 @@ public class Referral {
 
 	private String code;
 	private String title;
+	private Boolean status;
 	
 	@Column(name="discountforsender")
 	private String discountForSender;
@@ -124,6 +125,12 @@ public class Referral {
 	}
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	public Boolean getStatus() {
+		return status;
+	}
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 	
 	

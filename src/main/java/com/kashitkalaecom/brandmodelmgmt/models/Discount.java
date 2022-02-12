@@ -20,6 +20,7 @@ public class Discount {
 	private String code;
 	private String title;
 	private String discount;
+	private Boolean status;
 	
 	@Column(name="discounttype")
 	private String discountType;
@@ -133,6 +134,12 @@ public class Discount {
 	}
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	public Boolean getStatus() {
+		return status;
+	}
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 
