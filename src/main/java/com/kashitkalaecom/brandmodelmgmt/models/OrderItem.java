@@ -8,20 +8,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ORDER_ITEM")
+@Table(name = "orderItems")
 public class OrderItem {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="item_id")
+    @Column(name="id")
     private int itemId;
 	
-	@Column(name = "item_quantity")
+	@Column(name = "itemQuantity")
 	private int itemQuantity;
 	
-	@Column(name = "item_name")
+	@Column(name = "itemName")
 	private String itemName;
 	
+	@Column(name = "itemPrice")
+	private String itemPrice;
+	
+	public String getItemPrice() {
+		return itemPrice;
+	}
+
+	public void setItemPrice(String itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+
 	protected OrderItem() {
 	}
 	

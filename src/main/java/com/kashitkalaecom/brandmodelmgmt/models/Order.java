@@ -1,14 +1,14 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -17,35 +17,34 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ORDER_DETAILS")
+@Table(name = "oderdetails")
 public class Order {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-	private int id;
 
-	@Column(name = "order_status")
+	@Id 
+	@Column(name = "id")
+	protected String id = UUID.randomUUID().toString();
+	
+	@Column(name = "orderStatus")
 	private String status;
-	
+
 	@Column(name = "subtotal")
-	private int subtotal;
-	
+	private BigDecimal subtotal;
+
 	@Column(name = "tax")
 	private int tax;
-	
+
 	@Column(name = "total")
-	private int total;
-	
-	@Column(name = "order_date")
+	private BigDecimal total;
+
+	@Column(name = "orderdate")
 	private LocalDateTime created;
-	
-	@Column(name = "shipping_charge")
+
+	@Column(name = "shippingcharge")
 	private int shippingCharge;
-	
-	@Column(name = "customer_id")
+
+	@Column(name = "userid")
 	private int customerId;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id", referencedColumnName = "id")
 	private List<OrderItem> orderItem;
@@ -53,12 +52,12 @@ public class Order {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id", referencedColumnName = "bill_id")
 	private Billing billing;
-	
+
 	protected Order() {
 	}
 
-	public Order(String status, int subtotal, int tax, int total, int shippingCharge,
-			int customerId2, List<OrderItem> orderItem, Billing billing) {
+	public Order(String status, BigDecimal subtotal, int tax, BigDecimal total, int shippingCharge, int customerId2,
+			List<OrderItem> orderItem, Billing billing) {
 		super();
 		this.status = status;
 		this.subtotal = subtotal;
@@ -69,15 +68,12 @@ public class Order {
 		this.orderItem = orderItem;
 		this.billing = billing;
 	}
-	
+
 	@PrePersist
-    void onCreate() {
-	   this.setCreated(LocalDateTime.now());
-    }
-	
-	public int getId() {
-		return id;
+	void onCreate() {
+		this.setCreated(LocalDateTime.now());
 	}
+
 
 	public String getStatus() {
 		return status;
@@ -87,11 +83,21 @@ public class Order {
 		this.status = status;
 	}
 
-	public int getSubtotal() {
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public BigDecimal getSubtotal() {
 		return subtotal;
 	}
 
-	public void setSubtotal(int subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
 	}
 
@@ -103,11 +109,11 @@ public class Order {
 		this.tax = tax;
 	}
 
-	public int getTotal() {
+	public BigDecimal getTotal() {
 		return total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
 
@@ -157,5 +163,5 @@ public class Order {
 				+ ", created=" + created + ", shippingCharge=" + shippingCharge + ", customerId=" + customerId
 				+ ", orderItem=" + orderItem + "]";
 	}
-	
+
 }

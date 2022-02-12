@@ -22,7 +22,7 @@ public class ProductFV {
 
 	private static String module = Product.class.getSimpleName();
 
-	public APIResponse fValidateCreate(String tenantCode, Product product, String locale) {
+	public APIResponse<Product> fValidateCreate(String tenantCode, Product product, String locale) {
 
 		APIResponse<Product> apiResponse = new APIResponse<>();
 

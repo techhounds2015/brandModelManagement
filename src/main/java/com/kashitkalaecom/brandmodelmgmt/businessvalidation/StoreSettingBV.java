@@ -47,20 +47,14 @@ public class StoreSettingBV {
 	private APIResponse<StoreSetting> validateCreate(String tenantCode, StoreSetting storeSetting, String locale) {
 		
 		APIResponse<StoreSetting> apiResponse = new APIResponse<>();
-        List<String> storeSettingList = masterDataService.getDataNameByType(tenantCode, "StoreSetting");
-        
-        if (storeSettingList != null && !storeSettingList.contains(storeSetting.getStoreName())) {
-        	apiResponse.setResponseCode(StatusCodeEnum.USER_INVALID.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.USER_INVALID.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
-        }
+		apiResponse.setProcessingSuccess(true);
+       
         
         StoreSetting storeSetting1 = storeSettingService.getStoreSettingByName(storeSetting.getCompanyName());
         
         if (storeSetting1 != null) {
-        	apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
+        	apiResponse.setResponseCode(StatusCodeEnum.STORE_NOT_EXISTS.getCode());
+        	apiResponse.setResponseMessage(StatusCodeEnum.STORE_NOT_EXISTS.getDesc());
         	apiResponse.setProcessingSuccess(false);
         	return apiResponse;
         }

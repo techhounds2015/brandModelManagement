@@ -30,15 +30,18 @@ public class Product {
 	private String hsnCode;
 	
 	@Column(name="vegnonvegstatus")
-	private Boolean vegNonvegStatus;
+	private Boolean vegNonvegStatus; //true=VEG, false=NON-VEG
+	
 	private Integer sizes;
 	
 	@Column(name="avaliableforsubscription")
 	private Boolean avaliableForSubscription;
+	
 	private String description;
 	
 	@Column(name="maxqualitypurchased")
 	private String maxQualityPurchased;
+	
 	private Boolean status;
 	private String sku;
 	private String mrp;

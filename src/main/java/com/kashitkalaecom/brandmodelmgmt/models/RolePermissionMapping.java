@@ -1,6 +1,5 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -15,35 +14,38 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
-@Table(name = "brand")
+@Table(name = "rolepermissionmapping")
 @DiscriminatorValue("E")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Brand implements Serializable // extends CommonObject
-{
-	private static final long serialVersionUID = 1L;
-	@Column(name = "categoryid")
-	private String categoryId;
-	private String name;
-	private Boolean status;
-	private String description;
-	private String logo;
+public class RolePermissionMapping {
+
+	
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
-	protected String id = UUID.randomUUID().toString();
+	public String id = UUID.randomUUID().toString();
 
 	@Column(name = "createdby")
-	protected String createdBy;
+	public String createdBy;
 
 	@Column(name = "createdon")
-	protected Timestamp createdOn = CustomClock.timestamp();
+	public Timestamp createdOn = CustomClock.timestamp();
 
 	@Column(name = "modifiedby")
-	protected String modifiedBy;
+	public String modifiedBy;
 
 	@Column(name = "modifiedon")
-	protected Timestamp modifiedOn;
+	public Timestamp modifiedOn;
+	
+	@Column(name = "permissionid")
+	public String permissionId;
+
+	@Column(name = "roleid")
+	public String roleId;
+	
+	public String action;
+
+	public Boolean status;
 
 	public String getId() {
 		return id;
@@ -85,20 +87,28 @@ public class Brand implements Serializable // extends CommonObject
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getCategoryId() {
-		return categoryId;
+	public String getPermissionId() {
+		return permissionId;
 	}
 
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setPermissionId(String permissionId) {
+		this.permissionId = permissionId;
 	}
 
-	public String getName() {
-		return name;
+	public String getRoleId() {
+		return roleId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	public Boolean getStatus() {
@@ -108,21 +118,6 @@ public class Brand implements Serializable // extends CommonObject
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-
+	
+	
 }

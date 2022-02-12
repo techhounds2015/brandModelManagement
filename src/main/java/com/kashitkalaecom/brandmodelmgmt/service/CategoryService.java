@@ -19,6 +19,10 @@ public class CategoryService {
 		return categoryRepository.getById(categoryId);
 	}
 	
+	public int categoryExists(String categoryId) {
+		return categoryRepository.categoryExists(categoryId);
+	}
+	
 	public List<Category> getAllCategories() {
 		return categoryRepository.findAll();
 	}

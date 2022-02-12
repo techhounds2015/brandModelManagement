@@ -12,4 +12,7 @@ public interface CategoryRepository extends JpaRepository<Category, String>{
 	@Query(" from Category m where m.name =:name ")
 	Category findByName(String name);
 
+	@Query("select count(*) from Category m where m.id =:categoryId ")
+	int categoryExists(String categoryId);
+
 }

@@ -42,4 +42,12 @@ public class ProductService {
 		return productRepository.findByName(categoryId);
 	}
 
+	public int productIdExists(String id) {
+		return productRepository.productIdExists(id);
+	}
+
+	public int titleExists(String modelId, String brandId, String categoryId) {
+		return productRepository.titleExists(modelId,brandId,categoryId);
+	}
+
 }

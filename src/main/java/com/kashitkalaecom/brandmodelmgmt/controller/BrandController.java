@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
@@ -36,17 +35,17 @@ public class BrandController {
 
 	@PostMapping("/create")
 	public APIResponse<Brand> createBrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
-		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
+		APIResponse<Brand> apiResponse = new APIResponse<>();
 
 		try {
 
 			apiResponse = brandFV.fValidateCreate(null, brand, null);
-			if (!apiResponse.getValidationSuccess()) {
+			if (Boolean.FALSE.equals(apiResponse.getValidationSuccess())) {
 				return apiResponse;
 			}
 			
 			apiResponse = brandBV.bValidateCreate(null, brand, null);
-            if (!apiResponse.getProcessingSuccess()) {
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
                 return apiResponse;
             }
             
@@ -64,17 +63,18 @@ public class BrandController {
 	}
 
 	@GetMapping("/view/{brandId}")
-	public APIResponse brand(@RequestHeader String requestorId, @PathVariable("brandId") String brandId) {
+	public APIResponse<Brand> brand(@RequestHeader String requestorId, @PathVariable("brandId") String brandId) {
 
-		APIResponse apiResponse = new APIResponse();
-		Brand brand = brandService.getBrandById(brandId);
+		APIResponse<Brand> apiResponse = new APIResponse<>();
+		int brandCount = brandService.brandIdExists(brandId);
 
-		if (brand == null) {
+		if (brandCount == 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getCode());
-			apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getDesc());
-			apiResponse.setResponseObject(brand);
+			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_NOT_EXISTS.getDesc());
 			return apiResponse;
 		}
+		
+		Brand brand = brandService.getBrandById(brandId);
 		apiResponse.setResponseMessage("Success");
 		apiResponse.setResponseObject(brand);
 		return apiResponse;
@@ -110,8 +110,15 @@ public class BrandController {
 
 	@PutMapping("/update")
 	public APIResponse<Brand> updatebrand(@RequestHeader String requestorId, @RequestBody Brand brand) {
-		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
+		APIResponse<Brand> apiResponse = new APIResponse<>();
 		try {
+			
+			apiResponse = brandBV.bValidateUpdate(null, brand, null);
+			
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+                return apiResponse;
+            }
+			
 			brand = brandService.update(brand, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_UPDATED.getCode());
@@ -124,10 +131,18 @@ public class BrandController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse<Brand> deletebrand(@RequestHeader String requestorId, @RequestParam String id) {
+	public APIResponse<Brand> deletebrand(@RequestHeader String requestorId, @PathVariable String id) {
 
-		APIResponse<Brand> apiResponse = new APIResponse<Brand>();
+		APIResponse<Brand> apiResponse = new APIResponse<>();
 		try {
+			
+			int brandCount = brandService.brandIdExists(id);
+			if (brandCount == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.BRAND_NOT_EXISTS.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.BRAND_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
+			
 			Brand brand = brandService.delete(id, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.BRAND_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.BRAND_UPDATED.getCode());

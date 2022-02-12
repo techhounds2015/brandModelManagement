@@ -9,11 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
 @Table(name = "category")
 @DiscriminatorValue("E")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Category {
 
 	@Id
@@ -41,7 +45,6 @@ public class Category {
 	private String description;
 	private String name;
 	private String image;
-	private String category;
 	private Boolean status;
 
 	public String getId() {
@@ -124,14 +127,7 @@ public class Category {
 		this.image = image;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
+	
 	public Boolean getStatus() {
 		return status;
 	}

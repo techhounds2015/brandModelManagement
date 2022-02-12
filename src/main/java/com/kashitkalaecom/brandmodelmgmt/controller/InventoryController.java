@@ -133,6 +133,7 @@ public class InventoryController {
 	}
 
 	
+	@PostMapping("/fileupdate")
 	public APIResponse<Inventory> updateInventoryByFile(@RequestHeader String requestorId, @RequestPart MultipartFile file) {
 		APIResponse<Inventory> apiResponse = new APIResponse<Inventory>();
 

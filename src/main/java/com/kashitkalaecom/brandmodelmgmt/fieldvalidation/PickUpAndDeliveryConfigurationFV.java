@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.models.PickUpAndDeliveryConfiguration;
 import com.kashitkalaecom.brandmodelmgmt.validation.ValidationService;
 
@@ -23,7 +22,7 @@ public class PickUpAndDeliveryConfigurationFV {
 
 	private static String module = PickUpAndDeliveryConfiguration.class.getSimpleName();
 
-	public APIResponse fValidateCreate(String tenantCode, PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration,
+	public APIResponse<PickUpAndDeliveryConfiguration> fValidateCreate(String tenantCode, PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration,
 			String locale) {
 
 		APIResponse<PickUpAndDeliveryConfiguration> apiResponse = new APIResponse<>();

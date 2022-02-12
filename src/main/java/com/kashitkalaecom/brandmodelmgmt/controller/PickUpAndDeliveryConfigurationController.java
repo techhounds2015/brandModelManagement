@@ -8,20 +8,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.businessvalidation.PickUpAndDeliveryConfigurationBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.BrandFV;
-import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.ModelFV;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.PickUpAndDeliveryConfigurationFV;
-import com.kashitkalaecom.brandmodelmgmt.models.Brand;
-import com.kashitkalaecom.brandmodelmgmt.models.Model;
 import com.kashitkalaecom.brandmodelmgmt.models.PickUpAndDeliveryConfiguration;
-import com.kashitkalaecom.brandmodelmgmt.service.BrandService;
-import com.kashitkalaecom.brandmodelmgmt.service.ModelService;
 import com.kashitkalaecom.brandmodelmgmt.service.PickUpAndDeliveryConfigurationService;
 
 @RestController
@@ -38,18 +31,18 @@ public class PickUpAndDeliveryConfigurationController {
 	PickUpAndDeliveryConfigurationBV pickUpAndDeliveryConfigurationBV;
 
 	@PostMapping("/create")
-	public APIResponse pickUpAndDeliveryConfiguration(@RequestHeader String requestorId, @RequestBody PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<PickUpAndDeliveryConfiguration> pickUpAndDeliveryConfiguration(@RequestHeader String requestorId, @RequestBody PickUpAndDeliveryConfiguration pickUpAndDeliveryConfiguration) {
+		APIResponse<PickUpAndDeliveryConfiguration> apiResponse = new APIResponse<>();
 
 		try {
 
 			apiResponse = pickUpAndDeliveryConfigurationFV.fValidateCreate(null, pickUpAndDeliveryConfiguration, null);
-			if (!apiResponse.getValidationSuccess()) {
+			if (Boolean.FALSE.equals(apiResponse.getValidationSuccess())) {
 				return apiResponse;
 			}
 			
 			apiResponse = pickUpAndDeliveryConfigurationBV.bValidateCreate(null, pickUpAndDeliveryConfiguration, null);
-            if (!apiResponse.getProcessingSuccess()) {
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
                 return apiResponse;
             }
             

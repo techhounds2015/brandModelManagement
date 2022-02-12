@@ -1,11 +1,9 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -15,20 +13,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
-@Table(name = "brand")
-@DiscriminatorValue("E")
+@Table(name = "role")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Brand implements Serializable // extends CommonObject
-{
-	private static final long serialVersionUID = 1L;
-	@Column(name = "categoryid")
-	private String categoryId;
-	private String name;
-	private Boolean status;
-	private String description;
-	private String logo;
-
+public class Role {
+	
 	@Id
 	// @GeneratedValue(strategy = GenerationType.AUTO)
 	protected String id = UUID.randomUUID().toString();
@@ -44,6 +33,12 @@ public class Brand implements Serializable // extends CommonObject
 
 	@Column(name = "modifiedon")
 	protected Timestamp modifiedOn;
+	
+	private String name;
+	
+	private String description;
+	
+	private Boolean status;
 
 	public String getId() {
 		return id;
@@ -85,28 +80,12 @@ public class Brand implements Serializable // extends CommonObject
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
 	}
 
 	public String getDescription() {
@@ -117,12 +96,14 @@ public class Brand implements Serializable // extends CommonObject
 		this.description = description;
 	}
 
-	public String getLogo() {
-		return logo;
+	public Boolean getStatus() {
+		return status;
 	}
 
-	public void setLogo(String logo) {
-		this.logo = logo;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
+	
+	
 
 }

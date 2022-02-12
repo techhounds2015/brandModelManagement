@@ -23,6 +23,7 @@ public class OutletController {
 
 	@Autowired
 	OutletService outletService;
+
 	
 	@Autowired
 	OutletFV outletFV;
@@ -53,7 +54,7 @@ public class OutletController {
 		}
 		return apiResponse;
 	}
-	
+
 	@GetMapping("/view/{id}")
 	public APIResponse<Outlet> outlet(@RequestHeader String requestorId, @PathVariable("id") String id) {
 		APIResponse<Outlet> apiResponse = new APIResponse<Outlet>();
@@ -64,15 +65,17 @@ public class OutletController {
 			apiResponse.setResponseObject(outlet);
 			return apiResponse;
 		}
+
+		Outlet outlet2 = outletService.getOutletById(id);
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("Success");
-		apiResponse.setResponseObject(outlet);
+		apiResponse.setResponseObject(outlet2);
 		return apiResponse;
 	}
+
 	
 	@PutMapping("/update")
-	public APIResponse<Outlet> updateOutlet(@RequestHeader String requestorId,
-			@RequestBody Outlet outlet) {
+	public APIResponse<Outlet> updateOutlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
 		APIResponse<Outlet> apiResponse = new APIResponse<Outlet>();
 		try {
 			outlet = outletService.update(outlet, requestorId);
@@ -103,7 +106,6 @@ public class OutletController {
 	}
 
 
-	
 }
 
 	

@@ -1,20 +1,19 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "BILLING")
+@Table(name = "billing")
 public class Billing {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="bill_id")
-    private int billId;
+	protected String id = UUID.randomUUID().toString();
 	
 	@Column(name = "billing_address1")
 	private String billingAddress1;
@@ -43,8 +42,13 @@ public class Billing {
 		this.billingZipCode = billingZipCode;
 	}
 
-	public int getBillId() {
-		return billId;
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getBillingAddress1() {
