@@ -1,4 +1,4 @@
-package com.kashitkalaecom.brandmodelmgmt.models;
+package com.kashitkalaecom.brandmodelmgmt.model;
 
 import java.sql.Timestamp;
 import java.util.UUID;

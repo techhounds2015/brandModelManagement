@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
+import com.kashitkalaecom.brandmodelmgmt.brand.BrandService;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.service.BrandService;
+import com.kashitkalaecom.brandmodelmgmt.model.ModelService;
 import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
-import com.kashitkalaecom.brandmodelmgmt.service.ModelService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
 
 @Component

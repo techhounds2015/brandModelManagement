@@ -1,4 +1,4 @@
-package com.kashitkalaecom.brandmodelmgmt.models;
+package com.kashitkalaecom.brandmodelmgmt.brand;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

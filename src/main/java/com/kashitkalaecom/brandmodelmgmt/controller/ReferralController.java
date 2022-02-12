@@ -15,11 +15,8 @@ import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.businessvalidation.ReferralBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.ReferralFV;
-import com.kashitkalaecom.brandmodelmgmt.models.Brand;
 import com.kashitkalaecom.brandmodelmgmt.models.Referral;
-import com.kashitkalaecom.brandmodelmgmt.models.Webpages;
 import com.kashitkalaecom.brandmodelmgmt.service.ReferralService;
-import com.kashitkalaecom.brandmodelmgmt.service.WebpagesService;
 
 @RestController
 @RequestMapping("/api/v1/referral")
