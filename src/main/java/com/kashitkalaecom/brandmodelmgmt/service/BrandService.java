@@ -46,5 +46,13 @@ public class BrandService {
 	public Brand getBrandByName(String name) {
 		return brandRepository.findByName(name);
 	}
+
+	public int brandExists(String name) {
+		return brandRepository.brandExists(name);
+	}
+	
+	public int brandIdExists(String brandId) {
+		return brandRepository.brandIdExists(brandId);
+	}
 	
 }

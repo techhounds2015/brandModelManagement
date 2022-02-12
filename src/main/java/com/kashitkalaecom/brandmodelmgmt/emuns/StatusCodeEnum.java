@@ -8,6 +8,7 @@ public enum StatusCodeEnum {
     BRAND_CREATION_FAILED("1003","Failed to Create Brand."),
     BRAND_UPDATION_FAILED("1004","Failed to Update Brand."),
     BRAND_NOT_EXISTS("1005","Brand doesn't exists."),
+    BRAND_DUPLICATE("1006","Brand already exists."),
     
     
     // Model
@@ -16,6 +17,7 @@ public enum StatusCodeEnum {
     MODEL_CREATION_FAILED("2003","Failed to Create Model."),
     MODEL_UPDATION_FAILED("2004","Failed to Update Model."),
     MODEL_NOT_EXISTS("2005","Model doesn't exists."),
+    MODEL_DUPLICATE("2006","Model already exists."),
     
     
     // Category

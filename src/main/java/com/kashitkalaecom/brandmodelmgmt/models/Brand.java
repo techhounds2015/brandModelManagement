@@ -10,11 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
 @Table(name = "brand")
 @DiscriminatorValue("E")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Brand implements Serializable // extends CommonObject
 {
 	private static final long serialVersionUID = 1L;
