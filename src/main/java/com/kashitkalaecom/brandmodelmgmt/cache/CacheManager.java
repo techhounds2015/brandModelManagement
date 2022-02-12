@@ -2,7 +2,9 @@ package com.kashitkalaecom.brandmodelmgmt.cache;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public abstract class CacheManager
 {
     private static String infispan = "Infinispan";

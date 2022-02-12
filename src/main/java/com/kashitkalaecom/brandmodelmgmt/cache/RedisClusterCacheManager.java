@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.utilities.JsonUtil;
 
@@ -15,6 +16,7 @@ import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+@Component
 public class RedisClusterCacheManager extends CacheManager
 {
     private static final Logger logger = LoggerFactory.getLogger(RedisClusterCacheManager.class);

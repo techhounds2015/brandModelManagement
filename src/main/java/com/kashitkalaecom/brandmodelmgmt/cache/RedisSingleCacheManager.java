@@ -3,7 +3,9 @@ package com.kashitkalaecom.brandmodelmgmt.cache;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.utilities.JsonUtil;
 
@@ -11,13 +13,15 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+@Component
 public class RedisSingleCacheManager extends CacheManager
 {
     private static final Logger logger = LoggerFactory.getLogger(RedisSingleCacheManager.class);
 
     private static final int defaultExpirySec = 120 * 60;
 
-    private static RedisSingleCacheManager cacheManager = new RedisSingleCacheManager();
+    @Autowired
+    private static RedisSingleCacheManager cacheManager;
     private JedisPool jedisPool;
     
 
