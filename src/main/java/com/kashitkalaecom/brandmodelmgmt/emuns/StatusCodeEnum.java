@@ -124,6 +124,8 @@ public enum StatusCodeEnum {
     NOTIFICATION_TEMPLATE_UPDATED("1302","Notification Template Updated Successfully."),
     NOTIFICATION_TEMPLATE_CREATION_FAILED("1303","Failed to Create Notification Template Configuration."),
     NOTIFICATION_TEMPLATE_UPDATION_FAILED("1304","Failed to Update Notification Template Configuration."),
+    NOTIFICATION_TEMPLATE_CODE_DUPLCIATE("1305","Notification Template already exists."),
+    NOTIFICATION_TEMPLATE_CODE_NOT_EXISTS("1306","Notification Template doesn't exists."),
 
 
     // Inventory

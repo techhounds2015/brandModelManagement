@@ -1,6 +1,7 @@
 package com.kashitkalaecom.brandmodelmgmt.notification;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,9 @@ public class NotificationTemplateController {
 
 	@Autowired
 	private NotificationService notificationService;
+	
+	@Autowired
+	private NotificationTemplateBV notificationTemplateBV;
 
 	@PostMapping("/create")
 	public APIResponse<NotificationTemplate> createNewNotificationTemplate(@RequestHeader String requestorId,
@@ -27,6 +31,13 @@ public class NotificationTemplateController {
 		APIResponse<NotificationTemplate> apiResponse = new APIResponse<>();
 
 		try {
+			
+			apiResponse = notificationTemplateBV.bValidateCreate(null, notificationTemplate, null);
+			if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+				return apiResponse;
+			}
+			
+			
 			notificationTemplate = notificationService.save(notificationTemplate, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.NOTIFICATION_TEMPLATE_CREATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.NOTIFICATION_TEMPLATE_CREATED.getDesc());
@@ -49,7 +60,43 @@ public class NotificationTemplateController {
 
 		try {
 			
+			apiResponse = notificationTemplateBV.bValidateUpdate(null, notificationTemplate, null);
+			if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+				return apiResponse;
+			}
+			
 			notificationTemplate = notificationService.update(notificationTemplate, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.NOTIFICATION_TEMPLATE_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.NOTIFICATION_TEMPLATE_UPDATED.getDesc());
+			apiResponse.setResponseObject(notificationTemplate);
+
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.NOTIFICATION_TEMPLATE_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.NOTIFICATION_TEMPLATE_UPDATION_FAILED.getDesc());
+		}
+
+		return apiResponse;
+	}
+	
+	@PutMapping("/view/{id}")
+	public APIResponse<NotificationTemplate> updateNewNotificationTemplate(@RequestHeader String requestorId,
+			@PathVariable("id") String notificationTemplateId)
+
+	{
+
+		APIResponse<NotificationTemplate> apiResponse = new APIResponse<>();
+
+		try {
+			
+			int count = notificationService.notificationTemplateIdExists(notificationTemplateId);
+			
+			if (count == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.NOTIFICATION_TEMPLATE_UPDATED.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.NOTIFICATION_TEMPLATE_UPDATED.getDesc());
+				return apiResponse;
+			}
+						
+			NotificationTemplate notificationTemplate  = notificationService.getNotificationTempalteById(notificationTemplateId);
 			apiResponse.setResponseCode(StatusCodeEnum.NOTIFICATION_TEMPLATE_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.NOTIFICATION_TEMPLATE_UPDATED.getDesc());
 			apiResponse.setResponseObject(notificationTemplate);

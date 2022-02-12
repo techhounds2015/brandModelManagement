@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.models.Product;
 import com.kashitkalaecom.brandmodelmgmt.models.ProductImages;
 import com.kashitkalaecom.brandmodelmgmt.validation.ValidationService;
 
@@ -23,7 +22,7 @@ public class ProductImagesFV {
 
 	private static String module = ProductImages.class.getSimpleName();
 
-	public APIResponse fValidateCreate(String tenantCode, ProductImages productImages, String locale) {
+	public APIResponse<ProductImages> fValidateCreate(String tenantCode, ProductImages productImages, String locale) {
 
 		APIResponse<ProductImages> apiResponse = new APIResponse<>();
 
