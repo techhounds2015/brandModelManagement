@@ -12,4 +12,7 @@ public interface ModelRepository extends JpaRepository<Model, String> {
 	@Query(" from Model m where m.name =:name ")
 	public Model findByName(String name);
 
+	@Query("select count(1) from Model m where m.id =:modelId ")
+	public int modelIdExists(String modelId);
+
 }

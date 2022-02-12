@@ -31,18 +31,18 @@ public class ProductController {
 	ProductBV productBV;
 
 	@PostMapping("/create")
-	public APIResponse category(@RequestHeader String requestorId, @RequestBody Product product) {
-		APIResponse apiResponse = new APIResponse();
+	public APIResponse<Product> category(@RequestHeader String requestorId, @RequestBody Product product) {
+		APIResponse<Product> apiResponse = new APIResponse<>();
 
 		try {
 
 			apiResponse = prodeuctFV.fValidateCreate(null, product, null);
-			if (!apiResponse.getValidationSuccess()) {
+			if (Boolean.FALSE.equals(apiResponse.getValidationSuccess())) {
 				return apiResponse;
 			}
 
 			apiResponse = productBV.bValidateCreate(null, product, null);
-			if (!apiResponse.getProcessingSuccess()) {
+			if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
 				return apiResponse;
 			}
 			product = productService.save(product, requestorId);
@@ -60,10 +60,22 @@ public class ProductController {
 	}
 
 	@GetMapping("/view/{productId}")
-	public APIResponse product(@RequestHeader String requestorId, @PathVariable("productId") String productId) {
-
+	public APIResponse<Product> product(@RequestHeader String requestorId,
+			@PathVariable("productId") String productId) {
+		
+		APIResponse<Product> apiResponse = new APIResponse<>();
+		
+		// Product exists
+		int productCount = productService.productIdExists(productId);
+		
+		if (productCount == 0) {
+			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_NOT_EXISTS.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
+		}
 		Product product = productService.getProductById(productId);
-		APIResponse apiResponse = new APIResponse();
+
 		if (product == null) {
 			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_NOT_EXISTS.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_NOT_EXISTS.getDesc());
@@ -77,11 +89,17 @@ public class ProductController {
 	}
 
 	@PutMapping("/update")
-	public APIResponse updateproduct(@RequestHeader String requestorId, @RequestBody Product product) {
+	public APIResponse<Product> updateproduct(@RequestHeader String requestorId, @RequestBody Product product) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Product> apiResponse = new APIResponse<>();
 
 		try {
+
+			apiResponse = productBV.bValidateUpdate(null, product, null);
+			if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+				return apiResponse;
+			}
+
 			product = productService.update(product, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATED.getDesc());
@@ -94,10 +112,21 @@ public class ProductController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public APIResponse deleteproduct(@RequestHeader String requestorId, @PathVariable String id) {
+	public APIResponse<Product> deleteproduct(@RequestHeader String requestorId, @PathVariable String id) {
 
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Product> apiResponse = new APIResponse<>();
 		try {
+			
+			// Product exists
+			int productCount = productService.productIdExists(id);
+			
+			if (productCount == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_NOT_EXISTS.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_NOT_EXISTS.getDesc());
+				apiResponse.setProcessingSuccess(false);
+				return apiResponse;
+			}
+			
 			Product product = productService.delete(id, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.PRODUCT_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.PRODUCT_UPDATED.getDesc());

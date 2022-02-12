@@ -35,6 +35,8 @@ public enum StatusCodeEnum {
     OUTLET_CREATION_FAILED("4003","Failed to Create Outlet."),
     OUTLET_UPDATION_FAILED("4004","Failed to Update Outlet."),
     OUTLET_NOT_EXISTS("4005","Outlet doesn't exists."),
+    OUTLET_INVALID("4006","Invalid Outlet."),
+    OUTLET_DUPLICATE("4007","Outlet already exists."),
 	
 	// Product
     PRODUCT_CREATED("5001","Product Created Successfully."),
@@ -52,13 +54,17 @@ public enum StatusCodeEnum {
     DISCOUNT_CODE_CREATION_FAILED("6003","Failed to Create Discount Code."),
     DISCOUNT_CODE_UPDATION_FAILED("6004","Failed to Update Discount Code."),
     DISCOUNT_CODE_NOT_EXISTS("6005","Discount Code doesn't exists."),
-    DISCOUNT_CODE_DUPLICATE("5006","Discount Code already exists."),
+    DISCOUNT_CODE_INVALID("6006","Invalid Discount Code."),
+    DISCOUNT_CODE_DUPLICATE("6007","Discount Code already exists."),
 	
 	// Referral Code
     REFERRAL_CODE_CREATED("7001","Referral Code Created Successfully."),
     REFERRAL_CODE_UPDATED("7002","Referral Code Updated Successfully."),
     REFERRAL_CODE_CREATION_FAILED("7003","Failed to Create Referral Code."),
     REFERRAL_CODE_UPDATION_FAILED("7004","Failed to Update Referral Code."),
+    REFERRAL_CODE_NOT_EXISTS("7005","Discount Code doesn't exists."),
+    REFERRAL_CODE_INVALID("6006","Invalid Referral Code."),
+    REFERRAL_CODE_DUPLICATE("6007","Referral Code already exists."),
 	
 	// User
     USER_CREATED("8001","User Created Successfully."),
@@ -83,7 +89,27 @@ public enum StatusCodeEnum {
     DELIVERY_CONFIG_UPDATED("1102","Delivery Configuration Updated Successfully."),
     DELIVERY_CONFIG_CREATION_FAILED("1103","Failed to Create Delivery Configuration."),
     DELIVERY_CONFIG_UPDATION_FAILED("1104","Failed to Update Delivery Configuration."),
-    DELIVERY_CONFIG_NOT_EXISTS("1105","Delivery Configuration doesn't exists."),
+    DELIVERY_CONFIG_NOT_EXISTS("1105","Failed to Update Delivery Configuration."),
+    DELIVERY_CONFIG_INVALID("1106","Invalid Delivery Configuration."),
+    DELIVERY_CONFIG_DUPLICATE("1107","Delivery Configuration already exists."),
+
+    // Webpages Configuration
+    WEBPAGES_CONFIG_CREATED("1201","Webpages configuration Created Successfully."),
+    WEBPAGES_CONFIG_UPDATED("1202","Webpages configuration Updated Successfully."),
+    WEBPAGES_CONFIG_CREATION_FAILED("1203","Failed to Create Webpages configuration."),
+    WEBPAGES_CONFIG_UPDATION_FAILED("1203","Failed to Update Webpages configuration."),
+    WEBPAGES_CONFIG_NOT_EXISTS("1205","Webpages configuration doesn't exists."),
+    WEBPAGES_CONFIG_INVALID("1106","Invalid Webpages Configuration."),
+    WEBPAGES_CONFIG_DUPLICATE("1107","Webpages Configuration already exists."),
+    
+    // HomeSlider Configuration
+    HOMESLIDER_CONFIG_CREATED("1301","HomeSlider Configuration Created Successfully."),
+    HOMESLIDER_CONFIG_UPDATED("1302","HomeSlider Configuration Updated Successfully."),
+    HOMESLIDER_CONFIG_CREATION_FAILED("1303","Failed to Create HomeSlider Configuration."),
+    HOMESLIDER_CONFIG_UPDATION_FAILED("1304","Failed to Update HomeSlider Configuration."),
+    HOMESLIDER_CONFIG_NOT_EXISTS("1305","HomeSlider Configuration doesn't exists."),
+    HOMESLIDER_CONFIG_INVALID("1306","Invalid HomeSlider Configuration."),
+    HOMESLIDER_CONFIG_DUPLICATE("1307","HomeSlider Configuration already exists."),
     
     // Delivery Slot
     DELIVERY_SLOT_CREATED("1201","Delivery Slot Created Successfully."),
@@ -98,6 +124,8 @@ public enum StatusCodeEnum {
     NOTIFICATION_TEMPLATE_UPDATED("1302","Notification Template Updated Successfully."),
     NOTIFICATION_TEMPLATE_CREATION_FAILED("1303","Failed to Create Notification Template Configuration."),
     NOTIFICATION_TEMPLATE_UPDATION_FAILED("1304","Failed to Update Notification Template Configuration."),
+    NOTIFICATION_TEMPLATE_CODE_DUPLCIATE("1305","Notification Template already exists."),
+    NOTIFICATION_TEMPLATE_CODE_NOT_EXISTS("1306","Notification Template doesn't exists."),
 
 
     // Inventory

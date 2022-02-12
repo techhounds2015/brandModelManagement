@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 @DiscriminatorValue("E")
 public class User {
 
@@ -32,6 +32,9 @@ public class User {
 	
 	@Column(name="roleid")
 	private String roleId;
+	
+	private String password;
+	private String salt;
 	
 	@Id //@GeneratedValue(strategy = GenerationType.AUTO)
 	protected String id = UUID.randomUUID().toString();
@@ -122,6 +125,18 @@ public class User {
 	}
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 

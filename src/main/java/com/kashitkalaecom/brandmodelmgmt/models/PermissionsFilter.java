@@ -38,7 +38,12 @@ public class PermissionsFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-
+		
+		if(/*action.equals(pemisssion.getAction())*/true){
+			chain.doFilter(request, response);
+			return;
+		}
+		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String reqUri = httpRequest.getRequestURI();
 		String[] tokens = reqUri.split("/");
@@ -54,15 +59,13 @@ public class PermissionsFilter implements Filter {
 			action = tokens[3];
 		}
 		
-		RolePermissionMapping pemisssion = mapping.getUserPermission(module,requestUserid);
-		if("CREATE".equals(pemisssion.getAction())){
-			chain.doFilter(request, response);
-			return;
-		}
-		if(action.equals(pemisssion.getAction())){
-			chain.doFilter(request, response);
-			return;
-		}
+		/*
+		 * RolePermissionMapping pemisssion =
+		 * mapping.getUserPermission(module,requestUserid);
+		 * if("CREATE".equals(pemisssion.getAction())){ chain.doFilter(request,
+		 * response); return; } if(action.equals(pemisssion.getAction())){
+		 * chain.doFilter(request, response); return; }
+		 */
 	}
 
 }
