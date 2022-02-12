@@ -51,11 +51,7 @@ public class CategoryFV {
 		
 		HashMap<String, String> hashMap = new HashMap<>();
 		String errorString = null;
-
-		errorString = validationService.validateField(tenantCode, module, category.getCategory(), "category", locale);
-		if (errorString != null)
-			hashMap.put("category", errorString);
-		
+	
 		errorString = validationService.validateField(tenantCode, module, category.getParentCategory(), "parentCategory", locale);
 		if (errorString != null)
 			hashMap.put("parentCategory", errorString);

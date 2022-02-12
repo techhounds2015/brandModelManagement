@@ -38,7 +38,15 @@ public class UserService {
 	}
 
 	public User getUserByWalletId(String walletId) {
-		return userRepository.findByName(walletId);
+		return userRepository.findByWalletId(walletId);
+	}
+
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
+	public User getUserByPhoneNumber(String mobile) {
+		return userRepository.findByMobile(mobile);
 	}
 
 }

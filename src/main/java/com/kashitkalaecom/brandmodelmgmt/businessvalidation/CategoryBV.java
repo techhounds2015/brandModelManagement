@@ -46,14 +46,7 @@ public class CategoryBV {
 		
 		APIResponse<Category> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
-        List<String> categoryList = masterDataService.getDataNameByType(tenantCode, "Category");
-        
-        if (categoryList != null && !categoryList.contains(category.getCategory())) {
-        	apiResponse.setResponseCode(StatusCodeEnum.CATEGORY_INVALID.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.CATEGORY_INVALID.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
-        }
+      
         
         Category cat = categoryService.getCategoryByName(category.getName());
         

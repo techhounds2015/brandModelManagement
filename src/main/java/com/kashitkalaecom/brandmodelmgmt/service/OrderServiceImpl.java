@@ -36,9 +36,9 @@ public class OrderServiceImpl implements OrderService{
 		if (orderResult.isPresent()) {
 			Order ordResult = orderResult.get();
 			response.setCustomerId(ordResult.getCustomerId());
-			response.setOrderId(ordResult.getId());
+			//response.setOrderId(ordResult.getId());
 			response.setOrderStatus(ordResult.getStatus());
-			response.setTotal(ordResult.getTotal());
+			//response.setTotal(ordResult.getTotal());
 			List<OrderItem> orderItemResult = orderItemRepo.findAllById(id);
 			if (!orderItemResult.isEmpty()) {
 				List<String> itemName = new ArrayList<>();
@@ -72,15 +72,13 @@ public class OrderServiceImpl implements OrderService{
 			List<OrderItem> orderItem = req.getOrderItem();
 			Billing billing = req.getBilling();
 			
-			Order orderObj = new Order(status, subtotal, tax, total, shipCharge, customerId, orderItem, billing);
+			//Order orderObj = new Order(status, subtotal, tax, total, shipCharge, customerId, orderItem, billing);
 			
-			orderRepo.save(orderObj);
+			//orderRepo.save(orderObj);
 			
-			return orderObj;
-//		}
-//		else {
-//			return null;
-//		}
+			//return orderObj;
+			return null;
+
 	}
 
 	@Override
@@ -131,9 +129,9 @@ public class OrderServiceImpl implements OrderService{
 				List<OrderItem> orderItem = o.getOrderItem();
 				Billing billing = o.getBilling();
 				
-				Order orderObj = new Order(status, subtotal, tax, total, shipCharge, customerId, orderItem, billing);
+				//Order orderObj = new Order(status, subtotal, tax, total, shipCharge, customerId, orderItem, billing);
 				
-				orderRepo.save(orderObj);				
+				//orderRepo.save(orderObj);				
 			}
 			else {
 				String status = o.getOrderStatus();
@@ -146,9 +144,9 @@ public class OrderServiceImpl implements OrderService{
 				List<OrderItem> orderItem = o.getOrderItem();
 				Billing billing = o.getBilling();
 				
-				Order orderObj = new Order(status, subtotal, tax, total, shipCharge, customerId, orderItem, billing);
+				//Order orderObj = new Order(status, subtotal, tax, total, shipCharge, customerId, orderItem, billing);
 				
-				orderRepo.save(orderObj);
+				//orderRepo.save(orderObj);
 			}
 			return true;
 
