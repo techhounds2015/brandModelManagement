@@ -19,52 +19,49 @@ public class OutletController {
 
 	@Autowired
 	OutletService outletService;
-	
-	@PostMapping("/create")
-	public APIResponse Outlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
 
-		 outlet = outletService.save(outlet, requestorId);
-		APIResponse apiResponse = new APIResponse();
+	@PostMapping("/create")
+	public APIResponse<Outlet> createOutlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
+
+		outlet = outletService.save(outlet, requestorId);
+		APIResponse<Outlet> apiResponse = new APIResponse<>();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(outlet);
 		return apiResponse;
 	}
-	
+
 	@GetMapping("/view/{id}")
-	public APIResponse outlet(@RequestHeader String requestorId, @PathVariable("id") String id) {
+	public APIResponse<Outlet> outlet(@RequestHeader String requestorId, @PathVariable("id") String id) {
 
 		Outlet outlet = outletService.getOutletById(id);
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<Outlet> apiResponse = new APIResponse<>();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(outlet);
 		return apiResponse;
 	}
-	
+
 	@PutMapping("/update")
-	public APIResponse updateOutlet(@RequestHeader String requestorId,
-			@RequestBody Outlet outlet) {
+	public APIResponse<Outlet> updateOutlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
 
-		 outlet = outletService.update(outlet, requestorId);
-		APIResponse apiResponse = new APIResponse();
+		outlet = outletService.update(outlet, requestorId);
+		APIResponse<Outlet> apiResponse = new APIResponse<>();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(outlet);
 		return apiResponse;
 	}
-	
+
 	@PutMapping("/delete")
-	public APIResponse deletebrand(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
+	public APIResponse<Outlet> deleteOutlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
 
-		 outlet = outletService.delete(outlet, requestorId);
-		APIResponse apiResponse = new APIResponse();
+		outlet = outletService.delete(outlet, requestorId);
+		APIResponse<Outlet> apiResponse = new APIResponse<>();
 		apiResponse.setResponseCode("200");
 		apiResponse.setResponseMessage("success");
 		apiResponse.setResponseObject(outlet);
 		return apiResponse;
 	}
 
-
-	
 }

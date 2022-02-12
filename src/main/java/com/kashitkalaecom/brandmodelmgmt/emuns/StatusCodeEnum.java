@@ -35,6 +35,7 @@ public enum StatusCodeEnum {
     OUTLET_CREATION_FAILED("4003","Failed to Create Outlet."),
     OUTLET_UPDATION_FAILED("4004","Failed to Update Outlet."),
     OUTLET_NOT_EXISTS("4005","Outlet doesn't exists."),
+    OUTLET_DUPLICATE("4006","Outlet already exists."),
 	
 	// Product
     PRODUCT_CREATED("5001","Product Created Successfully."),

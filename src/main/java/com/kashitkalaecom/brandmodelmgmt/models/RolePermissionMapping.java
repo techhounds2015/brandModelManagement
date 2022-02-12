@@ -4,16 +4,25 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
+@Entity
+@Table(name = "rolepermissionmapping")
+@DiscriminatorValue("E")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RolePermissionMapping {
 
 	
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	public String id = UUID.randomUUID().toString();
 
 	@Column(name = "createdby")

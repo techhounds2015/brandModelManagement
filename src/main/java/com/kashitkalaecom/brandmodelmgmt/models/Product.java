@@ -31,14 +31,17 @@ public class Product {
 	
 	@Column(name="vegnonvegstatus")
 	private Boolean vegNonvegStatus;
+	
 	private Integer sizes;
 	
 	@Column(name="avaliableforsubscription")
 	private Boolean avaliableForSubscription;
+	
 	private String description;
 	
 	@Column(name="maxqualitypurchased")
 	private String maxQualityPurchased;
+	
 	private Boolean status;
 	private String sku;
 	private String mrp;
