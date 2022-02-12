@@ -48,20 +48,13 @@ public class StoreSettingBV {
 		
 		APIResponse<StoreSetting> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
-        List<String> storeSettingList = masterDataService.getDataNameByType(tenantCode, "StoreSetting");
-        
-        if (storeSettingList != null && !storeSettingList.contains(storeSetting.getStoreName())) {
-        	apiResponse.setResponseCode(StatusCodeEnum.USER_INVALID.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.USER_INVALID.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
-        }
+       
         
         StoreSetting storeSetting1 = storeSettingService.getStoreSettingByName(storeSetting.getCompanyName());
         
         if (storeSetting1 != null) {
-        	apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
+        	apiResponse.setResponseCode(StatusCodeEnum.STORE_NOT_EXISTS.getCode());
+        	apiResponse.setResponseMessage(StatusCodeEnum.STORE_NOT_EXISTS.getDesc());
         	apiResponse.setProcessingSuccess(false);
         	return apiResponse;
         }

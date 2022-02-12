@@ -116,6 +116,12 @@ public enum StatusCodeEnum {
     PERMISSION_UPDATION_FAILED("1504","Failed to Update Permission."),
     PERMISSION_NOT_EXISTS("1505","Permission doesn't exists."),
     PERMISSION_DUPLICATE("1506","Permission already exists."),
+    
+    
+    // Permission
+    STORE_SETTINGS_CREATED("1601","Store Settings Created Successfully."),
+    STORE_SETTINGS_UPDATED("1602","Store Settings Updated Successfully."),
+    STORE_NOT_EXISTS("1603","Store doesn't exists."),
 	
 	// Error while validating request 
     ERROR_ON_VALIDATING_REQUEST("8000","Error while validating request."),
