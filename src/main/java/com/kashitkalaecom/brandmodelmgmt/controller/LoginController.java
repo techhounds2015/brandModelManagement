@@ -11,6 +11,8 @@ import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.businessvalidation.LoginBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.User;
+import com.kashitkalaecom.brandmodelmgmt.requests.LoginRequest;
+import com.kashitkalaecom.brandmodelmgmt.responses.LoginResponse;
 import com.kashitkalaecom.brandmodelmgmt.service.LoginService;
 
 @RestController
@@ -24,24 +26,24 @@ public class LoginController {
 	LoginBV loginBV;
 	
 	@PostMapping("/loginwithpassword")
-	public APIResponse user(@RequestHeader String tenantCode, @RequestHeader String requestorId, @RequestBody User user, @RequestHeader String locale) {
+	public APIResponse user(@RequestHeader String requestorId, @RequestBody LoginRequest loginRequest) {
 		APIResponse apiResponse = new APIResponse();
 
 		try {
 			
-			apiResponse = loginBV.bValidateCreate(tenantCode, user, locale);
+			apiResponse = loginBV.bValidateCreate(null, loginRequest, null);
             if (!apiResponse.getProcessingSuccess()) {
                 return apiResponse;
             }
-			user = loginService.save(user, requestorId);
+            LoginResponse  response= loginService.vaildateUser(apiResponse,requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.USER_CREATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_CREATED.getDesc());
-			apiResponse.setResponseObject(user);
+			apiResponse.setResponseObject(response);
 		} catch (Exception e) {
 			apiResponse.setResponseCode(StatusCodeEnum.USER_CREATION_FAILED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_CREATION_FAILED.getDesc());
-			apiResponse.setResponseObject(user);
+			apiResponse.setResponseObject(loginRequest);
 		}
 
 		return apiResponse;

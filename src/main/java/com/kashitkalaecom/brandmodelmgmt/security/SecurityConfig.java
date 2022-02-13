@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
             //.antMatchers("/consumerLogin","/login","/addCardTokenDtls","/validateAccount").permitAll()
-            .antMatchers("/**").permitAll()
+            .antMatchers("/api/v1/login/loginwithpassword").permitAll()
             .anyRequest().authenticated();
 
         // Custom JWT based security filter

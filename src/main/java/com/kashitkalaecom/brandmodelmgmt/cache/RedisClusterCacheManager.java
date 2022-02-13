@@ -6,6 +6,7 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +17,13 @@ import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-@Component
+//@Component
 public class RedisClusterCacheManager extends CacheManager
 {
     private static final Logger logger = LoggerFactory.getLogger(RedisClusterCacheManager.class);
 
-    private static RedisClusterCacheManager cacheManager = new RedisClusterCacheManager();
+    @Autowired
+    private static RedisClusterCacheManager cacheManager;// = new RedisClusterCacheManager();
     private JedisCluster jedisCluster;
     private JedisPool jedisPool;
 

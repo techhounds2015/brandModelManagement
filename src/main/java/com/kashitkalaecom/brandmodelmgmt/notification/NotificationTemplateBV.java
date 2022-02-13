@@ -3,6 +3,7 @@ package com.kashitkalaecom.brandmodelmgmt.notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.businessvalidation.ProductBV;
@@ -13,7 +14,7 @@ import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
 import com.kashitkalaecom.brandmodelmgmt.service.ModelService;
 import com.kashitkalaecom.brandmodelmgmt.service.ProductService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
-
+@Component
 public class NotificationTemplateBV {
 
 	@Autowired

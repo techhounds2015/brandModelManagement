@@ -1,13 +1,17 @@
 package com.kashitkalaecom.brandmodelmgmt.cache;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.utilities.JsonUtil;
+import com.kashitkalaecom.brandmodelmgmt.utilities.PropertyConfig;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -20,31 +24,56 @@ public class RedisSingleCacheManager extends CacheManager
 
     private static final int defaultExpirySec = 120 * 60;
 
-    @Autowired
     private static RedisSingleCacheManager cacheManager;
     private JedisPool jedisPool;
     
 
-    @Value("${cachingPort}")
-    private static int port;
-    
-    @Value("${cachingHost}")
-    private static String cachingHost;
-    
-    
-    @Value("${cachingPass}")
-    private static String pass;
-    
-    @Value("${cacheConnectTimeout}")
-    private static int cacheConnectTimeout;
-    
-    
+	/*
+	 * @Value("${cachingPort}") private static int port;
+	 * 
+	 * @Value("${cachingHost}") private static String cachingHost;
+	 * 
+	 * 
+	 * @Value("${cachingPass}") private static String pass;
+	 * 
+	 * @Value("${cacheConnectTimeout}") private static int cacheConnectTimeout;
+	 */
+   public Properties getProperties() {
+	   
+	   Properties properties=new Properties();
+	     try {
+			properties.load(new FileInputStream("E:\\test\\brandmodelmgmt\\src\\main\\resources\\application.properties"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     return properties;
+   }
 
-    private RedisSingleCacheManager()
+
+    private RedisSingleCacheManager() 
     {
+    	 Properties properties=getProperties();
+    	    String cachingHost = null;
+    	    int port = 0 ;
+    	    String pass = null;
+    	    int cacheConnectTimeout = 0;
+			try {
+				cachingHost = PropertyConfig.loadProperties().getProperty("cachingHost");
+				 port = Integer.parseInt(PropertyConfig.loadProperties().getProperty("cachingPort"));//properties.getProperty("cachingPort")
+				 pass=PropertyConfig.loadProperties().getProperty("cachingHost");//properties.getProperty("cachingPass");
+	    		 cacheConnectTimeout = Integer.parseInt(PropertyConfig.loadProperties().getProperty("cachingTimeout"));//properties.getProperty("cachingTimeout")
 
-
-	logger.info("Caching host and caching port {} {}", cachingHost, port);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	    // properties.getProperty("cachingHost");
+    	
+	//logger.info("Caching host and caching port {} {}", cachingHost, port);
 
 	JedisPoolConfig poolConfig = buildPoolConfig();
 
@@ -72,10 +101,12 @@ public class RedisSingleCacheManager extends CacheManager
 	return poolConfig;
     }
 
-    public static RedisSingleCacheManager getCacheManager()
-    {
-	return cacheManager;
-    }
+	public static RedisSingleCacheManager getCacheManager() {
+		if (null == cacheManager) {
+			cacheManager = new RedisSingleCacheManager();
+		}
+		return cacheManager;
+	}
 
 
     public void cacheObject(String id, Object object) throws Exception
@@ -237,24 +268,19 @@ public class RedisSingleCacheManager extends CacheManager
 	}
 
     }
-
-    public static void main(String[] args)
-    {
-	RedisSingleCacheManager manager = new RedisSingleCacheManager();
-	Jedis jedis = manager.jedisPool.getResource();
-
-	for (int i = 0; i < 10; i++)
-	{
-	    String id = "id ";
-	    String field = "field " + i;
-	    String object = "Objet " + i;
-
-	    jedis.hset(id, field, object);
-	}
-
-	jedis.close();
-
-    }
+	/*
+	 * public static void main(String[] args) { RedisSingleCacheManager manager =
+	 * new RedisSingleCacheManager(); Jedis jedis = manager.jedisPool.getResource();
+	 * 
+	 * for (int i = 0; i < 10; i++) { String id = "id "; String field = "field " +
+	 * i; String object = "Objet " + i;
+	 * 
+	 * jedis.hset(id, field, object); }
+	 * 
+	 * jedis.close();
+	 * 
+	 * }
+	 */
 
 	@Override
 	public void cacheObject(Object object) throws Exception {

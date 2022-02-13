@@ -75,7 +75,8 @@ public enum StatusCodeEnum {
     USER_INVALID_EMAIL("8006","Invalid email."),
     USER_DUPLICATE("8007","User already exists."),
     USER_INVALID_PHONE("8008","Invalid Phone."),
-	
+    MORETHAN_ONE_USER("8009","More than one user exists."),
+    INVALID_CREDENTIAL("8010", "Invalid credentials"),
 	// Role
     ROLE_CREATED("9001","Role Created Successfully."),
     ROLE_UPDATED("9002","Role Updated Successfully."),

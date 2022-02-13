@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -56,6 +57,17 @@ public class ExceptionHandlerControllerAdvice {
 				commonResponse.setErrors(errors);
 				commonResponse.setResponseCode("1010");
 				commonResponse.setResponseMessage("Invalid Request");
+				commonResponse.setResponseObject(exception.getMessage());
+			}
+			if(exception instanceof AuthenticationException) {
+				commonResponse.setErrors(errors);
+				commonResponse.setResponseCode("1010");
+				commonResponse.setResponseMessage("Invalid Request");
+				commonResponse.setResponseObject(exception.getMessage());	
+			}else {
+				commonResponse.setErrors(errors);
+				commonResponse.setResponseCode("1010");
+				commonResponse.setResponseMessage("Something went worng");
 				commonResponse.setResponseObject(exception.getMessage());
 			}
 

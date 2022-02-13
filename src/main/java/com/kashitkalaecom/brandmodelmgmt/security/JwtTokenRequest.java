@@ -2,22 +2,15 @@ package com.kashitkalaecom.brandmodelmgmt.security;
 
 public class JwtTokenRequest {
 
-	private String accountId;
-	private String ssn;
+	private String userName;
+	//private String ssn;
 	private String email;
 	private String password;
-	public String getAccountId() {
-		return accountId;
-	}
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
-	}
-	public String getSsn() {
-		return ssn;
-	}
-	public void setSsn(String ssn) {
-		this.ssn = ssn;
-	}
+
+	/*
+	 * public String getSsn() { return ssn; } public void setSsn(String ssn) {
+	 * this.ssn = ssn; }
+	 */
 	public String getEmail() {
 		return email;
 	}
@@ -29,6 +22,13 @@ public class JwtTokenRequest {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

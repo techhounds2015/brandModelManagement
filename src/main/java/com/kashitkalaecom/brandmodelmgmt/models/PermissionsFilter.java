@@ -16,15 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.kashitkalaecom.brandmodelmgmt.repository.RolePermissionMappingRepository;
-
+import com.kashitkalaecom.brandmodelmgmt.service.RolePermissionMappingService;
 
 @Component
 @Order(1)
 public class PermissionsFilter implements Filter {
-	
+
 	@Autowired
-	RolePermissionMappingRepository mapping;
+	RolePermissionMappingService mapping;
 
 	private static final Logger logger = LoggerFactory.getLogger(PermissionsFilter.class);
 
@@ -38,34 +37,40 @@ public class PermissionsFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
-		if(/*action.equals(pemisssion.getAction())*/true){
-			chain.doFilter(request, response);
-			return;
-		}
+
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String reqUri = httpRequest.getRequestURI();
 		String[] tokens = reqUri.split("/");
 		String module = "";
 		String action = "";
-		String requestUserid = httpRequest.getHeader("userId");
+		String requestUserid = httpRequest.getHeader("requestorId");
 		
-		if (tokens != null && tokens.length > 2) {
-			module = tokens[2];
+		if (reqUri.equals("/api/v1/login/loginwithpassword")) {
+			chain.doFilter(request, response);
+			return;
 		}
+		 
+
 
 		if (tokens != null && tokens.length > 3) {
-			action = tokens[3];
+			module = tokens[3];
 		}
-		
-		/*
-		 * RolePermissionMapping pemisssion =
-		 * mapping.getUserPermission(module,requestUserid);
-		 * if("CREATE".equals(pemisssion.getAction())){ chain.doFilter(request,
-		 * response); return; } if(action.equals(pemisssion.getAction())){
-		 * chain.doFilter(request, response); return; }
-		 */
+
+		if (tokens != null && tokens.length > 4) {
+			action = tokens[4];
+		}
+
+		RolePermissionMapping pemisssion = mapping.getUserPermission(module, requestUserid);
+		if ("CREATE".equals(pemisssion.getAction())) {
+			chain.doFilter(request, response);
+			return;
+		}
+		if (action.equals(pemisssion.getAction())) {
+			chain.doFilter(request, response);
+			return;
+		}
+
 	}
 
 }

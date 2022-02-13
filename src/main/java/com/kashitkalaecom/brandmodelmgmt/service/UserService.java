@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kashitkalaecom.brandmodelmgmt.models.User;
 import com.kashitkalaecom.brandmodelmgmt.repository.UserRepository;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
+import com.kashitkalaecom.brandmodelmgmt.utilities.PasswordUtil;
 
 @Service
 public class UserService {
@@ -18,6 +19,7 @@ public class UserService {
 	public User save(User user, String requestorId) {
 		user.setCreatedBy(requestorId);
 		user.setCreatedOn(CustomClock.timestamp());
+		user=PasswordUtil.generatePassword(user);
 		return userRepository.save(user);
 	}
 

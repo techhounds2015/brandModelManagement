@@ -19,7 +19,7 @@ public class JwtUser implements UserDetails {
 
     public JwtUser(JwtTokenRequest user
     ) {
-        this.username = user.getAccountId();
+        this.username = user.getUserName();
         this.password = null;
         this.authorities = null;
         this.enabled = true;
