@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.businessvalidation.LoginBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.models.User;
 import com.kashitkalaecom.brandmodelmgmt.requests.LoginRequest;
 import com.kashitkalaecom.brandmodelmgmt.responses.LoginResponse;
 import com.kashitkalaecom.brandmodelmgmt.service.LoginService;
@@ -25,8 +24,8 @@ public class LoginController {
 	@Autowired
 	LoginBV loginBV;
 	
-	@PostMapping("/loginwithpassword")
-	public APIResponse user(@RequestHeader String requestorId, @RequestBody LoginRequest loginRequest) {
+	@PostMapping("/signIn")
+	public APIResponse<LoginResponse> user(@RequestHeader String requestorId, @RequestBody LoginRequest loginRequest) {
 		APIResponse apiResponse = new APIResponse();
 
 		try {
