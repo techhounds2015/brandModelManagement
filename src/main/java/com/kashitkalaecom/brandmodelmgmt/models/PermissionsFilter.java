@@ -46,7 +46,7 @@ public class PermissionsFilter implements Filter {
 		String action = "";
 		String requestUserid = httpRequest.getHeader("requestorId");
 		
-		if (reqUri.equals("/api/v1/login/loginwithpassword")) {
+		if (reqUri.equals("/api/v1/login/signIn")) {
 			chain.doFilter(request, response);
 			return;
 		}
