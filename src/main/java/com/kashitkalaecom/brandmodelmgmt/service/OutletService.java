@@ -14,8 +14,12 @@ public class OutletService {
 	@Autowired
 	OutletRepositroy outletRepositroy;
 
-	public Outlet getOutletById(String gstNo) {
-		return outletRepositroy.findByName(gstNo);
+	public Outlet getOutletByGstNo(String gstNo) {
+		return outletRepositroy.findByGstNo(gstNo);
+	}
+	
+	public int outletGstExists(String gstNo) {
+		return outletRepositroy.outletGstExists(gstNo);
 	}
 
 	public Outlet save(Outlet outlet, String requestorId) {
@@ -36,6 +40,19 @@ public class OutletService {
 		outlet.setStatus(false);
 		return outletRepositroy.save(outlet);
 	}
+
+	public Outlet getOutletById(String id) {
+		return outletRepositroy.getById(id);
+	}
+	
+	public int outletIdExists(String id) {
+		return outletRepositroy.outletIdExists(id);
+	}
+
+	public int outletNameExists(String name) {
+		return outletRepositroy.outletNameExists(name);
+	}
+	
 	
 
 	

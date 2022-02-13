@@ -29,7 +29,6 @@ public class DiscountBV {
 		 
 		 APIResponse<Discount> apiResponse = new APIResponse<Discount>();
 		 apiResponse.setProcessingSuccess(true);
-		 List<String> list = new ArrayList<String>();
 		try {
 			apiResponse = validateCreate(tenantCode, discount, locale);
 
@@ -40,13 +39,6 @@ public class DiscountBV {
 			logger.error(e.getMessage(), e);
 			return apiResponse;
 		}
-		if (list.size() > 0) {
-			apiResponse.setResponseMessage("FAILURE");
-			apiResponse.setResponseCode("9000");
-			apiResponse.setProcessingErrors(list);
-			apiResponse.setProcessingSuccess(false);
-
-		}
 		return apiResponse;
 
 }
@@ -54,16 +46,9 @@ public class DiscountBV {
 	private APIResponse<Discount> validateCreate(String tenantCode, Discount discount, String locale) {
 		
 		APIResponse<Discount> apiResponse = new APIResponse<>();
-		apiResponse.setProcessingSuccess(true);
-        List<String> discountList = masterDataService.getDataNameByType(tenantCode, "Discount");
-        if (discountList != null && !discountList.contains(discount.getDiscount())) {
-        	apiResponse.setResponseCode(StatusCodeEnum.DISCOUNT_CODE_INVALID.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.DISCOUNT_CODE_INVALID.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
-        }
-        Discount dis = discountService.getpagesById(discount.getDiscount());
-        if (dis != null) {
+		apiResponse.setProcessingSuccess(true);       
+        int dis = discountService.discountCodeCodeExists(discount.getCode());
+        if (dis > 0 ) {
         	apiResponse.setResponseCode(StatusCodeEnum.DISCOUNT_CODE_DUPLICATE.getCode());
         	apiResponse.setResponseMessage(StatusCodeEnum.DISCOUNT_CODE_DUPLICATE.getDesc());
         	apiResponse.setProcessingSuccess(false);

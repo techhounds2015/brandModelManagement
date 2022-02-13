@@ -22,7 +22,7 @@ public class UserFV {
 
 	private static String module = User.class.getSimpleName();
 
-	public APIResponse fValidateCreate(String tenantCode, User user, String locale) {
+	public APIResponse<User> fValidateCreate(String tenantCode, User user, String locale) {
 		APIResponse<User> apiResponse = new APIResponse<>();
 
 		apiResponse.setValidationSuccess(true);

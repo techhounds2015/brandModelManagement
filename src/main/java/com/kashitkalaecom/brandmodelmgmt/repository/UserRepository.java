@@ -22,4 +22,13 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 	public List<User> findByUserId(String userId);
 
+	@Query("select count(*) from User u where u.email =:email ")
+	public int userEmailExists(String email);
+	
+	@Query("select count(*) from User u where u.mobile =:mobile ")
+	public int userMobileExists(String mobile);
+
+	@Query("select count(*) from User u where u.id =:userId ")
+	public int userIdExists(String userId);
+
 }

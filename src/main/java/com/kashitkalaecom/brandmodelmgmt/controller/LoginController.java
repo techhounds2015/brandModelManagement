@@ -32,7 +32,8 @@ public class LoginController {
 		try {
 			
 			apiResponse = loginBV.bValidateCreate(null, loginRequest, null);
-            if (!apiResponse.getProcessingSuccess()) {
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+
                 return apiResponse;
             }
             LoginResponse  response= loginService.vaildateUser(apiResponse,requestorId);

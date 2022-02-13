@@ -32,15 +32,15 @@ public class OutletController {
 	OutletBV outletBV;
 	
 	@PostMapping("/create")
-	public APIResponse<Outlet> Outlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
+	public APIResponse<Outlet> createOutlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
 		APIResponse<Outlet> apiResponse = new APIResponse<Outlet>();
 		try {
 			apiResponse = outletFV.fValidateCreate(null, outlet, null);
-			if (!apiResponse.getValidationSuccess()) {
+			if (Boolean.FALSE.equals(apiResponse.getValidationSuccess())) {
 				return apiResponse;
 			}
 			apiResponse = outletBV.bValidateCreate(null, outlet, null);
-            if (!apiResponse.getProcessingSuccess()) {
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
                 return apiResponse;
             }
 			outlet = outletService.save(outlet, requestorId);
@@ -56,13 +56,12 @@ public class OutletController {
 	}
 
 	@GetMapping("/view/{id}")
-	public APIResponse<Outlet> outlet(@RequestHeader String requestorId, @PathVariable("id") String id) {
-		APIResponse<Outlet> apiResponse = new APIResponse<Outlet>();
-		Outlet outlet = outletService.getOutletById(id);
-		if (outlet == null) {
+	public APIResponse<Outlet> viewOutlet(@RequestHeader String requestorId, @PathVariable("id") String id) {
+		APIResponse<Outlet> apiResponse = new APIResponse<>();
+		int count = outletService.outletIdExists(id);
+		if (count == 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.OUTLET_NOT_EXISTS.getCode());
 			apiResponse.setResponseCode(StatusCodeEnum.OUTLET_NOT_EXISTS.getDesc());
-			apiResponse.setResponseObject(outlet);
 			return apiResponse;
 		}
 
@@ -76,8 +75,15 @@ public class OutletController {
 	
 	@PutMapping("/update")
 	public APIResponse<Outlet> updateOutlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
-		APIResponse<Outlet> apiResponse = new APIResponse<Outlet>();
+		APIResponse<Outlet> apiResponse = new APIResponse<>();
 		try {
+			
+			int count = outletService.outletIdExists(outlet.getId());
+			if (count == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.OUTLET_NOT_EXISTS.getCode());
+				apiResponse.setResponseCode(StatusCodeEnum.OUTLET_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
 			outlet = outletService.update(outlet, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.OUTLET_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.OUTLET_UPDATED.getCode());
@@ -92,8 +98,14 @@ public class OutletController {
 	@PutMapping("/delete/{id}")
 	public APIResponse<Outlet> deletebrand(@RequestHeader String requestorId, @PathVariable String id) {
 
-		APIResponse<Outlet> apiResponse = new APIResponse<Outlet>();
+		APIResponse<Outlet> apiResponse = new APIResponse<>();
 		try {
+			int count = outletService.outletIdExists(id);
+			if (count == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.OUTLET_NOT_EXISTS.getCode());
+				apiResponse.setResponseCode(StatusCodeEnum.OUTLET_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
 			Outlet outlet = outletService.delete(id, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.OUTLET_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.OUTLET_UPDATED.getCode());

@@ -17,24 +17,25 @@ import com.kashitkalaecom.brandmodelmgmt.service.ProductService;
 import com.kashitkalaecom.brandmodelmgmt.service.UserService;
 import com.kashitkalaecom.brandmodelmgmt.utilities.PasswordUtil;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
+
 @Component
 public class LoginBV {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	LoginService loginService;
-	
+
 	@Autowired
 	LoginBV loginBV;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(LoginBV.class);
-	
+
 	public APIResponse bValidateCreate(String tenantCode, LoginRequest loginRequest, String locale) {
-		
+
 		APIResponse<User> apiResponse = new APIResponse<>();
-		 apiResponse.setProcessingSuccess(true);
+		apiResponse.setProcessingSuccess(true);
 		try {
 			apiResponse = validateCreate(tenantCode, loginRequest, locale);
 
@@ -45,41 +46,41 @@ public class LoginBV {
 			logger.error(e.getMessage(), e);
 			return apiResponse;
 		}
-	
+
 		return apiResponse;
 	}
 
 	private APIResponse<User> validateCreate(String tenantCode, LoginRequest loginRequest, String locale) {
-		
+
 		APIResponse<User> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
-        List<User> userList = userService.getByUserName(tenantCode, loginRequest.getUserName());
-        
-        if (userList == null || userList.isEmpty()) {
-        	apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
-        }
-        
-		if(userList.size()>1) {
+
+		List<User> userList = userService.getByUserName(tenantCode, loginRequest.getUserName());
+
+		if (userList == null || userList.isEmpty()) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
+		}
+
+		if (userList.size() > 1) {
 			apiResponse.setResponseCode(StatusCodeEnum.MORETHAN_ONE_USER.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.MORETHAN_ONE_USER.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
+			apiResponse.setResponseMessage(StatusCodeEnum.MORETHAN_ONE_USER.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
 		}
-		User user=userList.get(0);
-		String passord=PasswordUtil.encryptedPassword(loginRequest.getPassword(), user.getSalt());
-		if(!passord.equals(user.getPassword())) {
+		User user = userList.get(0);
+		String passord = PasswordUtil.encryptedPassword(loginRequest.getPassword(), user.getSalt());
+		if (!passord.equals(user.getPassword())) {
 			apiResponse.setResponseCode(StatusCodeEnum.INVALID_CREDENTIAL.getCode());
-        	apiResponse.setResponseMessage(StatusCodeEnum.INVALID_CREDENTIAL.getDesc());
-        	apiResponse.setProcessingSuccess(false);
-        	return apiResponse;
+			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_CREDENTIAL.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
 		}
-	
-		
+
 		apiResponse.setResponseObject(user);
-        return apiResponse;
+		return apiResponse;
 	}
 
 }

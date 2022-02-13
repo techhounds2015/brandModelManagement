@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.models.Brand;
 import com.kashitkalaecom.brandmodelmgmt.models.Outlet;
 import com.kashitkalaecom.brandmodelmgmt.validation.ValidationService;
 
