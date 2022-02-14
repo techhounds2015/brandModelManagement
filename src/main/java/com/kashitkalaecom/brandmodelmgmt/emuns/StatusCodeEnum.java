@@ -77,6 +77,9 @@ public enum StatusCodeEnum {
     USER_INVALID_PHONE("8008","Invalid Phone."),
     MORETHAN_ONE_USER("8009","More than one user exists."),
     INVALID_CREDENTIAL("8010", "Invalid credentials"),
+    USER_LOGIN_FAILED("8011", "Unable to login please try after sometime"),
+    
+    
 	// Role
     ROLE_CREATED("9001","Role Created Successfully."),
     ROLE_UPDATED("9002","Role Updated Successfully."),

@@ -26,7 +26,7 @@ public class LoginController {
 	
 	@PostMapping("/signIn")
 	public APIResponse<LoginResponse> user(@RequestHeader String requestorId, @RequestBody LoginRequest loginRequest) {
-		APIResponse apiResponse = new APIResponse();
+		APIResponse<LoginResponse> apiResponse = new APIResponse<>();
 
 		try {
 			
@@ -37,13 +37,13 @@ public class LoginController {
             }
             LoginResponse  response= loginService.vaildateUser(apiResponse,requestorId);
 
-			apiResponse.setResponseCode(StatusCodeEnum.USER_CREATED.getCode());
-			apiResponse.setResponseMessage(StatusCodeEnum.USER_CREATED.getDesc());
+			apiResponse.setResponseCode("200");
+			apiResponse.setResponseMessage("Success");
 			apiResponse.setResponseObject(response);
 		} catch (Exception e) {
-			apiResponse.setResponseCode(StatusCodeEnum.USER_CREATION_FAILED.getCode());
-			apiResponse.setResponseMessage(StatusCodeEnum.USER_CREATION_FAILED.getDesc());
-			apiResponse.setResponseObject(loginRequest);
+			apiResponse.setResponseCode(StatusCodeEnum.USER_LOGIN_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_LOGIN_FAILED.getDesc());
+			apiResponse.setResponseObject(null);
 		}
 
 		return apiResponse;
