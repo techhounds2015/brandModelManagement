@@ -55,7 +55,7 @@ public class NotificationTemplateBV {
 		APIResponse<NotificationTemplate> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
 
-		int catCount = notificationService.notificationCodeExists(notificationTemplate.getNotificationcode());
+		int catCount = notificationService.notificationCodeExists(notificationTemplate.getCode());
 
 		if (catCount > 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.NOTIFICATION_TEMPLATE_CODE_DUPLCIATE.getCode());

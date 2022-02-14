@@ -46,9 +46,25 @@ public class NotificationTemplate implements Serializable {
 	private String body;
 	
 	private String subject;
-	private String notificationtype;
-	private String notificationcode;
+	private String type;
+	private String code;
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	private String title;
 	
 	private String parentcode;
@@ -125,21 +141,7 @@ public class NotificationTemplate implements Serializable {
 		this.subject = subject;
 	}
 
-	public String getNotificationtype() {
-		return notificationtype;
-	}
-
-	public void setNotificationtype(String notificationtype) {
-		this.notificationtype = notificationtype;
-	}
-
-	public String getNotificationcode() {
-		return notificationcode;
-	}
-
-	public void setNotificationcode(String notificationcode) {
-		this.notificationcode = notificationcode;
-	}
+	
 
 	public String getTitle() {
 		return title;
