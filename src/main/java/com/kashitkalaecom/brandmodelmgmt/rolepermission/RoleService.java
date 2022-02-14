@@ -36,4 +36,14 @@ public class RoleService {
 		return roleRepository.getRoleById(roleId);
 	}
 
+
+
+	public Role update(String roleId,String requestorId) {
+		Role role = roleRepository.getRoleById(roleId);
+		role.setModifiedBy(requestorId);
+		role.setModifiedOn(CustomClock.timestamp());
+		role.setStatus(false);
+		return roleRepository.save(role);
+	}
+
 }

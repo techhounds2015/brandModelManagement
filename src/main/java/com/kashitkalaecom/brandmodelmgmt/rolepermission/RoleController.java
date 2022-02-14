@@ -61,6 +61,32 @@ public class RoleController {
 		}
 		return apiResponse;
 	}
+	
+	@PutMapping("/delete/{roleId}")
+	public APIResponse<Role> deleteRole(@RequestHeader String requestorId, @PathVariable String roleId) {
+		APIResponse<Role> apiResponse = new APIResponse<>();
+
+		try {
+
+			int roleExists = roleService.roleIdExists(roleId);
+
+			if (roleExists == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.ROLE_NOT_EXISTS.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.ROLE_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
+
+			Role role = roleService.update(roleId,requestorId);	
+			apiResponse.setResponseCode(StatusCodeEnum.ROLE_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.ROLE_UPDATED.getDesc());
+			apiResponse.setResponseObject(role);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.ERROR_WHILE_RETREVING_DATA.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.ERROR_WHILE_RETREVING_DATA.getDesc());
+		}
+		return apiResponse;
+	}
+
 
 	@GetMapping("/view/{roleId}")
 	public APIResponse<Role> role(@RequestHeader String requestorId, @PathVariable String roleId) {
@@ -76,7 +102,7 @@ public class RoleController {
 				return apiResponse;
 			}
 
-			Role role = roleService.getRoleById(requestorId);
+			Role role = roleService.getRoleById(roleId);
 			apiResponse.setResponseCode("200");
 			apiResponse.setResponseMessage("Success");
 			apiResponse.setResponseObject(role);

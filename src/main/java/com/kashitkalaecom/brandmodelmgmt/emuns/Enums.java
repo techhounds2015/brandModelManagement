@@ -11,4 +11,10 @@ public class Enums {
 
 		ORDER_PLACED_SUCCESSFULLY;
 	}
+	
+
+	public enum ROLES {
+
+		ADMIN,CUSTOMER,OPERATION_USERS;
+	}
 }

@@ -87,6 +87,7 @@ public enum StatusCodeEnum {
     ROLE_UPDATION_FAILED("9004","Failed to Update Role."),
     ROLE_NOT_EXISTS("9005","Role doesn't exists."),
     ROLE_DUPLICATE("9006","Role already exists."),
+    ROLE_INACTIVE("9007","Role is not active."),
 	
 	// Delivery Configuration
     DELIVERY_CONFIG_CREATED("1101","Delivery Configuration Created Successfully."),
