@@ -1,7 +1,5 @@
 package com.kashitkalaecom.brandmodelmgmt.businessvalidation;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
-import com.kashitkalaecom.brandmodelmgmt.models.Category;
 import com.kashitkalaecom.brandmodelmgmt.models.User;
-import com.kashitkalaecom.brandmodelmgmt.service.CategoryService;
-import com.kashitkalaecom.brandmodelmgmt.service.RoleService;
+import com.kashitkalaecom.brandmodelmgmt.rolepermission.RoleService;
 import com.kashitkalaecom.brandmodelmgmt.service.UserService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
 

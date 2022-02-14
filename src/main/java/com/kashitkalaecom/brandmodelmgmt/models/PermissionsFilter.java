@@ -16,7 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.kashitkalaecom.brandmodelmgmt.service.RolePermissionMappingService;
+import com.kashitkalaecom.brandmodelmgmt.rolepermission.RolePermissionMapping;
+import com.kashitkalaecom.brandmodelmgmt.rolepermission.RolePermissionMappingService;
 
 @Component
 @Order(1)
