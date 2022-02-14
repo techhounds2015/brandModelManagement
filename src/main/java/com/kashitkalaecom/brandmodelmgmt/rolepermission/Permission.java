@@ -1,4 +1,4 @@
-package com.kashitkalaecom.brandmodelmgmt.models;
+package com.kashitkalaecom.brandmodelmgmt.rolepermission;
 
 import java.sql.Timestamp;
 import java.util.UUID;

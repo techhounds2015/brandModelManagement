@@ -1,10 +1,8 @@
-package com.kashitkalaecom.brandmodelmgmt.repository;
+package com.kashitkalaecom.brandmodelmgmt.rolepermission;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.kashitkalaecom.brandmodelmgmt.models.RolePermissionMapping;
 @Repository
 public interface RolePermissionMappingRepository  extends JpaRepository<RolePermissionMapping, String> {
 

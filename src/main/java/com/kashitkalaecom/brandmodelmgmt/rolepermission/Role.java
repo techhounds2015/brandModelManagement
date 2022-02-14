@@ -1,10 +1,9 @@
-package com.kashitkalaecom.brandmodelmgmt.models;
+package com.kashitkalaecom.brandmodelmgmt.rolepermission;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,38 +13,32 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Entity
-@Table(name = "rolepermissionmapping")
-@DiscriminatorValue("E")
+@Table(name = "role")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RolePermissionMapping {
-
+public class Role {
 	
-
 	@Id
-	public String id = UUID.randomUUID().toString();
+	// @GeneratedValue(strategy = GenerationType.AUTO)
+	protected String id = UUID.randomUUID().toString();
 
 	@Column(name = "createdby")
-	public String createdBy;
+	protected String createdBy;
 
 	@Column(name = "createdon")
-	public Timestamp createdOn = CustomClock.timestamp();
+	protected Timestamp createdOn = CustomClock.timestamp();
 
 	@Column(name = "modifiedby")
-	public String modifiedBy;
+	protected String modifiedBy;
 
 	@Column(name = "modifiedon")
-	public Timestamp modifiedOn;
+	protected Timestamp modifiedOn;
 	
-	@Column(name = "permissionid")
-	public String permissionId;
-
-	@Column(name = "roleid")
-	public String roleId;
+	private String name;
 	
-	public String action;
-
-	public Boolean status;
+	private String description;
+	
+	private Boolean status;
 
 	public String getId() {
 		return id;
@@ -87,28 +80,20 @@ public class RolePermissionMapping {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getPermissionId() {
-		return permissionId;
+	public String getName() {
+		return name;
 	}
 
-	public void setPermissionId(String permissionId) {
-		this.permissionId = permissionId;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getRoleId() {
-		return roleId;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Boolean getStatus() {
@@ -120,4 +105,5 @@ public class RolePermissionMapping {
 	}
 	
 	
+
 }
