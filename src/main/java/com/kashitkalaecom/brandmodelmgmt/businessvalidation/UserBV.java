@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.User;
+import com.kashitkalaecom.brandmodelmgmt.rolepermission.PermissionService;
 import com.kashitkalaecom.brandmodelmgmt.rolepermission.RoleService;
 import com.kashitkalaecom.brandmodelmgmt.service.UserService;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
@@ -20,9 +21,12 @@ public class UserBV {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	PermissionService permissionService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserBV.class);
 
@@ -59,22 +63,21 @@ public class UserBV {
 
 		int userMobile = userService.userMobileExists(user.getMobile());
 
-		if (userMobile > 0 ) {
+		if (userMobile > 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.USER_DUPLICATE.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_DUPLICATE.getDesc());
 			apiResponse.setProcessingSuccess(false);
 			return apiResponse;
 		}
-		
+
 		int roleCount = roleService.roleIdExists(user.getRoleId());
-		
-		if (roleCount == 0 ) {
+
+		if (roleCount == 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.ROLE_NOT_EXISTS.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.ROLE_NOT_EXISTS.getDesc());
 			apiResponse.setProcessingSuccess(false);
 			return apiResponse;
 		}
-
 
 		return apiResponse;
 	}

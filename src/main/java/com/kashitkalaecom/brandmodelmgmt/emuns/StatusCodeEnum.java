@@ -153,10 +153,19 @@ public enum StatusCodeEnum {
     PERMISSION_DUPLICATE("1506","Permission already exists."),
     
     
-    // Permission
+    // Store Settings
     STORE_SETTINGS_CREATED("1601","Store Settings Created Successfully."),
     STORE_SETTINGS_UPDATED("1602","Store Settings Updated Successfully."),
     STORE_NOT_EXISTS("1603","Store doesn't exists."),
+    
+    // Permission
+    ROLE_PERMISSION_MAPPING_CREATED("1701","Role Permission Mapping Created Successfully."),
+    ROLE_PERMISSION_MAPPING_UPDATED("1702","Role Permission Mapping  Updated Successfully."),
+    ROLE_PERMISSION_MAPPING_CREATION_FAILED("1703","Failed to Create Role Permission Mapping ."),
+    ROLE_PERMISSION_MAPPING_UPDATION_FAILED("1704","Failed to Update Role Permission Mapping ."),
+    ROLE_PERMISSION_MAPPING_NOT_EXISTS("1705","Role Permission Mapping  doesn't exists."),
+    ROLE_PERMISSION_MAPPING_DUPLICATE("1706","Role Permission Mapping  already exists."),
+    
 	
 	// Error while validating request 
     ERROR_ON_VALIDATING_REQUEST("8000","Error while validating request."),

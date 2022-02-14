@@ -9,19 +9,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.PermissionsFilter;
 @Configuration
 public class ApplicationConfiguration {
 	
-	   
-	/*
-	 * @Bean public FilterRegistrationBean<AuthenticationFilter>
-	 * authenticationFilterRegistrationBean() {
-	 * FilterRegistrationBean<AuthenticationFilter> authenticationFilterBean = new
-	 * FilterRegistrationBean<AuthenticationFilter>(); AuthenticationFilter
-	 * authFilter = new AuthenticationFilter();
-	 * 
-	 * authenticationFilterBean.setFilter(authFilter);
-	 * authenticationFilterBean.addUrlPatterns("/*");
-	 * authenticationFilterBean.setOrder(4); // set precedence return
-	 * authenticationFilterBean; }
-	 */
+	
 		@Bean
 		public FilterRegistrationBean<PermissionsFilter> perFilterRegistrationBean() {
 			FilterRegistrationBean<PermissionsFilter> permissionsFilterBean = new FilterRegistrationBean<PermissionsFilter>();
