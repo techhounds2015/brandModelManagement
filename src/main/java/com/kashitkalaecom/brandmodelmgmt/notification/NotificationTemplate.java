@@ -47,6 +47,7 @@ public class NotificationTemplate implements Serializable {
 	
 	private String subject;
 	private String type;
+	@Column(name = "code")
 	private String code;
 	
 	public String getType() {
