@@ -19,17 +19,25 @@ public class PermissionController {
 
 	@Autowired
 	PermissionService permissionService;
+	
+	@Autowired
+	PermissionBV permissionBV;
 
 	@PostMapping("/create")
-	public APIResponse<Permission> createPermission(@RequestHeader String requestorId, @RequestBody Permission Permission) {
+	public APIResponse<Permission> createPermission(@RequestHeader String requestorId, @RequestBody Permission permission) {
 		APIResponse<Permission> apiResponse = new APIResponse<>();
 
 		try {
-			Permission = permissionService.save(Permission, requestorId);
+			
+			apiResponse = permissionBV.bValidateCreate(null, permission, null);
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+                return apiResponse;
+            }
+			permission = permissionService.save(permission, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.PERMISSION_CREATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.PERMISSION_CREATED.getDesc());
-			apiResponse.setResponseObject(Permission);
+			apiResponse.setResponseObject(permission);
 		} catch (Exception e) {
 			apiResponse.setResponseCode(StatusCodeEnum.PERMISSION_CREATION_FAILED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.PERMISSION_CREATION_FAILED.getDesc());
@@ -61,22 +69,49 @@ public class PermissionController {
 		}
 		return apiResponse;
 	}
-
-	@GetMapping("/view/{permissionId}")
-	public APIResponse<Permission> Permission(@RequestHeader String requestorId, @PathVariable String permissionId) {
+	
+	
+	@PutMapping("/delete/{permissionId}")
+	public APIResponse<Permission> delete(@RequestHeader String requestorId, @PathVariable String permissionId) {
 		APIResponse<Permission> apiResponse = new APIResponse<>();
 
 		try {
 
-			int PermissionExists = permissionService.permissionIdExists(permissionId);
+			int permissionExists = permissionService.permissionIdExists(permissionId);
 
-			if (PermissionExists == 0) {
+			if (permissionExists == 0) {
 				apiResponse.setResponseCode(StatusCodeEnum.PERMISSION_NOT_EXISTS.getCode());
 				apiResponse.setResponseMessage(StatusCodeEnum.PERMISSION_NOT_EXISTS.getDesc());
 				return apiResponse;
 			}
 
-			Permission permission = permissionService.getPermissionById(requestorId);
+			Permission permission = permissionService.delete(requestorId, permissionId);
+			apiResponse.setResponseCode(StatusCodeEnum.PERMISSION_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.PERMISSION_UPDATED.getDesc());
+			apiResponse.setResponseObject(permission);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.ERROR_WHILE_RETREVING_DATA.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.ERROR_WHILE_RETREVING_DATA.getDesc());
+		}
+		return apiResponse;
+	}
+	
+
+	@GetMapping("/view/{permissionId}")
+	public APIResponse<Permission> permission(@RequestHeader String requestorId, @PathVariable String permissionId) {
+		APIResponse<Permission> apiResponse = new APIResponse<>();
+
+		try {
+
+			int permissionExists = permissionService.permissionIdExists(permissionId);
+
+			if (permissionExists == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.PERMISSION_NOT_EXISTS.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.PERMISSION_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
+
+			Permission permission = permissionService.getPermissionById(permissionId);
 			apiResponse.setResponseCode("200");
 			apiResponse.setResponseMessage("Success");
 			apiResponse.setResponseObject(permission);

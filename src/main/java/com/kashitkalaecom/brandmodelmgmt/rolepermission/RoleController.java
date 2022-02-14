@@ -19,12 +19,21 @@ public class RoleController {
 
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	RoleBV roleBV;
 
 	@PostMapping("/create")
 	public APIResponse<Role> createRole(@RequestHeader String requestorId, @RequestBody Role role) {
 		APIResponse<Role> apiResponse = new APIResponse<>();
 
 		try {
+			
+			apiResponse = roleBV.bValidateCreate(null, role, null);
+            if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+                return apiResponse;
+            }
+			
 			role = roleService.save(role, requestorId);
 
 			apiResponse.setResponseCode(StatusCodeEnum.ROLE_CREATED.getCode());

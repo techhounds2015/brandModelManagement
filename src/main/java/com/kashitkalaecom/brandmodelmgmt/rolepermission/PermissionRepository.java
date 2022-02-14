@@ -17,4 +17,6 @@ public interface PermissionRepository extends JpaRepository<Permission, String>{
 	@Query("Select count(1) from Permission c where c.id =:id ")
 	public int permissionIdExists(String id);
 
+	@Query("Select count(1) from Permission c where c.name =:name ")
+	public int permissionNameExists(String name);
 }

@@ -36,4 +36,20 @@ public class PermissionService {
 		return permissionRepository.getPermissionById(id);
 	}
 
+
+
+	public int permissionNameExists(String name) {
+		return permissionRepository.permissionNameExists(name);
+	}
+
+
+
+	public Permission delete(String requestorId, String permissionId) {
+		Permission permission = permissionRepository.getById(permissionId);
+		permission.setModifiedBy(requestorId);
+		permission.setModifiedOn(CustomClock.timestamp());
+		permission.setStatus(false);
+		return permissionRepository.save(permission);
+	}
+
 }

@@ -46,4 +46,10 @@ public class RoleService {
 		return roleRepository.save(role);
 	}
 
+
+
+	public int roleNameExists(String name) {
+		return roleRepository.roleNameExists(name);
+	}
+
 }

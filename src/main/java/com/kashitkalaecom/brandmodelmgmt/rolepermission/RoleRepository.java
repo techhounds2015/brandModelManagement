@@ -13,5 +13,8 @@ public interface RoleRepository extends JpaRepository<Role, String>{
 	@Query("Select c from Role c where c.id =:id ")
 	public Role getRoleById(String id);
 
+	@Query("Select count(1) from Role c where c.name =:name ")
+	public int roleNameExists(String name);
+
 
 }
