@@ -90,16 +90,16 @@ public class NotificationTemplateBV {
 		APIResponse<NotificationTemplate> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
 
-		// Product exists
+		// NotificationTemplate exists
 
-		int productCount = notificationService.notificationTemplateIdExists(notificationTemplate.getId());
-		if (productCount == 0) {
-			apiResponse.setResponseCode(StatusCodeEnum.NOTIFICATION_TEMPLATE_CODE_DUPLCIATE.getCode());
+		int count = notificationService.notificationTemplateIdExists(notificationTemplate.getId());
+		if (count == 0) {
+			apiResponse.setResponseCode(StatusCodeEnum.NOTIFICATION_TEMPLATE_CODE_NOT_EXISTS.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.NOTIFICATION_TEMPLATE_CODE_NOT_EXISTS.getDesc());
 			apiResponse.setProcessingSuccess(false);
 			return apiResponse;
 		}
-
+			
 		
 
 		return apiResponse;

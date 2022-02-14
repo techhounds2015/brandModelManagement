@@ -68,7 +68,6 @@ public class NotificationTemplate implements Serializable {
 
 	private String title;
 	
-	private String parentcode;
 
 	public String getId() {
 		return id;
@@ -152,14 +151,5 @@ public class NotificationTemplate implements Serializable {
 		this.title = title;
 	}
 
-	public String getParentcode() {
-		return parentcode;
-	}
-
-	public void setParentcode(String parentcode) {
-		this.parentcode = parentcode;
-	}
-	
-	
 
 }

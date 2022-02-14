@@ -1,4 +1,4 @@
-package com.kashitkalaecom.brandmodelmgmt.model;
+package com.kashitkalaecom.brandmodelmgmt.models;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
+import com.kashitkalaecom.brandmodelmgmt.model.Model;
+import com.kashitkalaecom.brandmodelmgmt.model.ModelBV;
+import com.kashitkalaecom.brandmodelmgmt.model.ModelFV;
+import com.kashitkalaecom.brandmodelmgmt.model.ModelService;
 
 @RestController
 @RequestMapping("/api/v1/model")
