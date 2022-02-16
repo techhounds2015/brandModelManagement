@@ -33,7 +33,7 @@ public class OutletController {
 	
 	@PostMapping("/create")
 	public APIResponse<Outlet> createOutlet(@RequestHeader String requestorId, @RequestBody Outlet outlet) {
-		APIResponse<Outlet> apiResponse = new APIResponse<Outlet>();
+		APIResponse<Outlet> apiResponse = new APIResponse<>();
 		try {
 			apiResponse = outletFV.fValidateCreate(null, outlet, null);
 			if (Boolean.FALSE.equals(apiResponse.getValidationSuccess())) {
@@ -50,7 +50,6 @@ public class OutletController {
 		} catch (Exception e) {
 			apiResponse.setResponseCode(StatusCodeEnum.OUTLET_CREATION_FAILED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.OUTLET_CREATION_FAILED.getDesc());
-			apiResponse.setResponseObject(outlet);
 		}
 		return apiResponse;
 	}

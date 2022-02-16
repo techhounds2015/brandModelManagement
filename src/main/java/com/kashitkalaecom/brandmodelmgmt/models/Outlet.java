@@ -19,16 +19,7 @@ import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Outlet {
-
-	private String name;
-	private String address;
-	private String code;
-	@Column(name="gstno")
-	private String gstNo;
-	private String latitude;
-	private String longitude;
-	private Boolean status;
-	private String desc;
+	
 
 	@Id
 	protected String id = UUID.randomUUID().toString();
@@ -40,6 +31,18 @@ public class Outlet {
 	protected String modifiedBy;
 	@Column(name = "modifiedon")
 	protected Timestamp modifiedOn;
+
+	private String name;
+	private String address;
+	private String code;
+	@Column(name="gstno")
+	private String gstNo;
+	private String latitude;
+	private String longitude;
+	private Boolean status;
+	@Column(name = "description")
+	private String desc;
+
 
 	public String getName() {
 		return name;

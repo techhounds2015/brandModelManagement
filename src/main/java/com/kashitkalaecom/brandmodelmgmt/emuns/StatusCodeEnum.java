@@ -142,7 +142,13 @@ public enum StatusCodeEnum {
     INVENTORY_SELLEING_PRICE_GT_MRP("1406","Selling Price Cannot be more than MRP."),
     INVENTORY_SELLING_PRICE_NEGATIVE("1407","Selling Price Cannot be less than Zero."),
     INVENTORY_MRP_NEGATIVE("1408","MRP Cannot be less than Zero."),
-    
+    INVENTORY_MRP_UPDATED("1409","MRP Updated Successfully."),
+    INVENTORY_MRP_UPDATION_FAILED("1410","Failed to Update MRP."),
+    INVENTORY_SELLEING_PRICE_UPDATION_FAILED("1411","Failed to Update Selling Price."),
+    INVENTORY_SELLING_PRICE_UPDATED("1412","Selling Price Updated Successfully."),
+    INVENTORY_SELLING_PRICE_UPDATION_FAILED("1413","Selling Price Updation Failed."),
+    INVENTORY_STOCKS_AVAIALBLE_UPDATED("1414","Avaiable Stocks Updated Successfully."),
+    INVENTORY_STOCKS_AVAIALBLE_UPDATION_FAILED("1415","Avaiable Stocks Updation Failed."),
     
     // Permission
     PERMISSION_CREATED("1501","Permission Created Successfully."),

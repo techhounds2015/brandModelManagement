@@ -29,7 +29,6 @@ public class InventoryService {
 	}
 
 	public Inventory getInventoryById(String inventoryId) {
-		// TODO Auto-generated method stub
 		return inventoryRepository.getById(inventoryId);
 	}
 
@@ -46,7 +45,7 @@ public class InventoryService {
 						CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
 			Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 			for (CSVRecord csvRecord : csvRecords) {
-				Inventory inventory= inventoryRepository.getByProductId(csvRecord.get("productId"));
+				Inventory inventory = inventoryRepository.getByProductId(csvRecord.get("productId"));
 				inventory.setBatchNumber(csvRecord.get("batchNumber"));
 				inventory.setCess(Float.parseFloat(csvRecord.get("cess")));
 				inventory.setCgst(Float.parseFloat(csvRecord.get("cgst")));
@@ -71,7 +70,7 @@ public class InventoryService {
 	}
 
 	public Inventory updateMRP(String requestorId, String inventoryId, Double mrp) {
-		Inventory inventory=inventoryRepository.getById(inventoryId);
+		Inventory inventory = inventoryRepository.getById(inventoryId);
 		inventory.setModifiedOn(CustomClock.timestamp());
 		inventory.setModifiedBy(requestorId);
 		inventory.setMrp(mrp);
@@ -79,7 +78,7 @@ public class InventoryService {
 	}
 
 	public Inventory updateSellingPrice(String requestorId, String inventoryId, Double sellingPrice) {
-		Inventory inventory=inventoryRepository.getById(inventoryId);
+		Inventory inventory = inventoryRepository.getById(inventoryId);
 		inventory.setModifiedOn(CustomClock.timestamp());
 		inventory.setModifiedBy(requestorId);
 		inventory.setSellingPrice(sellingPrice);
@@ -87,11 +86,15 @@ public class InventoryService {
 	}
 
 	public Inventory updateStocksAvaiabale(String requestorId, String inventoryId, Long stocksAvaiabale) {
-		Inventory inventory=inventoryRepository.getById(inventoryId);
+		Inventory inventory = inventoryRepository.getById(inventoryId);
 		inventory.setModifiedOn(CustomClock.timestamp());
 		inventory.setModifiedBy(requestorId);
 		inventory.setStockavaiable(stocksAvaiabale);
 		return inventoryRepository.save(inventory);
+	}
+
+	public int inventoryIdExists(String inventoryId) {
+		return inventoryRepository.inventoryIdExists(inventoryId);
 	}
 
 }
