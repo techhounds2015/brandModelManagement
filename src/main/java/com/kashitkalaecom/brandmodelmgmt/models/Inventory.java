@@ -73,6 +73,42 @@ public class Inventory {
 	
 	@Column(name = "status")
 	private Boolean status;
+	
+	@Column(name = "buyingprice")
+	private Double buyingPrice;
+	
+
+	@Column(name = "mfgdate")
+	private Timestamp mfgDate;
+	
+	@Column(name = "expdate")
+	private Timestamp expDate;
+	
+	public Timestamp getMfgDate() {
+		return mfgDate;
+	}
+
+	public void setMfgDate(Timestamp mfgDate) {
+		this.mfgDate = mfgDate;
+	}
+
+	public Timestamp getExpDate() {
+		return expDate;
+	}
+
+	public void setExpDate(Timestamp expDate) {
+		this.expDate = expDate;
+	}
+
+	
+
+	public Double getBuyingPrice() {
+		return buyingPrice;
+	}
+
+	public void setBuyingPrice(Double buyingPrice) {
+		this.buyingPrice = buyingPrice;
+	}
 
 	public String getId() {
 		return id;

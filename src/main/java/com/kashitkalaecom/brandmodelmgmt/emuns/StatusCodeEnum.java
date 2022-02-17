@@ -149,6 +149,8 @@ public enum StatusCodeEnum {
     INVENTORY_SELLING_PRICE_UPDATION_FAILED("1413","Selling Price Updation Failed."),
     INVENTORY_STOCKS_AVAIALBLE_UPDATED("1414","Avaiable Stocks Updated Successfully."),
     INVENTORY_STOCKS_AVAIALBLE_UPDATION_FAILED("1415","Avaiable Stocks Updation Failed."),
+    INVENTORY_EXPIRY_DATE_CANNOT_GT_MFG_DATE("1416","Expiry Date Cannot be greater than Manufacturing Date."),
+    INVENTORY_EXPIRY_DATE_CANNOT_LT_CURRENT_DATE("1416","Expiry Date Cannot be Less than today's Date."),
     
     // Permission
     PERMISSION_CREATED("1501","Permission Created Successfully."),

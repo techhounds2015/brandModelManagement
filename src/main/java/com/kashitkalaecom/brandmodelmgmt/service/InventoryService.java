@@ -38,7 +38,7 @@ public class InventoryService {
 		return inventoryRepository.save(inventory);
 	}
 
-	public void saveInventoryFile(MultipartFile file, String requestorId) {
+	public void saveInventoryFile(MultipartFile file, String requestorId) throws Exception {
 
 		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
 				CSVParser csvParser = new CSVParser(fileReader,
@@ -61,6 +61,9 @@ public class InventoryService {
 				inventory.setStockavaiable(Long.parseLong(csvRecord.get("stockavaiable")));
 				inventory.setVendorId(csvRecord.get("vendorId"));
 				inventory.setWarehouseRackNumber(csvRecord.get("warehouseRackNumber"));
+				inventory.setBuyingPrice(Double.parseDouble(csvRecord.get("buyingPrice")));
+				inventory.setMfgDate(CustomClock.stringToTS(csvRecord.get("mfgDate"), "yyyy-MM-dd HH:mm:ss.SSS"));
+				inventory.setExpDate(CustomClock.stringToTS(csvRecord.get("expDate"), "yyyy-MM-dd HH:mm:ss.SSS"));
 				inventoryRepository.save(inventory);
 			}
 

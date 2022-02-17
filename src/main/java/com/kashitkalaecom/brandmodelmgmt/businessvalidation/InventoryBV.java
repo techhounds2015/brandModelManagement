@@ -12,6 +12,7 @@ import com.kashitkalaecom.brandmodelmgmt.models.Product;
 import com.kashitkalaecom.brandmodelmgmt.service.InventoryService;
 import com.kashitkalaecom.brandmodelmgmt.service.OutletService;
 import com.kashitkalaecom.brandmodelmgmt.service.ProductService;
+import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 
 @Component
 public class InventoryBV {
@@ -69,6 +70,22 @@ public class InventoryBV {
 		if (inventory.getMrp() <= 0) {
 			apiResponse.setResponseCode(StatusCodeEnum.INVENTORY_MRP_NEGATIVE.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.INVENTORY_MRP_NEGATIVE.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
+		}
+		
+		
+		if (inventory.getExpDate().after(inventory.getMfgDate())) {
+			apiResponse.setResponseCode(StatusCodeEnum.INVENTORY_EXPIRY_DATE_CANNOT_GT_MFG_DATE.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.INVENTORY_EXPIRY_DATE_CANNOT_GT_MFG_DATE.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
+		}
+		
+
+		if (inventory.getExpDate().after(CustomClock.timestamp())) {
+			apiResponse.setResponseCode(StatusCodeEnum.INVENTORY_EXPIRY_DATE_CANNOT_LT_CURRENT_DATE.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.INVENTORY_EXPIRY_DATE_CANNOT_LT_CURRENT_DATE.getDesc());
 			apiResponse.setProcessingSuccess(false);
 			return apiResponse;
 		}
