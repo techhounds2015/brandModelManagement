@@ -3,16 +3,14 @@ package com.kashitkalaecom.brandmodelmgmt.service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
+import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import org.apache.commons.csv.CSVFormat;
 import com.kashitkalaecom.brandmodelmgmt.models.Inventory;
 import com.kashitkalaecom.brandmodelmgmt.repository.InventoryRepository;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
@@ -22,6 +20,9 @@ public class InventoryService {
 
 	@Autowired
 	InventoryRepository inventoryRepository;
+	
+	@Autowired
+	Inventory inventory;
 
 	public Inventory save(Inventory inventory, String requestorId) {
 		inventory.setCreatedBy(requestorId);
@@ -45,30 +46,30 @@ public class InventoryService {
 						CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
 			Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 			for (CSVRecord csvRecord : csvRecords) {
-				Inventory inventory = inventoryRepository.getByProductId(csvRecord.get("productId"));
-				inventory.setBatchNumber(csvRecord.get("batchNumber"));
-				inventory.setCess(Float.parseFloat(csvRecord.get("cess")));
-				inventory.setCgst(Float.parseFloat(csvRecord.get("cgst")));
-				inventory.setSgst(Float.parseFloat(csvRecord.get("sgst")));
-				inventory.setMrp(Double.parseDouble(csvRecord.get("mrp")));
-				inventory.setOutletId(csvRecord.get("outletId"));
-				inventory.setPoNumber(csvRecord.get("poNumbe"));
-				inventory.setProductId(csvRecord.get("productId"));
-				inventory.setSellingPrice(Double.parseDouble(csvRecord.get("sellingPrice")));
-				inventory.setSku(csvRecord.get("sku"));
-				inventory.setSold(Long.parseLong(csvRecord.get("sold")));
+				//Inventory inventory = inventoryRepository.getByProductId(csvRecord.get(0));
+				inventory.setBatchNumber(csvRecord.get(12)); //batchNumber
+				inventory.setCess(Float.parseFloat(csvRecord.get(9))); //cess
+				inventory.setCgst(Float.parseFloat(csvRecord.get(8))); //cgst
+				inventory.setSgst(csvRecord.get(7).equals("") ? Float.parseFloat("0.0") : Float.parseFloat(csvRecord.get(7))); //sgst
+				inventory.setMrp(Double.parseDouble(csvRecord.get(3))); // MRP
+				inventory.setOutletId(csvRecord.get(1)); // OutletId
+				inventory.setPoNumber(csvRecord.get(14)); //poNumber
+				inventory.setProductId(csvRecord.get(0)); // ProductId
+				inventory.setSellingPrice(Double.parseDouble(csvRecord.get(4))); //sellingPrice
+				inventory.setSku(csvRecord.get(2)); // SKU
+				inventory.setSold(csvRecord.get(15).equals("") ? Long.parseLong("0") : Long.parseLong(csvRecord.get(15))); //sold
 				inventory.setStatus(true);
-				inventory.setStockavaiable(Long.parseLong(csvRecord.get("stockavaiable")));
-				inventory.setVendorId(csvRecord.get("vendorId"));
-				inventory.setWarehouseRackNumber(csvRecord.get("warehouseRackNumber"));
-				inventory.setBuyingPrice(Double.parseDouble(csvRecord.get("buyingPrice")));
-				inventory.setMfgDate(CustomClock.stringToTS(csvRecord.get("mfgDate"), "yyyy-MM-dd HH:mm:ss.SSS"));
-				inventory.setExpDate(CustomClock.stringToTS(csvRecord.get("expDate"), "yyyy-MM-dd HH:mm:ss.SSS"));
+				inventory.setStockavaiable(Long.parseLong(csvRecord.get(5))); //stockavaiable
+				inventory.setVendorId(csvRecord.get(13)); //vendorId
+				inventory.setWarehouseRackNumber(csvRecord.get(13)); //warehouseRackNumber
+				inventory.setBuyingPrice(Double.parseDouble(csvRecord.get(6))); //buyingPrice
+				//inventory.setMfgDate(CustomClock.stringToTS(csvRecord.get(10), "yyyy-MM-dd HH:mm:ss.SSS")); //mfgDate
+				//inventory.setExpDate(CustomClock.stringToTS(csvRecord.get(11), "yyyy-MM-dd HH:mm:ss.SSS")); //expDate
 				inventoryRepository.save(inventory);
 			}
 
 		} catch (IOException e) {
-			throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
+			//throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
 		}
 	}
 
