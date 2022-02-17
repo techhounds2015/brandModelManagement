@@ -67,5 +67,9 @@ public class CustomClock {
 	public static Timestamp stringToTS(String time, String dateFormat) throws Exception {
         return new Timestamp(new SimpleDateFormat(dateFormat).parse(time).getTime());
     }
+	
+	public static Date stringToDate(String date, String dateFormat) throws Exception {
+		return new SimpleDateFormat(dateFormat).parse(date);  
+    }
 
 }

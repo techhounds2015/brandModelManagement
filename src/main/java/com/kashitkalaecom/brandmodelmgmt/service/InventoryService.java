@@ -63,8 +63,8 @@ public class InventoryService {
 				inventory.setVendorId(csvRecord.get(13)); //vendorId
 				inventory.setWarehouseRackNumber(csvRecord.get(13)); //warehouseRackNumber
 				inventory.setBuyingPrice(Double.parseDouble(csvRecord.get(6))); //buyingPrice
-				//inventory.setMfgDate(CustomClock.stringToTS(csvRecord.get(10), "yyyy-MM-dd HH:mm:ss.SSS")); //mfgDate
-				//inventory.setExpDate(CustomClock.stringToTS(csvRecord.get(11), "yyyy-MM-dd HH:mm:ss.SSS")); //expDate
+				inventory.setMfgDate(CustomClock.stringToDate(csvRecord.get(10),"yyyy-MM-dd")); //mfgDate
+				inventory.setExpDate(CustomClock.stringToDate(csvRecord.get(11),"yyyy-MM-dd")); //expDate
 				inventoryRepository.save(inventory);
 			}
 

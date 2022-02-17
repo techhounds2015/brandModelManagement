@@ -1,6 +1,7 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Inventory {
-	
+
 	@Id
 	// @GeneratedValue(strategy = GenerationType.AUTO)
 	protected String id = UUID.randomUUID().toString();
@@ -36,13 +37,13 @@ public class Inventory {
 
 	@Column(name = "modifiedon")
 	protected Timestamp modifiedOn;
-	
+
 	@Column(name = "productid")
 	private String productId;
 
 	@Column(name = "sku")
 	private String sku;
-	
+
 	@Column(name = "mrp")
 	private Double mrp;
 	@Column(name = "sellingprice")
@@ -51,59 +52,56 @@ public class Inventory {
 	private Float cgst;
 	@Column(name = "sgst")
 	private Float sgst;
-	
+
 	@Column(name = "cess")
 	private float cess;
-	
+
 	@Column(name = "outletid")
 	private String outletId;
 	@Column(name = "stockavaiable")
 	private Long stockavaiable;
 	@Column(name = "batchnumber")
 	private String batchNumber;
-	
+
 	@Column(name = "warehouseracknumber")
 	private String warehouseRackNumber;
-	
+
 	@Column(name = "vendorid")
 	private String vendorId;
-	
+
 	@Column(name = "ponumber")
 	private String poNumber;
-	
+
 	@Column(name = "sold")
 	private Long sold;
-	
+
 	@Column(name = "status")
 	private Boolean status;
-	
+
 	@Column(name = "buyingprice")
 	private Double buyingPrice;
-	
 
 	@Column(name = "mfgdate")
-	private Timestamp mfgDate;
-	
+	private Date mfgDate;
+
 	@Column(name = "expdate")
-	private Timestamp expDate;
-	
-	public Timestamp getMfgDate() {
+	private Date expDate;
+
+	public Date getMfgDate() {
 		return mfgDate;
 	}
 
-	public void setMfgDate(Timestamp mfgDate) {
+	public void setMfgDate(Date mfgDate) {
 		this.mfgDate = mfgDate;
 	}
 
-	public Timestamp getExpDate() {
+	public Date getExpDate() {
 		return expDate;
 	}
 
-	public void setExpDate(Timestamp expDate) {
+	public void setExpDate(Date expDate) {
 		this.expDate = expDate;
 	}
-
-	
 
 	public Double getBuyingPrice() {
 		return buyingPrice;
@@ -272,6 +270,5 @@ public class Inventory {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	
-	
+
 }

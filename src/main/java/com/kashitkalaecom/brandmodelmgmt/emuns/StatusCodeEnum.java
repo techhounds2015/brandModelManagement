@@ -151,6 +151,8 @@ public enum StatusCodeEnum {
     INVENTORY_STOCKS_AVAIALBLE_UPDATION_FAILED("1415","Avaiable Stocks Updation Failed."),
     INVENTORY_EXPIRY_DATE_CANNOT_GT_MFG_DATE("1416","Expiry Date Cannot be greater than Manufacturing Date."),
     INVENTORY_EXPIRY_DATE_CANNOT_LT_CURRENT_DATE("1416","Expiry Date Cannot be Less than today's Date."),
+    INVENTORY_SAMPLE_FILE_DOWNLOADED("1417","Sample Inventory File Downloaded Successfully."),
+    INVENTORY_SAMPLE_FILE_DOWNLOAD_FAILED("1418","Sample Inventory File Download Failed."),
     
     // Permission
     PERMISSION_CREATED("1501","Permission Created Successfully."),

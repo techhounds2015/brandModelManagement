@@ -1,6 +1,16 @@
 package com.kashitkalaecom.brandmodelmgmt.controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +28,9 @@ import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.Inventory;
 import com.kashitkalaecom.brandmodelmgmt.service.InventoryService;
 import com.kashitkalaecom.brandmodelmgmt.service.ProductService;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.util.FileCopyUtils;
 
 @RestController
 @RequestMapping("/api/v1/inventory")
@@ -31,6 +44,9 @@ public class InventoryController {
 
 	@Autowired
 	InventoryBV inventoryBV;
+
+	@Autowired
+	private ResourceLoader resourceLoader;
 
 	@PostMapping("/create")
 	public APIResponse<Inventory> createInventory(@RequestHeader String requestorId, @RequestBody Inventory inventory) {
@@ -158,7 +174,7 @@ public class InventoryController {
 			apiResponse.setResponseMessage(StatusCodeEnum.INVENTORY_SELLING_PRICE_UPDATION_FAILED.getDesc());
 		}
 		return apiResponse;
-		
+
 	}
 
 	@PostMapping("/bulk/fileUpload")
@@ -178,6 +194,23 @@ public class InventoryController {
 			apiResponse.setResponseMessage(StatusCodeEnum.INVENTORY_CREATION_FAILED.getDesc());
 		}
 		return apiResponse;
+
+	}
+
+	@GetMapping("/bulk/downloadSampleFile")
+	public ResponseEntity<InputStreamResource> downloadSampleFile(@RequestHeader String requestorId,  HttpServletResponse response)
+			throws IOException {
+		APIResponse<Inventory> apiResponse = new APIResponse<>();
+
+		Resource resource = resourceLoader.getResource("classpath:" + "sample-inventory.csv");
+		if (resource.exists()) {
+			response.setContentType("text/csv");
+			response.setHeader("Content-Disposition", String.format("attachment; filename=" + resource.getFilename()));
+			response.setContentLength((int) resource.contentLength());
+			InputStream inputStream = resource.getInputStream();
+			FileCopyUtils.copy(inputStream, response.getOutputStream());
+		}
+		return null;
 
 	}
 
