@@ -57,8 +57,8 @@ public class UserService {
 		return userRepository.findByMobile(mobile);
 	}
 
-	public List<User> getByUserName(String tenantCode, String userId) {
-		return userRepository.findByUserId(userId);
+	public User getByUserName(String tenantCode, String userName) {
+		return userRepository.getByUserName(userName);
 	}
 
 	public int userEmailExists(String email) {

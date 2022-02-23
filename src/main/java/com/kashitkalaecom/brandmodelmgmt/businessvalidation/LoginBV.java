@@ -55,22 +55,15 @@ public class LoginBV {
 		APIResponse<User> apiResponse = new APIResponse<>();
 		apiResponse.setProcessingSuccess(true);
 
-		List<User> userList = userService.getByUserName(tenantCode, loginRequest.getUserName());
+		User user = userService.getByUserName(tenantCode, loginRequest.getUserName());
 
-		if (userList == null || userList.isEmpty()) {
+		if (user == null) {
 			apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
 			apiResponse.setProcessingSuccess(false);
 			return apiResponse;
 		}
 
-		if (userList.size() > 1) {
-			apiResponse.setResponseCode(StatusCodeEnum.MORETHAN_ONE_USER.getCode());
-			apiResponse.setResponseMessage(StatusCodeEnum.MORETHAN_ONE_USER.getDesc());
-			apiResponse.setProcessingSuccess(false);
-			return apiResponse;
-		}
-		User user = userList.get(0);
 		String passord = PasswordUtil.encryptedPassword(loginRequest.getPassword(), user.getSalt());
 		if (!passord.equals(user.getPassword())) {
 			apiResponse.setResponseCode(StatusCodeEnum.INVALID_CREDENTIAL.getCode());

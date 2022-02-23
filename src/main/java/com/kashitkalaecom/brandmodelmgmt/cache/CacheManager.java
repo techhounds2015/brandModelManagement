@@ -1,13 +1,8 @@
 package com.kashitkalaecom.brandmodelmgmt.cache;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.utilities.PropertyConfig;
 
@@ -33,7 +28,6 @@ public abstract class CacheManager
 		
 			cacheProvider=PropertyConfig.loadProperties().getProperty("CacheProvider");//properties.getProperty("CacheProvider");
 	    } catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    cacheManager = buildCacheManager(cacheProvider);
@@ -60,8 +54,6 @@ public abstract class CacheManager
 
     private static CacheManager buildCacheManager(String cacheProvider)
     {
-	System.out.println("Cache provider :" + cacheProvider);
-
 	if (StringUtils.equals(cacheProvider, redisSingle))
 	{
 	    cacheManager = RedisSingleCacheManager.getCacheManager();

@@ -18,7 +18,6 @@ public class User {
 
 	private String name;
 	
-	@Column(name="username")
 	private String email;
 	private String mobile;
 	
@@ -50,6 +49,9 @@ public class User {
 	private boolean forcePasswordChange;
 	private String token;
 	private String deviceId;
+	
+	@Column(name="username")
+	private String userName;
 	
 	
 	public String getName() {
@@ -138,7 +140,6 @@ public class User {
 		this.salt = salt;
 	}
 
-	private String userName;
 	public String getUserName() {
 		return userName;
 	}

@@ -20,8 +20,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query("from User u where u.mobile =:mobile ")
 	public User findByMobile(String mobile);
 
-	public List<User> findByUserId(String userId);
-
 	@Query("select count(*) from User u where u.email =:email ")
 	public int userEmailExists(String email);
 	
@@ -31,10 +29,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query("select count(*) from User u where u.id =:userId ")
 	public int userIdExists(String userId);
 
-	@Query("select * from User u where u.username =:userName ")
+	@Query("from User u where u.userName =:userName")
 	public User getByUserName(String userName);
 	
-	@Query("select count(*) from User u where u.username =:userName ")
+	@Query("select count(*) from User u where u.userName =:userName")
 	public int userNameExists(String userName);
 
 }
