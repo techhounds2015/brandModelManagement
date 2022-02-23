@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.kashitkalaecom.brandmodelmgmt.rolepermission.RolePermissionMapping;
 import com.kashitkalaecom.brandmodelmgmt.rolepermission.RolePermissionMappingService;
+import com.kashitkalaecom.brandmodelmgmt.utilities.PropertyConfig;
 
 @Component
 @Order(1)
@@ -28,6 +29,8 @@ public class PermissionsFilter implements Filter {
 	
 	@Autowired
 	RolePermissionMappingService mapping;
+	
+	private String enableJwt;
 
 	private static final Logger logger = LoggerFactory.getLogger(PermissionsFilter.class);
 
@@ -42,6 +45,7 @@ public class PermissionsFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
+		enableJwt=PropertyConfig.loadProperties().getProperty("enableJwt");
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String reqUri = httpRequest.getRequestURI();
@@ -52,6 +56,13 @@ public class PermissionsFilter implements Filter {
 		String authHeader =  httpRequest.getHeader("Authorization");
 		String username = null;
 		String authToken = null;
+		
+		
+		if (!Boolean.valueOf(enableJwt)) {
+			chain.doFilter(request, response);
+			return;
+		}
+		
 		if (authHeader != null && authHeader.startsWith("Bearer ")) {
 			authToken = authHeader.substring(7);
 			username = jwtTokenUtil.getUsernameFromToken(authToken);

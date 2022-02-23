@@ -1,6 +1,5 @@
 package com.kashitkalaecom.brandmodelmgmt.security;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,47 +18,54 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.kashitkalaecom.brandmodelmgmt.service.UserServiceImpl;
+import com.kashitkalaecom.brandmodelmgmt.utilities.PropertyConfig;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+	@Autowired
+	private JwtAuthenticationEntryPoint unauthorizedHandler;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    private UserServiceImpl userService;
+	@Autowired
+	private UserServiceImpl userService;
 
-    @Value("${jwt.header}")
-    private String tokenHeader;
+	@Value("${jwt.header}")
+	private String tokenHeader;
 
-    @Value("${jwt.route.authentication.path}")
-    private String authenticationPath;
+	@Value("${jwt.route.authentication.path}")
+	private String authenticationPath;
+	
+	private static String enableJwt;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(userService)
-            .passwordEncoder(passwordEncoderBean());
-    }
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userService).passwordEncoder(passwordEncoderBean());
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoderBean() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoderBean() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Override
+	@Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+    	
+		
+		enableJwt=PropertyConfig.loadProperties().getProperty("enableJwt");
+    	
+    	if (Boolean.valueOf(enableJwt)) {
+    	
         httpSecurity
             // we don't need CSRF because our token is invulnerable
             .csrf().disable()
@@ -86,34 +92,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .headers()
             .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
             .cacheControl();
+    	}
+        else {
+        	httpSecurity.csrf().disable().authorizeRequests().anyRequest().permitAll();
+        }
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        // AuthenticationTokenFilter will ignore the below paths
-        web
-            .ignoring()
-            .antMatchers(
-                HttpMethod.POST,
-                authenticationPath
-            )
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		// AuthenticationTokenFilter will ignore the below paths
+		web.ignoring().antMatchers(HttpMethod.POST, authenticationPath)
 
-            // allow anonymous resource requests
-            .and()
-            .ignoring()
-            .antMatchers(
-                HttpMethod.GET,
-              
-                "/*.html",
-                "/favicon.ico",
-                "/**/*.html",
-                "/**/*.css",
-                "/**/*.js"
-            )
+				// allow anonymous resource requests
+				.and().ignoring().antMatchers(HttpMethod.GET,
 
-            // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
-            .and()
-            .ignoring()
-            ;
-    }
+						"/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js")
+
+				// Un-secure H2 Database (for testing purposes, H2 console shouldn't be
+				// unprotected in production)
+				.and().ignoring();
+	}
 }
