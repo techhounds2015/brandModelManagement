@@ -15,6 +15,7 @@ import com.kashitkalaecom.brandmodelmgmt.businessvalidation.UserBV;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.fieldvalidation.UserFV;
 import com.kashitkalaecom.brandmodelmgmt.models.User;
+import com.kashitkalaecom.brandmodelmgmt.requests.ChangePasswordRequest;
 import com.kashitkalaecom.brandmodelmgmt.service.UserService;
 
 @RestController
@@ -84,10 +85,40 @@ public class UserController {
 		APIResponse<User> apiResponse = new APIResponse<>();
 
 		try {
+			int userCount = userService.userIdExists(user.getId());
+			if (userCount == 0) {
+				apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
+				apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
+				return apiResponse;
+			}
+
 			user = userService.update(user, requestorId);
 			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATED.getDesc());
 			apiResponse.setResponseObject(user);
+		} catch (Exception e) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATION_FAILED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATION_FAILED.getDesc());
+		}
+		return apiResponse;
+	}
+
+	@PutMapping("/changePassword")
+	public APIResponse<User> changePassword(@RequestHeader String requestorId,
+			@RequestBody ChangePasswordRequest changePasswordRequest) {
+
+		APIResponse<User> apiResponse = new APIResponse<>();		
+
+		try {
+			
+			apiResponse = userBV.bValidateChangePassword(null, changePasswordRequest, null);
+			if (Boolean.FALSE.equals(apiResponse.getProcessingSuccess())) {
+				return apiResponse;
+			}
+			
+			userService.changePassword(changePasswordRequest, requestorId);
+			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATED.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATED.getDesc());
 		} catch (Exception e) {
 			apiResponse.setResponseCode(StatusCodeEnum.USER_UPDATION_FAILED.getCode());
 			apiResponse.setResponseMessage(StatusCodeEnum.USER_UPDATION_FAILED.getDesc());

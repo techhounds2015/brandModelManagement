@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 import com.kashitkalaecom.brandmodelmgmt.apiresponse.APIResponse;
 import com.kashitkalaecom.brandmodelmgmt.emuns.StatusCodeEnum;
 import com.kashitkalaecom.brandmodelmgmt.models.User;
+import com.kashitkalaecom.brandmodelmgmt.requests.ChangePasswordRequest;
 import com.kashitkalaecom.brandmodelmgmt.rolepermission.PermissionService;
 import com.kashitkalaecom.brandmodelmgmt.rolepermission.RoleService;
 import com.kashitkalaecom.brandmodelmgmt.service.UserService;
+import com.kashitkalaecom.brandmodelmgmt.utilities.PasswordUtil;
 import com.kashitkalaecom.brandmodelmgmt.validation.MasterDataService;
 
 @Component
@@ -82,4 +84,47 @@ public class UserBV {
 		return apiResponse;
 	}
 
+	public APIResponse<User> bValidateChangePassword(String tenantCode, ChangePasswordRequest changePasswordRequest, String locale) {
+
+		APIResponse<User> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
+		try {
+			apiResponse = validateChangePassword(tenantCode, changePasswordRequest, locale);
+
+		} catch (Exception e) {
+			apiResponse.setResponseMessage(StatusCodeEnum.INVALID_REQUEST.getDesc());
+			apiResponse.setResponseCode(StatusCodeEnum.INVALID_REQUEST.getCode());
+			apiResponse.setProcessingSuccess(false);
+			logger.error(e.getMessage(), e);
+			return apiResponse;
+		}
+
+		return apiResponse;
+	}
+
+	private APIResponse<User> validateChangePassword(String tenantCode, ChangePasswordRequest changePasswordRequest, String locale) {
+		APIResponse<User> apiResponse = new APIResponse<>();
+		apiResponse.setProcessingSuccess(true);
+
+
+		int userNamexists = userService.userNamexists(changePasswordRequest.getUserName());
+		
+		if (userNamexists == 0) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_NOT_EXISTS.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_NOT_EXISTS.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
+		}
+		
+		if (!PasswordUtil.base64ToString(changePasswordRequest.getPassword()).equals(PasswordUtil.base64ToString(changePasswordRequest.getConfirmPassword()))) {
+			apiResponse.setResponseCode(StatusCodeEnum.USER_PASSWORD_MISMATCH.getCode());
+			apiResponse.setResponseMessage(StatusCodeEnum.USER_PASSWORD_MISMATCH.getDesc());
+			apiResponse.setProcessingSuccess(false);
+			return apiResponse;
+		}
+
+		
+
+		return apiResponse;
+	}
 }

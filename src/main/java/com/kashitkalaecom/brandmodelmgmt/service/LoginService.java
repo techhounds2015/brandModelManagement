@@ -25,12 +25,12 @@ public class LoginService {
 	public LoginResponse vaildateUser( APIResponse apiResponse, String requestorId) throws Exception {
 		User user= (User) apiResponse.getResponseObject();
 		JwtTokenRequest jwtTokenRequest = new JwtTokenRequest();
-		jwtTokenRequest.setUserName(user.getUserId());;
-		String token = jwtTokenUtil.generateToken(user.getUserId(), jwtTokenRequest);
+		jwtTokenRequest.setUserName(user.getUserName());;
+		String token = jwtTokenUtil.generateToken(user.getUserName(), jwtTokenRequest);
 		LoginResponse  loginResponse=new LoginResponse();
 		loginResponse.setId(user.getId());
 		loginResponse.setToken(token);
-		CacheManager.getCacheManager().cacheObject(user.getUserId(), user);
+		CacheManager.getCacheManager().cacheObject(user.getUserName(), user);
 		return loginResponse;
 	}
 

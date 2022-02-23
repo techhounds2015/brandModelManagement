@@ -31,4 +31,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query("select count(*) from User u where u.id =:userId ")
 	public int userIdExists(String userId);
 
+	@Query("select * from User u where u.username =:userName ")
+	public User getByUserName(String userName);
+	
+	@Query("select count(*) from User u where u.username =:userName ")
+	public int userNameExists(String userName);
+
 }

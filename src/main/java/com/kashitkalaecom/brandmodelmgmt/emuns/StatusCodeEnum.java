@@ -78,6 +78,9 @@ public enum StatusCodeEnum {
     MORETHAN_ONE_USER("8009","More than one user exists."),
     INVALID_CREDENTIAL("8010", "Invalid credentials"),
     USER_LOGIN_FAILED("8011", "Unable to login please try after sometime"),
+    USER_PASSWORD_UPDATED("8012","User Password Updated Successfully."),
+    USER_PASSWORD_UPDATION_FAILED("8013","User Password Updation failed."),
+    USER_PASSWORD_MISMATCH("8014","Password and Confirm Password are not matched."),
     
     
 	// Role

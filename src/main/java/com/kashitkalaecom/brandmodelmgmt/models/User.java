@@ -18,8 +18,7 @@ public class User {
 
 	private String name;
 	
-	@Column(name="userid")
-	private String userId;
+	@Column(name="username")
 	private String email;
 	private String mobile;
 	
@@ -54,12 +53,7 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -139,5 +133,12 @@ public class User {
 		this.salt = salt;
 	}
 
+	private String userName;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 }

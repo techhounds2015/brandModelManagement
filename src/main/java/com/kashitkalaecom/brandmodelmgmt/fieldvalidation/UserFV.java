@@ -59,7 +59,7 @@ public class UserFV {
 		if (errorString != null)
 			hashMap.put("mobile", errorString);
 
-		errorString = validationService.validateField(tenantCode, module, user.getUserId(), "userId", locale);
+		errorString = validationService.validateField(tenantCode, module, user.getUserName(), "userName", locale);
 		if (errorString != null)
 			hashMap.put("userId", errorString);
 

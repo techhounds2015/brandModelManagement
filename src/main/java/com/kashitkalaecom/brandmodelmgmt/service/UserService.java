@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kashitkalaecom.brandmodelmgmt.models.User;
 import com.kashitkalaecom.brandmodelmgmt.repository.UserRepository;
+import com.kashitkalaecom.brandmodelmgmt.requests.ChangePasswordRequest;
 import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
 import com.kashitkalaecom.brandmodelmgmt.utilities.PasswordUtil;
 
@@ -28,8 +29,11 @@ public class UserService {
 	}
 
 	public User update(User user, String requestorId) {
-		user.setModifiedBy(requestorId);
-		user.setModifiedOn(CustomClock.timestamp());
+		User user1 = userRepository.getById(user.getId());
+		user1.setModifiedBy(requestorId);
+		user1.setModifiedOn(CustomClock.timestamp());
+		user1.setMobile(user.getMobile());
+		user1.setEmail(user.getEmail());	
 		return userRepository.save(user);
 	}
 
@@ -67,6 +71,21 @@ public class UserService {
 
 	public int userIdExists(String userId) {
 		return userRepository.userIdExists(userId);
+	}
+
+
+	public User changePassword(ChangePasswordRequest changePasswordRequest, String requestorId) {
+		User user = userRepository.getByUserName(changePasswordRequest.getUserName());
+		user.setPassword(changePasswordRequest.getPassword());
+		user=PasswordUtil.generatePassword(user);
+		user.setModifiedBy(requestorId);
+		user.setModifiedOn(CustomClock.timestamp());
+		return userRepository.save(user);
+		
+	}
+
+	public int userNamexists(String userName) {
+		return userRepository.userNameExists(userName);
 	}
 
 }
