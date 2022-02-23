@@ -179,6 +179,14 @@ public enum StatusCodeEnum {
     ROLE_PERMISSION_MAPPING_NOT_EXISTS("1705","Role Permission Mapping  doesn't exists."),
     ROLE_PERMISSION_MAPPING_DUPLICATE("1706","Role Permission Mapping  already exists."),
     
+    // Order
+    ORDER_CREATED("1801","Order Created Successfully."),    
+    ORDER_UPDATED("1802","Order Updated Successfully."),
+    ORDER_CANCELLED("1803","Order Cancelled Successfully."),
+    ORDER_PLACED("1804","Order Placed Successfully."),
+    ORDER_CREATION_FAILED("1805", "Order Creation Failed"),
+    ORDER_PLACED_FAILED("1806", "Order is not placed"),
+    
 	
 	// Error while validating request 
     ERROR_ON_VALIDATING_REQUEST("8000","Error while validating request."),
