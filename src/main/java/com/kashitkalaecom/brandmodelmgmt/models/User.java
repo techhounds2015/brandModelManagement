@@ -46,6 +46,11 @@ public class User {
 	@Column(name="modifiedon")
 	protected Timestamp modifiedOn;
 	
+	private boolean optedforMarketing;
+	private boolean forcePasswordChange;
+	private String token;
+	private String deviceId;
+	
 	
 	public String getName() {
 		return name;
@@ -140,5 +145,30 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public boolean isForcePasswordChange() {
+		return forcePasswordChange;
+	}
+	public void setForcePasswordChange(boolean forcePasswordChange) {
+		this.forcePasswordChange = forcePasswordChange;
+	}
+	public boolean isOptedforMarketing() {
+		return optedforMarketing;
+	}
+	public void setOptedforMarketing(boolean optedforMarketing) {
+		this.optedforMarketing = optedforMarketing;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public String getDeviceId() {
+		return deviceId;
+	}
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+	
 
 }
