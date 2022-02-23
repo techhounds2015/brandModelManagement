@@ -1,4 +1,4 @@
-package com.kashitkalaecom.brandmodelmgmt.models;
+package com.kashitkalaecom.brandmodelmgmt.security;
 
 import java.io.IOException;
 
@@ -24,6 +24,9 @@ import com.kashitkalaecom.brandmodelmgmt.rolepermission.RolePermissionMappingSer
 public class PermissionsFilter implements Filter {
 
 	@Autowired
+	JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
 	RolePermissionMappingService mapping;
 
 	private static final Logger logger = LoggerFactory.getLogger(PermissionsFilter.class);
@@ -46,6 +49,17 @@ public class PermissionsFilter implements Filter {
 		String module = "";
 		String action = "";
 		String requestUserid = httpRequest.getHeader("requestorId");
+		String authHeader =  httpRequest.getHeader("Authorization");
+		String username = null;
+		String authToken = null;
+		if (authHeader != null && authHeader.startsWith("Bearer ")) {
+			authToken = authHeader.substring(7);
+			username = jwtTokenUtil.getUsernameFromToken(authToken);
+		} else {
+			logger.warn("couldn't find bearer string, will ignore the header");
+			return;
+		}
+		
 		
 		if (reqUri.equals("/api/v1/login/signIn")) {
 			chain.doFilter(request, response);
@@ -62,7 +76,7 @@ public class PermissionsFilter implements Filter {
 			action = tokens[4];
 		}
 
-		RolePermissionMapping pemisssion = mapping.getUserPermission(module, requestUserid);
+		RolePermissionMapping pemisssion = mapping.getUserPermission(module, username);
 		if ("CREATE".equals(pemisssion.getAction())) {
 			chain.doFilter(request, response);
 			return;

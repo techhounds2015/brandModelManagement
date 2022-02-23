@@ -22,9 +22,9 @@ public class RolePermissionMappingService {
 	UserRepository repository;
 
 	@Transactional
-	public RolePermissionMapping getUserPermission(String module, String requestUserid) {
+	public RolePermissionMapping getUserPermission(String module, String userName) {
 		
-		User user= repository.getById(requestUserid);
+		User user= repository.getByUserName(userName);
 		Permission permission= permissionRepository.getByName(module);
 		return mapping.getUserPermission(user.getRoleId(),permission.getId());
 		 
