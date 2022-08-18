@@ -502,6 +502,7 @@ CREATE TABLE "role" (
 	modifiedon timestamp(0) NULL,
 	"name" varchar NULL,
 	description varchar NULL,
+	roleType varchar NULL,
 	status bool NULL
 );
 

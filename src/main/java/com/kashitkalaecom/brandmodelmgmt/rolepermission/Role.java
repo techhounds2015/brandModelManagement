@@ -39,6 +39,8 @@ public class Role {
 	private String description;
 	
 	private Boolean status;
+	
+	private String roleType; // ADMIN, OPERATION_USERS , USER
 
 	public String getId() {
 		return id;
@@ -102,6 +104,14 @@ public class Role {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
 	
 	
