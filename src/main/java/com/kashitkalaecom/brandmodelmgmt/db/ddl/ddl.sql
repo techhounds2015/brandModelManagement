@@ -706,3 +706,17 @@ CREATE TABLE webpages (
 	status bool NULL,
 	CONSTRAINT webpages_pk PRIMARY KEY (id)
 );
+
+
+CREATE TABLE ratings (
+	id varchar NOT NULL,
+	createdby varchar NULL,
+	createdon timestamp NULL,
+	modifiedby varchar NULL,
+	modifiedon timestamp NULL,
+	userid varchar NULL,
+	productid varchar NULL,
+	rating numeric NULL,
+	comments varchar NULL,
+	CONSTRAINT ratings_pk PRIMARY KEY (id)
+);
