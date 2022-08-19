@@ -8,12 +8,15 @@ import com.kashitkalaecom.brandmodelmgmt.models.OrderItem;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderRequest {
+
+	
 	private String orderStatus;
 	private int subtotal;
 	private int shippingCharges;
 	private int tax;
 	private int total;
 	private int customerId;
+	private String outletId;
 	
 	private List<OrderItem> orderItem;
 	private Billing billing;
@@ -42,14 +45,6 @@ public class OrderRequest {
 		this.orderStatus = orderStatus;
 	}
 
-	public int getSubtotal() {
-		return subtotal;
-	}
-
-	public void setSubtotal(int subtotal) {
-		this.subtotal = subtotal;
-	}
-
 	public int getShippingCharges() {
 		return shippingCharges;
 	}
@@ -66,6 +61,15 @@ public class OrderRequest {
 		this.tax = tax;
 	}
 
+
+	public int getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(int subtotal) {
+		this.subtotal = subtotal;
+	}
+
 	public int getTotal() {
 		return total;
 	}
@@ -77,6 +81,7 @@ public class OrderRequest {
 	public List<OrderItem> getOrderItem() {
 		return orderItem;
 	}
+
 
 	public void setOrderItem(List<OrderItem> orderItem) {
 		this.orderItem = orderItem;
@@ -96,6 +101,14 @@ public class OrderRequest {
 
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
+	}
+
+	public String getOutletId() {
+		return outletId;
+	}
+
+	public void setOutletId(String outletId) {
+		this.outletId = outletId;
 	}
 	
 }

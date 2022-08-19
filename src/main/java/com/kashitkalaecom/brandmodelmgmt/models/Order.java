@@ -1,62 +1,111 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
+
 @Entity
-@Table(name = "oderdetails")
+@Table(name = "customerorder")
 public class Order {
 
 	@Id 
 	@Column(name = "id")
 	protected String id = UUID.randomUUID().toString();
 	
-	@Column(name = "orderStatus")
+	@Column(name = "createdby")
+	protected String createdBy;
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	@Column(name = "createdon")
+	protected Timestamp createdOn = CustomClock.timestamp();
+
+	@Column(name = "modifiedby")
+	protected String modifiedBy;
+
+	@Column(name = "modifiedon")
+	protected Timestamp modifiedOn;
+	
+	@Column(name = "orderstatus")
 	private String status;
 
 	@Column(name = "subtotal")
-	private BigDecimal subtotal;
+	private int subtotal;
 
 	@Column(name = "tax")
 	private int tax;
 
 	@Column(name = "total")
-	private BigDecimal total;
+	private int total;
 
-	@Column(name = "orderdate")
-	private LocalDateTime created;
-
+	/*
+	 * @Column(name = "orderdate") private Timestamp created =
+	 * CustomClock.timestamp();
+	 */
 	@Column(name = "shippingcharge")
 	private int shippingCharge;
 
-	@Column(name = "userid")
+	@Column(name = "customerid")
 	private int customerId;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id", referencedColumnName = "id")
-	private List<OrderItem> orderItem;
+	@Column(name = "outletid")
+	private String outletId;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id", referencedColumnName = "bill_id")
-	private Billing billing;
+	/*
+	 * @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	 * 
+	 * @JoinColumn(name = "order_id", referencedColumnName = "id") private
+	 * List<OrderItem> orderItem;
+	 */
 
-	protected Order() {
+	/*
+	 * @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	 * 
+	 * @JoinColumn(name = "id", referencedColumnName = "orderid") private Billing
+	 * billing;
+	 */
+
+	public Order() {
 	}
 
-	public Order(String status, BigDecimal subtotal, int tax, BigDecimal total, int shippingCharge, int customerId2,
+	public Order(String status, int subtotal, int tax, int total, int shippingCharge, int customerId2,
 			List<OrderItem> orderItem, Billing billing) {
 		super();
 		this.status = status;
@@ -65,14 +114,16 @@ public class Order {
 		this.total = total;
 		this.shippingCharge = shippingCharge;
 		this.customerId = customerId2;
-		this.orderItem = orderItem;
-		this.billing = billing;
+		//this.orderItem = orderItem;
+		//this.billing = billing;
 	}
-
-	@PrePersist
-	void onCreate() {
-		this.setCreated(LocalDateTime.now());
-	}
+ 
+	
+	/*
+	 * public Timestamp getCreated() { return created; }
+	 * 
+	 * public void setCreated(Timestamp created) { this.created = created; }
+	 */
 
 
 	public String getStatus() {
@@ -93,14 +144,6 @@ public class Order {
 		this.id = id;
 	}
 
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
-
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
-
 	public int getTax() {
 		return tax;
 	}
@@ -109,21 +152,23 @@ public class Order {
 		this.tax = tax;
 	}
 
-	public BigDecimal getTotal() {
+	public int getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(int subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	public int getTotal() {
 		return total;
 	}
 
-	public void setTotal(BigDecimal total) {
+	public void setTotal(int total) {
 		this.total = total;
 	}
 
-	public LocalDateTime getCreated() {
-		return created;
-	}
-
-	public void setCreated(LocalDateTime created) {
-		this.created = created;
-	}
+	
 
 	public int getShippingCharge() {
 		return shippingCharge;
@@ -141,27 +186,24 @@ public class Order {
 		this.customerId = customerId;
 	}
 
-	public List<OrderItem> getOrderItem() {
-		return orderItem;
+	public String getOutletId() {
+		return outletId;
 	}
 
-	public void setOrderItem(List<OrderItem> orderItem) {
-		this.orderItem = orderItem;
+	public void setOutletId(String outletId) {
+		this.outletId = outletId;
 	}
 
-	public Billing getBilling() {
-		return billing;
-	}
 
-	public void setBilling(Billing billing) {
-		this.billing = billing;
-	}
-
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", status=" + status + ", subtotal=" + subtotal + ", tax=" + tax + ", total=" + total
-				+ ", created=" + created + ", shippingCharge=" + shippingCharge + ", customerId=" + customerId
-				+ ", orderItem=" + orderItem + "]";
-	}
-
+	/*
+	 * public Billing getBilling() { return billing; }
+	 * 
+	 * public void setBilling(Billing billing) { this.billing = billing; }
+	 */
+	/*
+	 * @Override public String toString() { return "Order [id=" + id + ", status=" +
+	 * status + ", subtotal=" + subtotal + ", tax=" + tax + ", total=" + total +
+	 * ", created=" + created + ", shippingCharge=" + shippingCharge +
+	 * ", customerId=" + customerId + ", orderItem=" + orderItem + "]"; }
+	 */
 }

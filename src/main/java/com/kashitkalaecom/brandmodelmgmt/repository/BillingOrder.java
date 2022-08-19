@@ -8,4 +8,6 @@ import com.kashitkalaecom.brandmodelmgmt.models.Billing;
 @Repository
 public interface BillingOrder extends JpaRepository<Billing, Integer> {
 
+	Billing getByOrderId(String id);
+
 }

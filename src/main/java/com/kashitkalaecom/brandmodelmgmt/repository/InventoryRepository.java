@@ -12,4 +12,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, String>{
 	@Query("select count(1) from Inventory m where m.id =:inventoryId ")
 	public int inventoryIdExists(String inventoryId);
 
+	@Query(" from Inventory m where m.productId =:productId and m.outletId=:outletId ")
+	public Inventory getByProductAndutletId(String productId, String outletId);
+
 }

@@ -9,8 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.kashitkalaecom.brandmodelmgmt.models.OrderItem;
 
 @Repository
-public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
+public interface OrderItemRepository extends JpaRepository<OrderItem, String> {
 	
-	@Query("FROM OrderItem WHERE id = ?1")
-	List<OrderItem> findAllById(int id);
+	@Query("FROM OrderItem WHERE orderId =:orderId")
+	List<OrderItem> findAllById(String orderId);
+
 }

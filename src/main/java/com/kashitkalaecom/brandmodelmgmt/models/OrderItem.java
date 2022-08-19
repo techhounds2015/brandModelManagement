@@ -1,20 +1,35 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
+import java.sql.Timestamp;
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
+
 @Entity
-@Table(name = "orderItems")
+@Table(name = "orderitem")
 public class OrderItem {
 	
+	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private int itemId;
+	protected String id = UUID.randomUUID().toString();
+		
+	@Column(name = "createdby")
+	protected String createdBy;
+
+	@Column(name = "createdon")
+	protected Timestamp createdOn = CustomClock.timestamp();
+
+	@Column(name = "modifiedby")
+	protected String modifiedBy;
+
+	@Column(name = "modifiedon")
+	protected Timestamp modifiedOn;
 	
 	@Column(name = "itemQuantity")
 	private int itemQuantity;
@@ -24,9 +39,55 @@ public class OrderItem {
 	
 	@Column(name = "itemPrice")
 	private String itemPrice;
+
+	@Column(name = "orderid")
+	private String orderId;
 	
+	@Column(name = "productid")
+    private String productId;
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getItemPrice() {
 		return itemPrice;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 
 	public void setItemPrice(String itemPrice) {
@@ -41,23 +102,27 @@ public class OrderItem {
 		this.itemName = itemName;
 	}
 
-	/**
-	 * @return the itemId
-	 */
-	public int getItemId() {
-		return itemId;
+	
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 
 	/**
 	 * @param itemId the itemId to set
 	 */
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
-
-	/**
-	 * @return the itemQuantity
-	 */
+	
 	public int getItemQuantity() {
 		return itemQuantity;
 	}

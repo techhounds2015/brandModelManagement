@@ -185,7 +185,10 @@ public enum StatusCodeEnum {
     ORDER_CANCELLED("1803","Order Cancelled Successfully."),
     ORDER_PLACED("1804","Order Placed Successfully."),
     ORDER_CREATION_FAILED("1805", "Order Creation Failed"),
+    ORDER_DETAIL_FETCHED("1805", "Order Details fetch sucessfully."),
     ORDER_PLACED_FAILED("1806", "Order is not placed"),
+    ORDER_ITEMS_NOT_EXISTS("1505","Order items doesn't exists."),
+	
     
 	
 	// Error while validating request 

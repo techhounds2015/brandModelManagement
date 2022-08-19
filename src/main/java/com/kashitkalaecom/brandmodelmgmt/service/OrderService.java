@@ -7,15 +7,18 @@ import com.kashitkalaecom.brandmodelmgmt.requests.OrderRequest;
 import com.kashitkalaecom.brandmodelmgmt.responses.OrderResponse;
 
 public interface OrderService {
-	OrderResponse findById(int id);
-
-	Order orderInsert(OrderRequest o);
-
+	
+	Order orderInsert(String requestorId,OrderRequest o);
+	
 	void insertAll(List<OrderRequest> o);
 
-	boolean delete(int id);
+	boolean update(OrderRequest o, String id);
 
-	boolean update(OrderRequest o, int id);
+	boolean updateAll(List<OrderRequest> o, String id);
 
-	boolean updateAll(List<OrderRequest> o, int id);
+	OrderResponse findById(String id);
+	
+	List<OrderSearchResponse> findByCustomerId(Integer customerId);
+
+	boolean delete(String id);
 }

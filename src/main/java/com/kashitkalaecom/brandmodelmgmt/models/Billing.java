@@ -1,5 +1,6 @@
 package com.kashitkalaecom.brandmodelmgmt.models;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -7,28 +8,48 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.kashitkalaecom.brandmodelmgmt.utilities.CustomClock;
+
 @Entity
 @Table(name = "billing")
 public class Billing {
 	
 	@Id
-    @Column(name="bill_id")
-	protected String id = UUID.randomUUID().toString();
+    @Column(name="id")
+	protected String id= UUID.randomUUID().toString();
+
+	@Column(name = "createdon")
+	protected Timestamp createdOn = CustomClock.timestamp();
+
+	@Column(name = "modifiedby")
+	protected String modifiedBy;
+
+	@Column(name = "modifiedon")
+	protected Timestamp modifiedOn;
 	
-	@Column(name = "billing_address1")
+	@Column(name = "billingaddress1")
 	private String billingAddress1;
 	
-	@Column(name = "billing_address2")
+	@Column(name = "billingaddress2")
 	private String billingAddress2;
 	
-	@Column(name = "billing_city")
+	@Column(name = "billingcity")
 	private String billingCity;
 	
-	@Column(name = "billing_state")
+	@Column(name = "billingstate")
 	private String billingState;
 	
-	@Column(name = "billing_zip_code")
+	@Column(name = "billingzipcode")
 	private int billingZipCode;
+
+	@Column(name = "orderid")
+	private String orderId;
+	
+	@Column(name = "latitude")
+	private String latitude;
+
+	@Column(name = "longitude")
+	private String longitude;
 	
 	protected Billing() {
 	}
@@ -49,6 +70,65 @@ public class Billing {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	@Column(name = "createdby")
+	protected String createdBy;
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+	
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 	public String getBillingAddress1() {

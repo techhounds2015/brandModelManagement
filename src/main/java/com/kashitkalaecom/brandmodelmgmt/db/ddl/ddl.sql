@@ -4,18 +4,26 @@
 
 -- DROP TABLE billing;
 
+-- ecom.billing definition
+
+-- Drop table
+
+-- DROP TABLE billing;
+
 CREATE TABLE billing (
 	id varchar NOT NULL,
 	createdby varchar NULL,
 	createdon timestamp NULL,
 	modifiedby varchar NULL,
 	modifiedon timestamp NULL,
-	orderId not null,
 	billingaddress1 varchar NULL,
 	billingaddress2 varchar NULL,
 	billingcity varchar NULL,
 	billingstate varchar NULL,
 	billingzipcode varchar NULL,
+	orderid varchar NULL,
+	latitude varchar NULL,
+	longitude varchar NULL,
 	CONSTRAINT billing_pk PRIMARY KEY (id)
 );
 
@@ -304,21 +312,26 @@ CREATE TABLE "order" (
 -- Drop table
 
 -- DROP TABLE orderitem;
+-- ecom.orderitem definition
+
+-- Drop table
+
+-- DROP TABLE orderitem;
 
 CREATE TABLE orderitem (
 	id varchar NOT NULL,
-	orderId not null,
 	createdby varchar NULL,
 	createdon timestamp NULL,
 	modifiedby varchar NULL,
 	modifiedon timestamp NULL,
-	itemid numeric NULL,
-	itemquantity numeric NULL,
+	itemid int8 NULL,
+	itemquantity int8 NULL,
 	itemname varchar NULL,
 	itemprice varchar NULL,
+	orderid varchar NULL,
+	productid varchar NULL,
 	CONSTRAINT orderitem_pk PRIMARY KEY (id)
 );
-
 
 -- ecom.orderpaymentinfo definition
 
@@ -707,4 +720,65 @@ CREATE TABLE webpages (
 	"content" varchar NULL,
 	status bool NULL,
 	CONSTRAINT webpages_pk PRIMARY KEY (id)
+);
+
+-- ecom.ratings definition
+
+-- Drop table
+
+-- DROP TABLE ratings;
+
+CREATE TABLE ratings (
+	id varchar NOT NULL,
+	createdby varchar NULL,
+	createdon timestamp NULL,
+	modifiedby varchar NULL,
+	modifiedon timestamp NULL,
+	userid varchar NULL,
+	productid varchar NULL,
+	rating numeric NULL,
+	"comments" varchar NULL,
+	CONSTRAINT ratings_pk PRIMARY KEY (id)
+);
+
+-- ecom.complain definition
+
+-- Drop table
+
+-- DROP TABLE complain;
+
+CREATE TABLE complain (
+	id varchar NOT NULL,
+	createdby varchar NULL,
+	createdon timestamp NULL,
+	modifiedby varchar NULL,
+	modifiedon timestamp NULL,
+	title varchar NULL,
+	complainnumber varchar NULL,
+	customerid varchar NULL,
+	"comments" varchar NULL,
+	CONSTRAINT complain_pk PRIMARY KEY (id)
+);
+
+-- ecom.customerorder definition
+
+-- Drop table
+
+-- DROP TABLE customerorder;
+
+CREATE TABLE customerorder (
+	id varchar NOT NULL,
+	createdby varchar NULL,
+	createdon timestamp NULL,
+	modifiedby varchar NULL,
+	modifiedon timestamp NULL,
+	orderstatus varchar NULL,
+	subtotal int4 NULL,
+	tax int8 NULL,
+	total int8 NULL,
+	orderdate timestamp NULL,
+	shippingcharge int8 NULL,
+	customerid int8 NULL,
+	outletid varchar NULL,
+	CONSTRAINT order_pk PRIMARY KEY (id)
 );
