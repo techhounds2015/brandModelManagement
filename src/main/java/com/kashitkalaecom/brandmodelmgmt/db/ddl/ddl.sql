@@ -10,6 +10,7 @@ CREATE TABLE billing (
 	createdon timestamp NULL,
 	modifiedby varchar NULL,
 	modifiedon timestamp NULL,
+	orderId not null,
 	billingaddress1 varchar NULL,
 	billingaddress2 varchar NULL,
 	billingcity varchar NULL,
@@ -306,6 +307,7 @@ CREATE TABLE "order" (
 
 CREATE TABLE orderitem (
 	id varchar NOT NULL,
+	orderId not null,
 	createdby varchar NULL,
 	createdon timestamp NULL,
 	modifiedby varchar NULL,
@@ -705,18 +707,4 @@ CREATE TABLE webpages (
 	"content" varchar NULL,
 	status bool NULL,
 	CONSTRAINT webpages_pk PRIMARY KEY (id)
-);
-
-
-CREATE TABLE ratings (
-	id varchar NOT NULL,
-	createdby varchar NULL,
-	createdon timestamp NULL,
-	modifiedby varchar NULL,
-	modifiedon timestamp NULL,
-	userid varchar NULL,
-	productid varchar NULL,
-	rating numeric NULL,
-	comments varchar NULL,
-	CONSTRAINT ratings_pk PRIMARY KEY (id)
 );
